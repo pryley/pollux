@@ -1,0 +1,25 @@
+debug: false
+disable_comments: false
+disable_posts: false
+remove_dashboard_widgets: true
+remove_wordpress_footer: true
+remove_wordpress_menu: true
+
+columns:
+  author: __('Author', 'pollux')
+  categories: __('Categories', 'pollux')
+  comments: __('Comments', 'pollux')
+  date: __('Date', 'pollux')
+  image: __('Image', 'pollux')
+  media: __('Media', 'pollux')
+  slug: __('Slug', 'pollux')
+  title: __('Title', 'pollux')
+
+depends:
+  plugin:
+    meta-box/meta-box.php: Meta Box
+
+meta_boxes: []
+post_types: []
+settings: []
+taxonomies: []

@@ -1,0 +1,53 @@
+<?php
+
+namespace GeminiLabs\Pollux;
+
+use GeminiLabs\Pollux\Application;
+
+abstract class Component
+{
+	/**
+	 * @var Application
+	 */
+	protected $app;
+
+	public function __construct( Application $app )
+	{
+		$this->app = $app;
+	}
+
+	/**
+	 * @return void
+	 */
+	abstract public function init();
+
+	/**
+	 * @return void
+	 */
+	abstract protected function normalize();
+
+	/**
+	 * @param string $methodPrefix
+	 * @return array
+	 */
+	protected function normalizeThis( array $data, array $defaults, $methodPrefix = 'normalize' )
+	{
+		$data = wp_parse_args( $data, $defaults );
+		foreach( $defaults as $key => $value ) {
+			$method = $this->app->buildMethodName( $key, $methodPrefix );
+			if( method_exists( $this, $method )) {
+				$data[$key] = $this->$method( $data[$key], $data );
+			}
+		}
+		return $data;
+	}
+
+	/**
+	 * @param mixed $value
+	 * @return array
+	 */
+	protected function toArray( $value )
+	{
+		return array_filter( (array) $value );
+	}
+}
