@@ -19,7 +19,6 @@
 
 defined( 'WPINC' ) || die;
 
-require_once __DIR__ . '/activate.php';
 require_once __DIR__ . '/autoload.php';
 require_once __DIR__ . '/helpers.php';
 
@@ -28,9 +27,10 @@ use GeminiLabs\Pollux\Provider;
 
 $app = Application::getInstance();
 
-$app->register( new Provider );
-
 register_activation_hook( __FILE__, array( $app, 'onActivation' ));
 register_deactivation_hook( __FILE__, array( $app, 'onDeactivation' ));
 
-$app->init();
+if( $app->gatekeeper->proceed() ) {
+	$app->register( new Provider );
+	$app->init();
+}

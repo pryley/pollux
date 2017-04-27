@@ -7,6 +7,7 @@ use GeminiLabs\Pollux\Config;
 use GeminiLabs\Pollux\Container;
 use GeminiLabs\Pollux\Controller;
 use GeminiLabs\Pollux\Facade;
+use GeminiLabs\Pollux\GateKeeper;
 use GeminiLabs\Pollux\PostType;
 
 final class Application extends Container
@@ -15,18 +16,21 @@ final class Application extends Container
 
 	public $config;
 	public $file;
+	public $gatekeeper;
 	public $id;
 	public $name;
 	public $version;
 
 	public function __construct()
 	{
-		$this->file = realpath( dirname( __DIR__ ) . '/pollux.php' );
-		$data = get_file_data( $this->file, [
+		$this->file = realpath( dirname( dirname( __FILE__ )) . '/pollux.php' );
+		$this->gatekeeper = new GateKeeper( plugin_basename( $this->file ));
+
+		$data = get_file_data( $this->file, array(
 			'id' => 'Text Domain',
 			'name' => 'Plugin Name',
 			'version' => 'Version',
-		], 'plugin' );
+		), 'plugin' );
 		array_walk( $data, function( $value, $key ) {
 			$this->$key = $value;
 		});
@@ -37,13 +41,13 @@ final class Application extends Container
 	 */
 	public function bootstrap()
 	{
-		$this->config = (new Config( $this ))->get();
 		Facade::clearResolvedInstances();
 		Facade::setFacadeApplication( $this );
+		$this->config = (new Config( $this ))->get();
 		$this->registerAliases();
-		$classNames = [
+		$classNames = array(
 			'MetaBox', 'PostType', 'Taxonomy', 'Settings',
-		];
+		);
 		foreach( $classNames as $className ) {
 			$this->make( $className )->init();
  		}
@@ -95,12 +99,12 @@ final class Application extends Container
 	{
 		$this->bootstrap();
 
-		$controller = $this->make( Controller::class );
+		$controller = $this->make( 'Controller' );
 
-		add_filter( 'admin_footer_text',          [$controller, 'filterWordPressFooter'] );
-		add_action( 'admin_enqueue_scripts',      [$controller, 'registerAssets'] );
-		add_action( 'admin_init',                 [$controller, 'removeDashboardWidgets'] );
-		add_action( 'wp_before_admin_bar_render', [$controller, 'removeWordPressMenu'] );
+		add_filter( 'admin_footer_text',          array( $controller, 'filterWordPressFooter' ));
+		add_action( 'admin_enqueue_scripts',      array( $controller, 'registerAssets' ));
+		add_action( 'admin_init',                 array( $controller, 'removeDashboardWidgets' ));
+		add_action( 'wp_before_admin_bar_render', array( $controller, 'removeWordPressMenu' ));
 
 		// Disallow indexing of the site on non-production environments
 		if( !$this->environment( 'production' ) && !is_admin() ) {
@@ -127,10 +131,10 @@ final class Application extends Container
 	 */
 	public function registerAliases()
 	{
-		$aliases = [
-			'PostMeta' => Facades\PostMeta::class,
-			'SiteMeta' => Facades\SiteMeta::class,
-		];
+		$aliases = array(
+			'PostMeta' => 'GeminiLabs\Pollux\Facades\PostMeta',
+			'SiteMeta' => 'GeminiLabs\Pollux\Facades\PostMeta',
+		);
 		AliasLoader::getInstance( $aliases )->register();
 	}
 
