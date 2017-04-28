@@ -89,8 +89,9 @@ class Config
 	 */
 	protected function parseRawStrings( $config )
 	{
+		$strings = apply_filters( 'pollux/config/raw_strings', self::RAW_STRINGS );
 		return stripslashes(
-			preg_replace( '/(\')((' . implode( '|', self::RAW_STRINGS ) . ')\(?.+\))(\')/', '$2', $config )
+			preg_replace( '/(\')((' . implode( '|', $strings ) . ')\(?.+\))(\')/', '$2', $config )
 		);
 	}
 
