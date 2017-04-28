@@ -15,10 +15,10 @@ class SiteMeta
 	public function get( $group = null, $key = null, $fallback = null )
 	{
 		$options = get_option( Settings::ID );
-		if( !$options ) {
+		if( empty( $options )) {
 			return $fallback;
 		}
-		if( !$group ) {
+		if( empty( $group )) {
 			return $options;
 		}
 		$group = $this->normalize( $options, $group, $fallback );

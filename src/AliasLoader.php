@@ -2,7 +2,7 @@
 
 namespace GeminiLabs\Pollux;
 
-class AliasLoader
+final class AliasLoader
 {
 	/**
 	 * The singleton instance of the loader.

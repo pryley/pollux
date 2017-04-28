@@ -6,6 +6,10 @@ use GeminiLabs\Pollux\Application;
 
 class PostMeta
 {
+	/**
+	 * @param string $metaKey
+	 * @return mixed
+	 */
 	public function get( $metaKey, array $args = [] )
 	{
 		if( empty( $metaKey ))return;
@@ -22,6 +26,11 @@ class PostMeta
 			: $metaValue;
 	}
 
+	/**
+	 * @param string $metaKey
+	 * @param string $prefix
+	 * @return string
+	 */
 	protected function buildMetaKey( $metaKey, $prefix )
 	{
 		return ( substr( $metaKey, 0, 1 ) == '_' && !empty( $prefix ))
@@ -29,6 +38,9 @@ class PostMeta
 			: $prefix . $metaKey;
 	}
 
+	/**
+	 * @return array
+	 */
 	protected function normalize( array $args )
 	{
 		$defaults = [

@@ -128,9 +128,9 @@ class PostType extends Component
 	 */
 	protected function normalizeMenuName( $menuname, array $args )
 	{
-		return empty( $menu_name )
+		return empty( $menuname )
 			? $args['plural']
-			: $menu_name;
+			: $menuname;
 	}
 
 	/**
@@ -169,12 +169,11 @@ class PostType extends Component
 	}
 
 	/**
-	 * @param int $postId
-	 * @return string
+	 * @return int
 	 */
-	protected function getColumnMedia( $postId )
+	protected function getColumnMedia()
 	{
-		return count( $this->app->make( PostMeta::class )->get( 'media', [
+		return count( (new PostMeta)->get( 'media', [
 			'fallback' => [],
 			'single' => false,
 		]));

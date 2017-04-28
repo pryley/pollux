@@ -72,7 +72,9 @@ class Settings extends MetaBox
 	}
 
 	/**
-	 * @param string $id
+	 * @param string $instruction
+	 * @param string $fieldId
+	 * @param string $metaboxId
 	 * @return string
 	 */
 	public function filterInstruction( $instruction, $fieldId, $metaboxId )
@@ -81,6 +83,7 @@ class Settings extends MetaBox
 	}
 
 	/**
+	 * @param bool $bool
 	 * @return bool
 	 */
 	public function isVisible( $bool, array $metabox )
@@ -182,6 +185,11 @@ class Settings extends MetaBox
 		}
 	}
 
+	/**
+	 * @param string $name
+	 * @param string $parentId
+	 * @return string
+	 */
 	protected function normalizeFieldName( $name, array $data, $parentId )
 	{
 		if( !empty( $name )) {
@@ -191,6 +199,11 @@ class Settings extends MetaBox
 		return sprintf( '%s[%s][%s]', self::ID, $parentId, $name );
 	}
 
+	/**
+	 * @param string $id
+	 * @param string $parentId
+	 * @return string
+	 */
 	protected function normalizeId( $id, array $data, $parentId )
 	{
 		return $parentId == $id

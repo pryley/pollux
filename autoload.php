@@ -1,6 +1,6 @@
 <?php
 
-defined( 'WPINC' ) or die;
+defined( 'WPINC' ) || die;
 
 /**
  * PSR-4 autoloader

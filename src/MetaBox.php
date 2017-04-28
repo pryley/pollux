@@ -167,7 +167,7 @@ class MetaBox extends Component
 	}
 
 	/**
-	 * @param mixed $condition
+	 * @param mixed $conditions
 	 * @return array
 	 */
 	protected function normalizeCondition( $conditions )

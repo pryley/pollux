@@ -2,8 +2,8 @@
 
 namespace GeminiLabs\Pollux;
 
-use GeminiLabs\Pollux\Facades\SiteMeta;
 use GeminiLabs\Pollux\Settings;
+use GeminiLabs\Pollux\SiteMeta;
 use RW_Meta_Box;
 use RWMB_Field;
 
@@ -30,7 +30,7 @@ class SettingsMetaBox extends RW_Meta_Box
 			return $meta;
 		}
 		$meta = call_user_func( [RWMB_Field::get_class_name( $field ), 'esc_meta'], ( $saved
-			? SiteMeta::get( $this->meta_box['id'], $field['id'] )
+			? (new SiteMeta)->get( $this->meta_box['id'], $field['id'] )
 			: $field['std']
 		));
 		return $this->_normalize_field_meta( $meta, $field );
@@ -79,7 +79,7 @@ class SettingsMetaBox extends RW_Meta_Box
 	public function is_saved()
 	{
 		foreach( array_column( $this->fields, 'id' ) as $field ) {
-			if( !is_null( SiteMeta::get( $this->meta_box['id'], $field, null ))) {
+			if( !is_null( (new SiteMeta)->get( $this->meta_box['id'], $field, null ))) {
 				return true;
 			}
 		}

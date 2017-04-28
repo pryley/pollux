@@ -42,7 +42,7 @@ class Taxonomy extends Component
 	}
 
 	/**
-	 * @return WP_Query
+	 * @return null|WP_Query
 	 */
 	public function filterBy( WP_Query $query )
 	{
@@ -82,10 +82,6 @@ class Taxonomy extends Component
 	 */
 	public function register()
 	{
-		$taxonomies = array_diff_key(
-			$this->taxonomies,
-			get_taxonomies( ['_builtin' => true] )
-		);
 		array_walk( $this->taxonomies, function( $args, $taxonomy ) {
 			register_taxonomy( $taxonomy, $args['post_types'], array_diff_key( $args, array_flip( self::CUSTOM_KEYS )));
 			foreach( $args['post_types'] as $type ) {
@@ -104,6 +100,10 @@ class Taxonomy extends Component
 				$this->normalizeThis( $args, self::TAXONOMY_DEFAULTS, $taxonomy )
 			);
 		}
+		$this->taxonomies = array_diff_key(
+			$this->taxonomies,
+			get_taxonomies( ['_builtin' => true] )
+		);
 	}
 
 	/**
