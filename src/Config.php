@@ -8,7 +8,7 @@ use Symfony\Component\Yaml\Yaml;
 class Config
 {
 	const RAW_STRINGS = [
-		'__', '_n', '_x',
+		'__', '_n', '_x', 'sprintf',
 	];
 
 	/**
