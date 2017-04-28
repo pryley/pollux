@@ -3,6 +3,7 @@
 namespace GeminiLabs\Pollux;
 
 use GeminiLabs\Pollux\Application;
+use GeminiLabs\Pollux\Settings;
 
 class Controller
 {
@@ -32,23 +33,29 @@ class Controller
 	 */
 	public function registerAssets()
 	{
-		wp_enqueue_style( 'pollux/main.css',
-			sprintf( '%sassets/css/main.css', $this->app->path ),
-			apply_filters( 'pollux/enqueue/css/deps', [] ),
-			$this->app->version
-		);
-		wp_enqueue_script( 'pollux/main.js',
-			sprintf( '%sassets/js/main.js', $this->app->path ),
-			apply_filters( 'pollux/enqueue/js/deps', [] ),
-			$this->app->version,
-			true
-		);
-		wp_localize_script( 'pollux/main.js',
-			apply_filters( 'pollux/enqueue/js/localize/variable', 'pollux' ),
-			apply_filters( 'pollux/enqueue/js/localize/variables', [
-				'ajax' => admin_url( 'admin-ajax.php' ),
-			])
-		);
+		if( get_current_screen()->id == sprintf( 'toplevel_page_%s', Settings::ID )) {
+			wp_enqueue_script( 'common' );
+			wp_enqueue_script( 'wp-lists' );
+			wp_enqueue_script( 'postbox' );
+		}
+
+		// wp_enqueue_style( 'pollux/main.css',
+		// 	sprintf( '%sassets/css/main.css', $this->app->path ),
+		// 	apply_filters( 'pollux/enqueue/css/deps', [] ),
+		// 	$this->app->version
+		// );
+		// wp_enqueue_script( 'pollux/main.js',
+		// 	sprintf( '%sassets/js/main.js', $this->app->path ),
+		// 	apply_filters( 'pollux/enqueue/js/deps', [] ),
+		// 	$this->app->version,
+		// 	true
+		// );
+		// wp_localize_script( 'pollux/main.js',
+		// 	apply_filters( 'pollux/enqueue/js/localize/variable', 'pollux' ),
+		// 	apply_filters( 'pollux/enqueue/js/localize/variables', [
+		// 		'ajax' => admin_url( 'admin-ajax.php' ),
+		// 	])
+		// );
 	}
 
 	/**

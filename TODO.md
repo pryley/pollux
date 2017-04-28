@@ -6,10 +6,10 @@
 - [x] PostType
 - [x] SiteMeta
 - [x] Taxonomy
-- [ ] Settings
+- [+] Settings
 - [ ] Conditional MetaBox Fields
-- [ ] PostType Archive
-- [ ] Debug
-- [ ] Color Schemes
-- [ ] Disable Comments
+- [ ] Dependant MetaBox Fields
 - [ ] Disable Posts
+- [ ] Disable Comments
+- [ ] Color Schemes
+- [ ] PostType Archive

@@ -3,6 +3,7 @@
 namespace GeminiLabs\Pollux;
 
 use GeminiLabs\Pollux\Application;
+use GeminiLabs\Pollux\Settings;
 
 class SiteMeta
 {
@@ -24,7 +25,7 @@ class SiteMeta
 	 */
 	public function get( $group, $key = false, $fallback = '' )
 	{
-		$metaKey = sprintf( '%ssettings-%s', Application::PREFIX, $group );
+		$metaKey = sprintf( '%s-%s', Settings::ID, $group );
 		$options = get_option( $metaKey, false );
 
 		if( !$options || !is_array( $options )) {

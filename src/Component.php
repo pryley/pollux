@@ -44,6 +44,18 @@ abstract class Component
 	}
 
 	/**
+	 * @param bool $toLowerCase
+	 * @return string
+	 */
+	protected function getClassname( $toLowerCase = true )
+	{
+		$paths = explode( '\\', get_class( $this ));
+		return wp_validate_boolean( $toLowerCase )
+			? strtolower( end( $paths ))
+			: end( $paths );
+	}
+
+	/**
 	 * @param string $methodPrefix
 	 * @return array
 	 */

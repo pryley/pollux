@@ -33,7 +33,7 @@ class MetaBox extends Component
 	/**
 	 * @return array
 	 */
-	public function register( array $metaboxes )
+	public function register( $metaboxes = [] )
 	{
 		if( current_user_can( 'switch_themes' )) {
 			$this->addInstructions();
@@ -92,11 +92,12 @@ class MetaBox extends Component
 	protected function generateInstructions()
 	{
 		return array_reduce( $this->getInstructions(), function( $html, $metabox ) {
-			$fields = array_reduce( array_column( $metabox['fields'], 'id' ), function( $html, $id ) {
+			$fields = array_reduce( array_column( $metabox['fields'], 'id' ), function( $html, $id ) use( $metabox ) {
 				$id = str_replace( Application::PREFIX, '', $id );
-				return $html . sprintf( "PostMeta::get('%s');%s", $id, PHP_EOL );
+				$hook = sprintf( 'pollux/%s/instruction', $this->getClassname() );
+				return $html . apply_filters( $hook, "PostMeta::get('{$id}');", $id, $metabox['id'] ) . PHP_EOL;
 			});
-			return $html . sprintf( '<p><strong>%s</strong></p><pre class="nav-tab-active misc-pub-section">%s</pre>',
+			return $html . sprintf( '<p><strong>%s</strong></p><pre class="my-sites nav-tab-active misc-pub-section">%s</pre>',
 				$metabox['title'],
 				$fields
 			);
@@ -178,9 +179,10 @@ class MetaBox extends Component
 				return !is_numeric( $key );
 			}, ARRAY_FILTER_USE_KEY );
 		}
+		$hook = sprintf( 'pollux/%s/conditions', $this->getClassname() );
 		return array_intersect_key(
 			$conditions,
-			array_flip( apply_filters( 'pollux/metabox/conditions', self::CONDITIONS ))
+			array_flip( apply_filters( $hook, self::CONDITIONS ))
 		);
 	}
 
@@ -192,7 +194,8 @@ class MetaBox extends Component
 		return array_map( function( $id, $field ) {
 			return $this->normalizeThis( $field, [
 				'id' => Application::PREFIX . $id,
-				'condition' => [],
+				// 'condition' => [],
+				// 'depends' => [];
 			]);
 		}, array_keys( $fields ), $fields );
 	}
