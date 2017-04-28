@@ -42,10 +42,14 @@ class SettingsMetaBox extends RW_Meta_Box
 	 */
 	public function _normalize_field_meta( $meta, array $field )
 	{
-		if( $field['clone'] || $field['multiple'] ) {
-			if( empty( $meta ) || !is_array( $meta )) {
-				$meta = $field['clone'] ? [''] : [];
-			}
+		if( !empty( $meta ) && is_array( $meta )) {
+			return $meta;
+		}
+		if( $field['clone'] ) {
+			return [''];
+		}
+		if( $field['multiple'] ) {
+			return [];
 		}
 		return $meta;
 	}

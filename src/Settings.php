@@ -83,18 +83,6 @@ class Settings extends MetaBox
 	}
 
 	/**
-	 * @param bool $bool
-	 * @return bool
-	 */
-	public function isVisible( $bool, array $metabox )
-	{
-		if( defined( 'DOING_AJAX' ) && DOING_AJAX || !isset( $metabox['condition'] )) {
-			return $bool;
-		}
-		return $this->verifyMetaBoxCondition( $metabox['condition'] );
-	}
-
-	/**
 	 * @return void
 	 */
 	public function register( $metaboxes = [] )

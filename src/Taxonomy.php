@@ -49,8 +49,10 @@ class Taxonomy extends Component
 		if( !is_admin() || get_current_screen()->base != 'edit' )return;
 		$vars = &$query->query_vars;
 		foreach( array_keys( $this->taxonomies ) as $taxonomy ) {
-			if( empty( $vars[$taxonomy] ) || !is_numeric( $vars[$taxonomy] ))continue;
-			$vars[$taxonomy] = get_term_by( 'id', $vars[$taxonomy], $taxonomy )->slug;
+			if( !isset( $vars[$taxonomy] ))return;
+			if( $term = get_term_by( 'id', $vars[$taxonomy], $taxonomy )) {
+				$vars[$taxonomy] = $term->slug;
+			}
 		}
 		return $query;
 	}
@@ -107,7 +109,7 @@ class Taxonomy extends Component
 	}
 
 	/**
-	 * @param mixed $condition
+	 * @param mixed $labels
 	 * @return array
 	 */
 	protected function normalizeLabels( $labels, array $args )
@@ -121,9 +123,9 @@ class Taxonomy extends Component
 	 */
 	protected function normalizeMenuName( $menuname, array $args )
 	{
-		return empty( $menu_name )
+		return empty( $menuname )
 			? $args['plural']
-			: $menu_name;
+			: $menuname;
 	}
 
 	/**

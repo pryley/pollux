@@ -46,9 +46,9 @@ class MetaBox extends Component
 	 */
 	public function isVisible( $bool, array $metabox )
 	{
-		if( defined( 'DOING_AJAX' ) && DOING_AJAX
+		if( defined( 'DOING_AJAX' )
 			|| !isset( $metabox['condition'] )
-			|| !in_array( $this->getPostType(), $metabox['post_types'] )) {
+			|| !$this->hasPostType( $metabox )) {
 			return $bool;
 		}
 		return $this->verifyMetaBoxCondition( $metabox['condition'] );
@@ -94,7 +94,6 @@ class MetaBox extends Component
 		return array_reduce( $this->getInstructions(), function( $html, $metabox ) {
 			$fields = array_reduce( array_column( $metabox['fields'], 'slug' ), function( $html, $slug ) use( $metabox ) {
 				$hook = sprintf( 'pollux/%s/instruction', $this->getClassname() );
-				error_log( print_r( $metabox, 1 ));
 				return $html . apply_filters( $hook, "PostMeta::get('{$slug}');", $slug, $metabox['slug'] ) . PHP_EOL;
 			});
 			return $html . sprintf( '<p><strong>%s</strong></p><pre class="my-sites nav-tab-active misc-pub-section">%s</pre>',
@@ -109,10 +108,9 @@ class MetaBox extends Component
 	 */
 	protected function getInstructions()
 	{
-		$type = get_post_type( $this->getPostId() );
-		return array_filter( $this->metaboxes, function( $metabox ) use( $type ) {
+		return array_filter( $this->metaboxes, function( $metabox ) {
 			return $this->verifyMetaBoxCondition( $metabox['condition'] )
-				&& in_array( $type, $metabox['post_types'] );
+				&& $this->hasPostType( $metabox );
 		});
 	}
 
@@ -128,14 +126,6 @@ class MetaBox extends Component
 	}
 
 	/**
-	 * @return string
-	 */
-	protected function getPostType()
-	{
-		return get_post_type( $this->getPostId() );
-	}
-
-	/**
 	 * @return array
 	 */
 	protected function getPostTypes()
@@ -146,6 +136,17 @@ class MetaBox extends Component
 			),
 			false
 		));
+	}
+
+	/**
+	 * @return bool
+	 */
+	protected function hasPostType( array $metabox )
+	{
+		if( !isset( $metabox['post_types'] )) {
+			return true;
+		}
+		return in_array( get_post_type( $this->getPostId() ), $metabox['post_types'] );
 	}
 
 	/**
