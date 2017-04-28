@@ -32,13 +32,13 @@ class Settings extends MetaBox
 
 		$this->normalize();
 
-		add_action( 'admin_menu',                             [$this, 'addPage'] );
-		add_action( 'pollux/settings/init',                   [$this, 'addSubmitMetaBox'] );
-		add_filter( 'pollux/settings/instruction',            [$this, 'filterInstruction'], 10, 3 );
-		add_filter( 'wp_redirect',                            [$this, 'filterRedirectOnSave'] );
-		add_action( 'current_screen',                         [$this, 'register'] );
-		add_action( 'admin_menu',                             [$this, 'registerSetting'] );
-		add_action( 'pollux/settings/init',                   [$this, 'reset'] );
+		add_action( 'admin_menu',                               [$this, 'addPage'] );
+		add_action( 'pollux/settings/init',                     [$this, 'addSubmitMetaBox'] );
+		add_filter( 'pollux/settings/instruction',              [$this, 'filterInstruction'], 10, 3 );
+		add_filter( 'wp_redirect',                              [$this, 'filterRedirectOnSave'] );
+		add_action( 'current_screen',                           [$this, 'register'] );
+		add_action( 'admin_menu',                               [$this, 'registerSetting'] );
+		add_action( 'pollux/settings/init',                     [$this, 'reset'] );
 		add_action( 'admin_footer-toplevel_page_' . static::ID, [$this, 'renderFooterScript'] );
 	}
 
@@ -121,13 +121,7 @@ class Settings extends MetaBox
 	 */
 	public function registerSetting()
 	{
-		register_setting( static::ID, static::ID, [$this, 'onSave'] );
-	}
-
-	public function onSave( $settings )
-	{
-		// error_log( print_r( $settings, 1 ));
-		return $settings;
+		register_setting( static::ID, static::ID );
 	}
 
 	/**
@@ -185,16 +179,6 @@ class Settings extends MetaBox
 			return add_settings_error( static::ID, 'reset', __( 'Settings reset to defaults.', 'pollux' ), 'updated' );
 		}
 		add_settings_error( static::ID, 'reset', __( 'Failed to reset settings. Please refresh the page and try again.', 'pollux' ));
-	}
-
-	/**
-	 * @return array
-	 */
-	protected function getInstructions()
-	{
-		return array_filter( $this->metaboxes, function( $metabox ) {
-			return $this->verifyMetaBoxCondition( $metabox['condition'] );
-		});
 	}
 
 	/**

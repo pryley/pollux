@@ -31,17 +31,6 @@ class MetaBox extends Component
 	}
 
 	/**
-	 * @return array
-	 */
-	public function register( $metaboxes = [] )
-	{
-		if( current_user_can( 'switch_themes' )) {
-			$this->addInstructions();
-		}
-		return array_merge( $metaboxes, $this->metaboxes );
-	}
-
-	/**
 	 * @return bool
 	 */
 	public function isVisible( $bool, array $metabox )
@@ -52,6 +41,17 @@ class MetaBox extends Component
 			return $bool;
 		}
 		return $this->verifyMetaBoxCondition( $metabox['condition'] );
+	}
+
+	/**
+	 * @return array
+	 */
+	public function register( $metaboxes = [] )
+	{
+		if( current_user_can( 'switch_themes' )) {
+			$this->addInstructions();
+		}
+		return array_merge( $metaboxes, $this->metaboxes );
 	}
 
 	/**
