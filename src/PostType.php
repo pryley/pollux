@@ -97,7 +97,7 @@ class PostType extends Component
 		$this->setColumns();
 		foreach( $this->app->config['post_types'] as $type => $args ) {
 			$this->types[$type] = apply_filters( 'pollux/post_type/args',
-				$this->normalizeThis( $args, self::POST_TYPE_DEFAULTS ),
+				$this->normalizeThis( $args, self::POST_TYPE_DEFAULTS, $type ),
 				$type
 			);
 		}

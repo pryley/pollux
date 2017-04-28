@@ -56,16 +56,16 @@ abstract class Component
 	}
 
 	/**
-	 * @param string $methodPrefix
+	 * @param string $id
 	 * @return array
 	 */
-	protected function normalizeThis( array $data, array $defaults, $methodPrefix = 'normalize' )
+	protected function normalizeThis( array $data, array $defaults, $id )
 	{
 		$data = wp_parse_args( $data, $defaults );
 		foreach( $defaults as $key => $value ) {
-			$method = $this->app->buildMethodName( $key, $methodPrefix );
+			$method = $this->app->buildMethodName( $key, 'normalize' );
 			if( method_exists( $this, $method )) {
-				$data[$key] = $this->$method( $data[$key], $data );
+				$data[$key] = $this->$method( $data[$key], $data, $id );
 			}
 		}
 		return $data;

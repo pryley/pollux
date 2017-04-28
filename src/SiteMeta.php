@@ -18,22 +18,24 @@ class SiteMeta
 	}
 
 	/**
-	 * @param string $group
-	 * @param false|string $key
+	 * @param null|string $group
+	 * @param null|string $key
 	 * @param mixed $fallback
 	 * @return mixed
 	 */
-	public function get( $group, $key = false, $fallback = '' )
+	public function get( $group = null, $key = null, $fallback = null )
 	{
-		$metaKey = sprintf( '%s-%s', Settings::ID, $group );
-		$options = get_option( $metaKey, false );
-
-		if( !$options || !is_array( $options )) {
+		$options = get_option( Settings::ID );
+		if( !$options ) {
 			return $fallback;
 		}
+		if( !$group ) {
+			return $options;
+		}
+		$group = $this->normalize( $options, $group, $fallback );
 		return is_string( $key )
-			? $this->normalize( $options, $key, $fallback )
-			: $options;
+			? $this->normalize( (array) $group, $key, $fallback )
+			: $group;
 	}
 
 	/**
@@ -46,13 +48,10 @@ class SiteMeta
 		if( !array_key_exists( $key, $options )) {
 			return $fallback;
 		}
-
 		$option = $options[$key];
-
 		$option = is_array( $option )
 			? array_filter( $option )
 			: trim( $option );
-
 		return empty( $option )
 			? $fallback
 			: $option;

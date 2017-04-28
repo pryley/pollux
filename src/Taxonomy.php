@@ -101,8 +101,7 @@ class Taxonomy extends Component
 	{
 		foreach( $this->app->config['taxonomies'] as $taxonomy => $args ) {
 			$this->taxonomies[$taxonomy] = apply_filters( 'pollux/taxonomy/args',
-				$this->normalizeThis( $args, self::TAXONOMY_DEFAULTS ),
-				$taxonomy
+				$this->normalizeThis( $args, self::TAXONOMY_DEFAULTS, $taxonomy )
 			);
 		}
 	}

@@ -2,6 +2,7 @@
 
 namespace GeminiLabs\Pollux;
 
+use GeminiLabs\Pollux\Application;
 use GeminiLabs\Pollux\MetaBox;
 use GeminiLabs\Pollux\SettingsMetaBox;
 
@@ -171,13 +172,29 @@ class Settings extends MetaBox
 		$this->metaboxes = [];
 		foreach( $this->app->config['settings'] as $id => $metabox ) {
 			unset( $metabox['post_types'], $metabox['pages'] );
-			$this->metaboxes[] = $this->normalizeThis( $metabox, [
+			$defaults = [
 				'condition' => [],
-				'context' => 'normal',
 				'fields' => [],
 				'id' => $id,
-				'priority' => 'high',
-			]);
+				'slug' => $id,
+			];
+			$this->metaboxes[] = $this->normalizeThis( $metabox, $defaults, $id );
 		}
+	}
+
+	protected function normalizeFieldName( $name, array $data, $parentId )
+	{
+		if( !empty( $name )) {
+			return $name;
+		}
+		$name = str_replace( sprintf( '%s-%s-', self::ID, $parentId ), '', $data['id'] );
+		return sprintf( '%s[%s][%s]', self::ID, $parentId, $name );
+	}
+
+	protected function normalizeId( $id, array $data, $parentId )
+	{
+		return $parentId == $id
+			? sprintf( '%s-%s', self::ID, $id )
+			: sprintf( '%s-%s-%s', self::ID, $parentId, $id );
 	}
 }

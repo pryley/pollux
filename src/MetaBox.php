@@ -92,10 +92,10 @@ class MetaBox extends Component
 	protected function generateInstructions()
 	{
 		return array_reduce( $this->getInstructions(), function( $html, $metabox ) {
-			$fields = array_reduce( array_column( $metabox['fields'], 'id' ), function( $html, $id ) use( $metabox ) {
-				$id = str_replace( Application::PREFIX, '', $id );
+			$fields = array_reduce( array_column( $metabox['fields'], 'slug' ), function( $html, $slug ) use( $metabox ) {
 				$hook = sprintf( 'pollux/%s/instruction', $this->getClassname() );
-				return $html . apply_filters( $hook, "PostMeta::get('{$id}');", $id, $metabox['id'] ) . PHP_EOL;
+				error_log( print_r( $metabox, 1 ));
+				return $html . apply_filters( $hook, "PostMeta::get('{$slug}');", $slug, $metabox['slug'] ) . PHP_EOL;
 			});
 			return $html . sprintf( '<p><strong>%s</strong></p><pre class="my-sites nav-tab-active misc-pub-section">%s</pre>',
 				$metabox['title'],
@@ -155,12 +155,14 @@ class MetaBox extends Component
 	{
 		$this->metaboxes = [];
 		foreach( $this->app->config['meta_boxes'] as $id => $metabox ) {
-			$this->metaboxes[] = $this->normalizeThis( $metabox, [
+			$defaults = [
 				'condition' => [],
 				'fields' => [],
 				'id' => $id,
 				'post_types' => [],
-			]);
+				'slug' => $id,
+			];
+			$this->metaboxes[] = $this->normalizeThis( $metabox, $defaults, $id );
 		}
 	}
 
@@ -189,15 +191,28 @@ class MetaBox extends Component
 	/**
 	 * @return array
 	 */
-	protected function normalizeFields( array $fields )
+	protected function normalizeFields( array $fields, array $data, $parentId )
 	{
-		return array_map( function( $id, $field ) {
-			return $this->normalizeThis( $field, [
-				'id' => Application::PREFIX . $id,
+		return array_map( function( $id, $field ) use( $parentId ) {
+			$defaults =  [
+				'id' => $id,
+				'field_name' => '',
+				'slug' => $id,
 				// 'condition' => [],
 				// 'depends' => [];
-			]);
+			];
+			return $this->normalizeThis( $field, $defaults, $parentId );
 		}, array_keys( $fields ), $fields );
+	}
+
+	/**
+	 * @param string $id
+	 * @param string $parentId
+	 * @return string
+	 */
+	protected function normalizeId( $id, array $data, $parentId )
+	{
+		return Application::PREFIX . $id;
 	}
 
 	/**
