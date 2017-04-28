@@ -18,7 +18,7 @@ class SiteMeta
 		if( empty( $options )) {
 			return $fallback;
 		}
-		if( empty( $group )) {
+		if( !is_string( $group )) {
 			return $options;
 		}
 		$group = $this->normalize( $options, $group, $fallback );

@@ -80,8 +80,9 @@ class MetaBox extends Component
 			'context' => 'side',
 			'priority' => 'low',
 			'fields' => [[
-				'type' => 'custom_html',
+				'slug' => '',
 				'std' => $this->generateInstructions(),
+				'type' => 'custom_html',
 			]],
 		];
 	}

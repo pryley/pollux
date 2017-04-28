@@ -27,6 +27,7 @@ class Settings extends MetaBox
 	 */
 	public function init()
 	{
+		// @todo: run GateKeeper here instead to check dependencies and capability
 		if( !is_plugin_active( 'meta-box/meta-box.php' ))return;
 
 		$this->normalize();
@@ -34,10 +35,11 @@ class Settings extends MetaBox
 		add_action( 'admin_menu',                             [$this, 'addPage'] );
 		add_action( 'pollux/settings/init',                   [$this, 'addSubmitMetaBox'] );
 		add_filter( 'pollux/settings/instruction',            [$this, 'filterInstruction'], 10, 3 );
+		add_filter( 'wp_redirect',                            [$this, 'filterRedirectOnSave'] );
 		add_action( 'current_screen',                         [$this, 'register'] );
+		add_action( 'admin_menu',                             [$this, 'registerSetting'] );
+		add_action( 'pollux/settings/init',                   [$this, 'reset'] );
 		add_action( 'admin_footer-toplevel_page_' . self::ID, [$this, 'renderFooterScript'] );
-
-		// add_filter( 'pollux/settings/save',        [$this, 'save'] );
 	}
 
 	/**
@@ -83,6 +85,22 @@ class Settings extends MetaBox
 	}
 
 	/**
+	 * @param string $location
+	 * @return string
+	 */
+	public function filterRedirectOnSave( $location )
+	{
+		if( strpos( $location, 'settings-updated=true' ) === false
+			|| strpos( $location, sprintf( 'page=%s', self::ID )) === false ) {
+			return $location;
+		}
+		return add_query_arg([
+			'page' => self::ID,
+			'settings-updated' => 'true',
+		], admin_url( 'admin.php' ));
+	}
+
+	/**
 	 * @return void
 	 */
 	public function register( $metaboxes = [] )
@@ -91,8 +109,25 @@ class Settings extends MetaBox
 		foreach( parent::register() as $metabox ) {
 			new SettingsMetaBox( $metabox );
 		}
-
+		add_screen_option( 'layout_columns', [
+			'max' => 2,
+			'default' => 2,
+		]);
 		do_action( 'pollux/settings/init' );
+	}
+
+	/**
+	 * @return void
+	 */
+	public function registerSetting()
+	{
+		register_setting( self::ID, self::ID, [$this, 'onSave'] );
+	}
+
+	public function onSave( $settings )
+	{
+		// error_log( print_r( $settings, 1 ));
+		return $settings;
 	}
 
 	/**
@@ -112,9 +147,8 @@ class Settings extends MetaBox
 	 */
 	public function renderPage()
 	{
-		// add_screen_option( 'layout_columns', ['max' => 2, 'default' => 2] );
 		$this->render( 'settings/index', [
-			'columns' => 2,//get_current_screen()->get_columns(),
+			'columns' => get_current_screen()->get_columns(),
 			'id' => self::ID,
 			'title' => __( 'Site Settings', 'pollux' ),
 		]);
@@ -126,8 +160,8 @@ class Settings extends MetaBox
 	public function renderSubmitMetaBox()
 	{
 		$query = [
-			'_wpnonce' => wp_create_nonce( sprintf( '%s-reset', self::ID )),
-			'action' => 'reset_settings',
+			'_wpnonce' => wp_create_nonce( $this->hook ),
+			'action' => 'reset',
 			'page' => self::ID,
 		];
 		$this->render( 'settings/submit', [
@@ -135,6 +169,22 @@ class Settings extends MetaBox
 			'reset_url' => esc_url( add_query_arg( $query, admin_url( 'admin.php' ))),
 			'submit' => get_submit_button( __( 'Save', 'pollux' ), 'primary', 'submit', false ),
 		]);
+	}
+
+	/**
+	 * @return void
+	 */
+	public function reset()
+	{
+		if( filter_input( INPUT_GET, 'page' ) !== self::ID
+			|| filter_input( INPUT_GET, 'action' ) !== 'reset'
+		)return;
+		if( wp_verify_nonce( filter_input( INPUT_GET, '_wpnonce' ), $this->hook )) {
+			delete_option( self::ID );
+			// @todo: now trigger save to restore defaults
+			return add_settings_error( self::ID, 'reset', __( 'Settings reset to defaults.', 'pollux' ), 'updated' );
+		}
+		add_settings_error( self::ID, 'reset', __( 'Failed to reset settings. Please refresh the page and try again.', 'pollux' ));
 	}
 
 	/**
@@ -162,7 +212,6 @@ class Settings extends MetaBox
 	{
 		$this->metaboxes = [];
 		foreach( $this->app->config['settings'] as $id => $metabox ) {
-			unset( $metabox['post_types'], $metabox['pages'] );
 			$defaults = [
 				'condition' => [],
 				'fields' => [],

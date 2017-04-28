@@ -12,7 +12,7 @@ class SettingsMetaBox extends RW_Meta_Box
 	public function __construct( $metabox )
 	{
 		parent::__construct( $metabox );
-
+		$this->meta_box = static::normalize( $this->meta_box );
 		remove_action( 'add_meta_boxes', [$this, 'add_meta_boxes'] );
 
 		add_filter( 'rwmb_field_meta',      [$this, '_get_field_meta'], 10, 3 );
@@ -26,11 +26,11 @@ class SettingsMetaBox extends RW_Meta_Box
 	 */
 	public function _get_field_meta( $meta, array $field, $saved )
 	{
-		if( !$this->is_edit_screen() || empty( $field['id'] )) {
+		if( !$this->is_edit_screen() || !empty( $meta ) || empty( $field['slug'] )) {
 			return $meta;
 		}
 		$meta = call_user_func( [RWMB_Field::get_class_name( $field ), 'esc_meta'], ( $saved
-			? (new SiteMeta)->get( $this->meta_box['id'], $field['id'] )
+			? (new SiteMeta)->get( $this->meta_box['slug'], $field['slug'], $meta )
 			: $field['std']
 		));
 		return $this->_normalize_field_meta( $meta, $field );
@@ -82,8 +82,8 @@ class SettingsMetaBox extends RW_Meta_Box
 	 */
 	public function is_saved()
 	{
-		foreach( array_column( $this->fields, 'id' ) as $field ) {
-			if( !is_null( (new SiteMeta)->get( $this->meta_box['id'], $field, null ))) {
+		foreach( array_column( $this->fields, 'slug' ) as $field ) {
+			if( !is_null( (new SiteMeta)->get( $this->meta_box['slug'], $field, null ))) {
 				return true;
 			}
 		}
@@ -96,8 +96,7 @@ class SettingsMetaBox extends RW_Meta_Box
 	 */
 	public static function normalize( $metabox )
 	{
-		$metabox = parent::normalize( $metabox );
 		$metabox['post_types'] = [];
-		return $metabox;
+		return wp_parse_args( $metabox, ['slug' => '']);
 	}
 }

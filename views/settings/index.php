@@ -4,6 +4,7 @@
 	<h2><?= $title; ?></h2>
 	<?php settings_errors(); ?>
 	<form method="post" action="options.php" enctype="multipart/form-data" id="<?= $id; ?>">
+		<?php settings_fields( $id ); ?>
 		<?php wp_nonce_field( 'closedpostboxes', 'closedpostboxesnonce', false ); ?>
 		<?php wp_nonce_field( 'meta-box-order', 'meta-box-order-nonce', false ); ?>
 		<div id="poststuff">
