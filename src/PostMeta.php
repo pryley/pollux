@@ -6,16 +6,6 @@ use GeminiLabs\Pollux\Application;
 
 class PostMeta
 {
-	/**
-	 * @var Application
-	 */
-	protected $app;
-
-	public function __construct( Application $app )
-	{
-		$this->app = $app;
-	}
-
 	public function get( $metaKey, array $args = [] )
 	{
 		if( empty( $metaKey ))return;

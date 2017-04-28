@@ -2,21 +2,10 @@
 
 namespace GeminiLabs\Pollux;
 
-use GeminiLabs\Pollux\Application;
 use GeminiLabs\Pollux\Settings;
 
 class SiteMeta
 {
-	/**
-	 * @var Application
-	 */
-	protected $app;
-
-	public function __construct( Application $app )
-	{
-		$this->app = $app;
-	}
-
 	/**
 	 * @param null|string $group
 	 * @param null|string $key
