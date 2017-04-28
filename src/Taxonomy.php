@@ -85,7 +85,7 @@ class Taxonomy extends Component
 	public function register()
 	{
 		array_walk( $this->taxonomies, function( $args, $taxonomy ) {
-			register_taxonomy( $taxonomy, $args['post_types'], array_diff_key( $args, array_flip( self::CUSTOM_KEYS )));
+			register_taxonomy( $taxonomy, $args['post_types'], array_diff_key( $args, array_flip( static::CUSTOM_KEYS )));
 			foreach( $args['post_types'] as $type ) {
 				register_taxonomy_for_object_type( $taxonomy, $type );
 			}
@@ -99,7 +99,7 @@ class Taxonomy extends Component
 	{
 		foreach( $this->app->config['taxonomies'] as $taxonomy => $args ) {
 			$this->taxonomies[$taxonomy] = apply_filters( 'pollux/taxonomy/args',
-				$this->normalizeThis( $args, self::TAXONOMY_DEFAULTS, $taxonomy )
+				$this->normalizeThis( $args, static::TAXONOMY_DEFAULTS, $taxonomy )
 			);
 		}
 		$this->taxonomies = array_diff_key(

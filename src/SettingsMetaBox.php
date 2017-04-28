@@ -13,7 +13,9 @@ class SettingsMetaBox extends RW_Meta_Box
 	{
 		parent::__construct( $metabox );
 		$this->meta_box = static::normalize( $this->meta_box );
+
 		remove_action( 'add_meta_boxes', [$this, 'add_meta_boxes'] );
+		remove_action( 'save_post_post', [$this, 'save_post'] );
 
 		add_filter( 'rwmb_field_meta',      [$this, '_get_field_meta'], 10, 3 );
 		add_action( 'pollux/settings/init', [$this, 'add_meta_boxes'] );
@@ -96,7 +98,7 @@ class SettingsMetaBox extends RW_Meta_Box
 	 */
 	public static function normalize( $metabox )
 	{
-		$metabox['post_types'] = [];
-		return wp_parse_args( $metabox, ['slug' => '']);
+		unset( $metabox['post_types'] );
+		return wp_parse_args( $metabox, ['slug' => ''] );
 	}
 }

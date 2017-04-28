@@ -186,7 +186,7 @@ class MetaBox extends Component
 		$hook = sprintf( 'pollux/%s/conditions', $this->getClassname() );
 		return array_intersect_key(
 			$conditions,
-			array_flip( apply_filters( $hook, self::CONDITIONS ))
+			array_flip( apply_filters( $hook, static::CONDITIONS ))
 		);
 	}
 

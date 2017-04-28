@@ -39,7 +39,7 @@ class Settings extends MetaBox
 		add_action( 'current_screen',                         [$this, 'register'] );
 		add_action( 'admin_menu',                             [$this, 'registerSetting'] );
 		add_action( 'pollux/settings/init',                   [$this, 'reset'] );
-		add_action( 'admin_footer-toplevel_page_' . self::ID, [$this, 'renderFooterScript'] );
+		add_action( 'admin_footer-toplevel_page_' . static::ID, [$this, 'renderFooterScript'] );
 	}
 
 	/**
@@ -51,7 +51,7 @@ class Settings extends MetaBox
 			__( 'Site Settings', 'pollux' ),
 			__( 'Site Settings', 'pollux' ),
 			'edit_theme_options',
-			self::ID,
+			static::ID,
 			[$this, 'renderPage'],
 			'dashicons-screenoptions',
 			1313
@@ -91,11 +91,11 @@ class Settings extends MetaBox
 	public function filterRedirectOnSave( $location )
 	{
 		if( strpos( $location, 'settings-updated=true' ) === false
-			|| strpos( $location, sprintf( 'page=%s', self::ID )) === false ) {
+			|| strpos( $location, sprintf( 'page=%s', static::ID )) === false ) {
 			return $location;
 		}
 		return add_query_arg([
-			'page' => self::ID,
+			'page' => static::ID,
 			'settings-updated' => 'true',
 		], admin_url( 'admin.php' ));
 	}
@@ -121,7 +121,7 @@ class Settings extends MetaBox
 	 */
 	public function registerSetting()
 	{
-		register_setting( self::ID, self::ID, [$this, 'onSave'] );
+		register_setting( static::ID, static::ID, [$this, 'onSave'] );
 	}
 
 	public function onSave( $settings )
@@ -138,7 +138,7 @@ class Settings extends MetaBox
 		$this->render( 'settings/script', [
 			'confirm' => __( 'Are you sure want to do this?', 'pollux' ),
 			'hook' => $this->hook,
-			'id' => self::ID,
+			'id' => static::ID,
 		]);
 	}
 
@@ -149,7 +149,7 @@ class Settings extends MetaBox
 	{
 		$this->render( 'settings/index', [
 			'columns' => get_current_screen()->get_columns(),
-			'id' => self::ID,
+			'id' => static::ID,
 			'title' => __( 'Site Settings', 'pollux' ),
 		]);
 	}
@@ -162,7 +162,7 @@ class Settings extends MetaBox
 		$query = [
 			'_wpnonce' => wp_create_nonce( $this->hook ),
 			'action' => 'reset',
-			'page' => self::ID,
+			'page' => static::ID,
 		];
 		$this->render( 'settings/submit', [
 			'reset' => __( 'Reset Settings', 'pollux' ),
@@ -176,15 +176,15 @@ class Settings extends MetaBox
 	 */
 	public function reset()
 	{
-		if( filter_input( INPUT_GET, 'page' ) !== self::ID
+		if( filter_input( INPUT_GET, 'page' ) !== static::ID
 			|| filter_input( INPUT_GET, 'action' ) !== 'reset'
 		)return;
 		if( wp_verify_nonce( filter_input( INPUT_GET, '_wpnonce' ), $this->hook )) {
-			delete_option( self::ID );
+			delete_option( static::ID );
 			// @todo: now trigger save to restore defaults
-			return add_settings_error( self::ID, 'reset', __( 'Settings reset to defaults.', 'pollux' ), 'updated' );
+			return add_settings_error( static::ID, 'reset', __( 'Settings reset to defaults.', 'pollux' ), 'updated' );
 		}
-		add_settings_error( self::ID, 'reset', __( 'Failed to reset settings. Please refresh the page and try again.', 'pollux' ));
+		add_settings_error( static::ID, 'reset', __( 'Failed to reset settings. Please refresh the page and try again.', 'pollux' ));
 	}
 
 	/**
@@ -195,14 +195,6 @@ class Settings extends MetaBox
 		return array_filter( $this->metaboxes, function( $metabox ) {
 			return $this->verifyMetaBoxCondition( $metabox['condition'] );
 		});
-	}
-
-	/**
-	 * @return array
-	 */
-	protected function getPostTypes()
-	{
-		return [];
 	}
 
 	/**
@@ -232,8 +224,8 @@ class Settings extends MetaBox
 		if( !empty( $name )) {
 			return $name;
 		}
-		$name = str_replace( sprintf( '%s-%s-', self::ID, $parentId ), '', $data['id'] );
-		return sprintf( '%s[%s][%s]', self::ID, $parentId, $name );
+		$name = str_replace( sprintf( '%s-%s-', static::ID, $parentId ), '', $data['id'] );
+		return sprintf( '%s[%s][%s]', static::ID, $parentId, $name );
 	}
 
 	/**
@@ -244,7 +236,7 @@ class Settings extends MetaBox
 	protected function normalizeId( $id, array $data, $parentId )
 	{
 		return $parentId == $id
-			? sprintf( '%s-%s', self::ID, $id )
-			: sprintf( '%s-%s-%s', self::ID, $parentId, $id );
+			? sprintf( '%s-%s', static::ID, $id )
+			: sprintf( '%s-%s-%s', static::ID, $parentId, $id );
 	}
 }

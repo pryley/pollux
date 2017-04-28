@@ -72,7 +72,7 @@ class PostType extends Component
 			get_post_types( ['_builtin' => true] )
 		);
 		array_walk( $types, function( $args, $type ) {
-			register_post_type( $type, array_diff_key( $args, array_flip( self::CUSTOM_KEYS )));
+			register_post_type( $type, array_diff_key( $args, array_flip( static::CUSTOM_KEYS )));
 		});
 	}
 
@@ -97,7 +97,7 @@ class PostType extends Component
 		$this->setColumns();
 		foreach( $this->app->config['post_types'] as $type => $args ) {
 			$this->types[$type] = apply_filters( 'pollux/post_type/args',
-				$this->normalizeThis( $args, self::POST_TYPE_DEFAULTS, $type ),
+				$this->normalizeThis( $args, static::POST_TYPE_DEFAULTS, $type ),
 				$type
 			);
 		}
