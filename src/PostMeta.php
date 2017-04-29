@@ -47,7 +47,7 @@ class PostMeta
 			'id'       => get_the_ID(),
 			'fallback' => '',
 			'single'   => true,
-			'prefix'   => Application::PREFIX,
+			'prefix'   => apply_filters( 'pollux/prefix', Application::PREFIX ),
 		];
 		return shortcode_atts( $defaults, array_change_key_case( $args ));
 	}

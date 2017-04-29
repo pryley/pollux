@@ -14,7 +14,7 @@ class SiteMeta
 	 */
 	public function get( $group = null, $key = null, $fallback = null )
 	{
-		$options = get_option( Settings::ID );
+		$options = get_option( apply_filters( 'pollux/settings/option', Settings::ID ));
 		if( empty( $options )) {
 			return $fallback;
 		}

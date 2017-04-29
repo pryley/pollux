@@ -68,6 +68,9 @@ class MetaBox extends Component
 		return !in_array( false, $conditions );
 	}
 
+	/**
+	 * @return void
+	 */
 	protected function addInstructions()
 	{
 		if( !count( array_filter( $this->metaboxes, function( $metabox ) {
@@ -213,7 +216,7 @@ class MetaBox extends Component
 	 */
 	protected function normalizeId( $id, array $data, $parentId )
 	{
-		return Application::PREFIX . $id;
+		return apply_filters( 'pollux/prefix', Application::PREFIX ) . $id;
 	}
 
 	/**

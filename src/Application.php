@@ -117,11 +117,13 @@ final class Application extends Container
 	 */
 	public function onActivation()
 	{
-		$settings = get_option( Settings::ID );
+		$option = apply_filters( 'pollux/settings/option', Settings::ID );
+		$settings = get_option( $option );
 		if( !$settings ) {
-			update_option( Settings::ID, [] );
+			update_option( $option, [] );
 		}
 	}
+
 
 	/**
 	 * @return void

@@ -76,7 +76,7 @@ class SettingsMetaBox extends RW_Meta_Box
 	 */
 	public function is_edit_screen( $screen = null )
 	{
-		return get_current_screen()->id == sprintf( 'toplevel_page_%s', Settings::ID );
+		return get_current_screen()->id == sprintf( 'toplevel_page_%s', apply_filters( 'pollux/settings/option', Settings::ID ));
 	}
 
 	/**
