@@ -101,10 +101,14 @@ class Settings extends MetaBox
 	}
 
 	/**
+	 * @param null|array $settings
 	 * @return array
 	 */
-	public function filterSavedSettings( array $settings )
+	public function filterSavedSettings( $settings )
 	{
+		if( is_null( $settings )) {
+			$settings = [];
+		}
 		return apply_filters( 'pollux/settings/save', $settings );
 	}
 
