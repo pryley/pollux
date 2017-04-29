@@ -7,5 +7,5 @@
 /*.md   export-ignore
 /*.sh   export-ignore
 /*.xml  export-ignore
-/src    export-ignore
+/+      export-ignore
 /tests  export-ignore

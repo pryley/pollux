@@ -1,0 +1,16 @@
+dest:
+  css: assets/
+  js: assets/
+  lang: languages/
+language:
+  domain: pollux
+  team: Gemini Labs <support@geminilabs.io>
+  translator: Paul Ryley <paul@geminilabs.io>
+primary_file: pollux.php
+watch:
+  js: +/main.js
+  php:
+    - src/**/*.php
+    - views/**/*.php
+    - '*.php'
+  scss: +/main.scss
