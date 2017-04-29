@@ -17,7 +17,7 @@ class MetaBox extends Component
 	/**
 	 * @var array
 	 */
-	public $metaboxes;
+	public $metaboxes = [];
 
 	/**
 	 * {@inheritdoc}
@@ -155,7 +155,6 @@ class MetaBox extends Component
 	 */
 	protected function normalize()
 	{
-		$this->metaboxes = [];
 		foreach( $this->app->config['meta_boxes'] as $id => $metabox ) {
 			$defaults = [
 				'condition' => [],
@@ -259,6 +258,9 @@ class MetaBox extends Component
 	 */
 	protected function validateIsPageTemplate( $value )
 	{
+		error_log( print_r( $value, 1 ));
+		error_log( print_r( basename( get_page_template_slug( $this->getPostId() )), 1 ));
+
 		return basename( get_page_template_slug( $this->getPostId() )) == $value;
 	}
 

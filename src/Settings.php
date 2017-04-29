@@ -27,8 +27,8 @@ class Settings extends MetaBox
 	 */
 	public function init()
 	{
-		// @todo: run GateKeeper here instead to check dependencies and capability
-		if( !is_plugin_active( 'meta-box/meta-box.php' ))return;
+		// @todo: run GateKeeper to check dependencies and capability (make sure it it run on the correct hook!)
+		// if( !is_plugin_active( 'meta-box/meta-box.php' ))return;
 
 		$this->normalize();
 
@@ -215,7 +215,6 @@ class Settings extends MetaBox
 	 */
 	protected function normalize()
 	{
-		$this->metaboxes = [];
 		foreach( $this->app->config['settings'] as $id => $metabox ) {
 			$defaults = [
 				'condition' => [],

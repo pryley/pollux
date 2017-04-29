@@ -27,7 +27,7 @@ class Taxonomy extends Component
 	/**
 	 * @var array
 	 */
-	public $taxonomies;
+	public $taxonomies = [];
 
 	/**
 	 * {@inheritdoc}

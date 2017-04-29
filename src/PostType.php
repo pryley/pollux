@@ -36,12 +36,12 @@ class PostType extends Component
 	/**
 	 * @var array
 	 */
-	public $columns;
+	public $columns = [];
 
 	/**
 	 * @var array
 	 */
-	public $types;
+	public $types = [];
 
 	/**
 	 * {@inheritdoc}
