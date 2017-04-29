@@ -40,9 +40,10 @@ class Config
 	/**
 	 * @return string
 	 */
-	public function getFile( $filename = 'config.php' )
+	public function getFile( $filename = 'pollux-config.php' )
 	{
-		$storagePath = $this->app->path( 'storage' );
+		$filename = apply_filters( 'pollux/config/dist/file', $filename );
+		$storagePath = trailingslashit( apply_filters( 'pollux/config/dist/location', WP_CONTENT_DIR ));
 		if( !is_dir( $storagePath )) {
 			mkdir( $storagePath, 0775 );
 		}
@@ -55,15 +56,15 @@ class Config
 	public function getYaml()
 	{
 		$theme = wp_get_theme();
-		$configYaml = apply_filters( 'pollux/config/file', 'pollux.yml' );
-		$configLocations = apply_filters( 'pollux/config/locations', [
+		$configYaml = apply_filters( 'pollux/config/src/file', 'pollux.yml' );
+		$configLocations = apply_filters( 'pollux/config/src/location', [
 			trailingslashit( trailingslashit( $theme->theme_root ) . $theme->stylesheet ),
 			trailingslashit( trailingslashit( $theme->theme_root ) . $theme->template ),
 			trailingslashit( WP_CONTENT_DIR ),
 			trailingslashit( ABSPATH ),
 			trailingslashit( dirname( ABSPATH )),
 		]);
-		foreach( $configLocations as $location ) {
+		foreach( (array) $configLocations as $location ) {
 			if( !file_exists( $location . $configYaml ))continue;
 			return $location . $configYaml;
 		}
