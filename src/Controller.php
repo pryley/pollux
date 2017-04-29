@@ -33,7 +33,7 @@ class Controller
 	 */
 	public function registerAssets()
 	{
-		if( get_current_screen()->id == sprintf( 'toplevel_page_%s', Settings::ID )) {
+		if( $this->app->screen()->id == sprintf( 'toplevel_page_%s', Settings::ID )) {
 			wp_enqueue_script( 'common' );
 			wp_enqueue_script( 'wp-lists' );
 			wp_enqueue_script( 'postbox' );

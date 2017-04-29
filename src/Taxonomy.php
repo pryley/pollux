@@ -46,7 +46,7 @@ class Taxonomy extends Component
 	 */
 	public function filterBy( WP_Query $query )
 	{
-		if( !is_admin() || get_current_screen()->base != 'edit' )return;
+		if( !is_admin() || $this->app->screen()->base != 'edit' )return;
 		$vars = &$query->query_vars;
 		foreach( array_keys( $this->taxonomies ) as $taxonomy ) {
 			if( !isset( $vars[$taxonomy] ))return;

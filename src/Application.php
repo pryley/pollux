@@ -152,6 +152,19 @@ final class Application extends Container
 	}
 
 	/**
+	 * get_current_screen() is unreliable because it is defined on most admin pages, but not all.
+	 * @return WP_Screen|null
+	 */
+	public function screen()
+	{
+		global $current_screen;
+		return isset( $current_screen ) ? $current_screen : (object) [
+			'base' => '',
+			'id' => '',
+		];
+	}
+
+	/**
 	 * @param string $path
 	 * @return string
 	 */
