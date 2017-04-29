@@ -17,14 +17,15 @@ class SettingsMetaBox extends RW_Meta_Box
 		remove_action( 'add_meta_boxes', [$this, 'add_meta_boxes'] );
 		remove_action( 'save_post_post', [$this, 'save_post'] );
 
-		add_filter( 'rwmb_field_meta',      [$this, '_get_field_meta'], 10, 3 );
 		add_action( 'pollux/settings/init', [$this, 'add_meta_boxes'] );
+		add_filter( 'rwmb_field_meta',      [$this, '_get_field_meta'], 10, 3 );
 	}
 
 	/**
 	 * @param mixed $meta
 	 * @param bool $meta
 	 * @return mixed
+	 * @filter rwmb_field_meta
 	 */
 	public function _get_field_meta( $meta, array $field, $saved )
 	{
@@ -58,6 +59,7 @@ class SettingsMetaBox extends RW_Meta_Box
 
 	/**
 	 * @return void
+	 * @action pollux/settings/init
 	 */
 	public function add_meta_boxes()
 	{

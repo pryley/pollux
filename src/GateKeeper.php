@@ -41,6 +41,8 @@ class GateKeeper
 
 	/**
 	 * @return void
+	 * @action activated_plugin
+	 * @action admin_notices
 	 */
 	public function deactivate( $plugin )
 	{

@@ -36,15 +36,16 @@ class Taxonomy extends Component
 	{
 		$this->normalize();
 
-		add_filter( 'parse_query',           [ $this, 'filterBy'] );
 		add_action( 'restrict_manage_posts', [ $this, 'printFilters'] );
 		add_action( 'init',                  [ $this, 'register'] );
+		add_filter( 'parse_query',           [ $this, 'filterByTaxonomy'] );
 	}
 
 	/**
 	 * @return null|WP_Query
+	 * @filter parse_query
 	 */
-	public function filterBy( WP_Query $query )
+	public function filterByTaxonomy( WP_Query $query )
 	{
 		if( !is_admin() || $this->app->screen()->base != 'edit' )return;
 		$vars = &$query->query_vars;
@@ -59,6 +60,7 @@ class Taxonomy extends Component
 
 	/**
 	 * @return void
+	 * @action restrict_manage_posts
 	 */
 	public function printFilters()
 	{
@@ -81,6 +83,7 @@ class Taxonomy extends Component
 
 	/**
 	 * @return void
+	 * @action register
 	 */
 	public function register()
 	{

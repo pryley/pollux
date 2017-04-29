@@ -37,6 +37,28 @@ final class Application extends Container
 	}
 
 	/**
+	 * The Application entry point
+	 *
+	 * @return void
+	 */
+	public function init()
+	{
+		$this->bootstrap();
+
+		$controller = $this->make( 'Controller' );
+
+		add_action( 'admin_enqueue_scripts',      array( $controller, 'registerAssets' ));
+		add_action( 'admin_init',                 array( $controller, 'removeDashboardWidgets' ));
+		add_action( 'wp_before_admin_bar_render', array( $controller, 'removeWordPressMenu' ));
+		add_filter( 'admin_footer_text',          array( $controller, 'filterWordPressFooter' ));
+
+		// Disallow indexing of the site on non-production environments
+		if( !$this->environment( 'production' ) && !is_admin() ) {
+			add_filter( 'pre_option_blog_public', '__return_zero' );
+		}
+	}
+
+	/**
 	 * @return void
 	 */
 	public function bootstrap()
@@ -46,7 +68,7 @@ final class Application extends Container
 		$this->config = (new Config( $this ))->get();
 		$this->registerAliases();
 		$classNames = array(
-			'MetaBox', 'PostType', 'Taxonomy', 'Settings',
+			'MetaBox', 'PostType', 'Settings', 'Taxonomy',
 		);
 		foreach( $classNames as $className ) {
 			$this->make( $className )->init();
@@ -91,28 +113,6 @@ final class Application extends Container
 	}
 
 	/**
-	 * The Application entry point
-	 *
-	 * @return void
-	 */
-	public function init()
-	{
-		$this->bootstrap();
-
-		$controller = $this->make( 'Controller' );
-
-		add_filter( 'admin_footer_text',          array( $controller, 'filterWordPressFooter' ));
-		add_action( 'admin_enqueue_scripts',      array( $controller, 'registerAssets' ));
-		add_action( 'admin_init',                 array( $controller, 'removeDashboardWidgets' ));
-		add_action( 'wp_before_admin_bar_render', array( $controller, 'removeWordPressMenu' ));
-
-		// Disallow indexing of the site on non-production environments
-		if( !$this->environment( 'production' ) && !is_admin() ) {
-			add_filter( 'pre_option_blog_public', '__return_zero' );
-		}
-	}
-
-	/**
 	 * @return void
 	 */
 	public function onActivation()
@@ -124,12 +124,20 @@ final class Application extends Container
 		}
 	}
 
-
 	/**
 	 * @return void
 	 */
 	public function onDeactivation()
 	{
+	}
+
+	/**
+	 * @param string $file
+	 * @return string
+	 */
+	public function path( $file = '' )
+	{
+		return plugin_dir_path( $this->file ) . ltrim( trim( $file ), '/' );
 	}
 
 	/**
@@ -142,15 +150,6 @@ final class Application extends Container
 			'SiteMeta' => 'GeminiLabs\Pollux\Facades\PostMeta',
 		);
 		AliasLoader::getInstance( $aliases )->register();
-	}
-
-	/**
-	 * @param string $file
-	 * @return string
-	 */
-	public function path( $file = '' )
-	{
-		return plugin_dir_path( $this->file ) . ltrim( trim( $file ), '/' );
 	}
 
 	/**

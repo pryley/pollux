@@ -27,11 +27,12 @@ class MetaBox extends Component
 		$this->normalize();
 
 		add_filter( 'rwmb_show',       [$this, 'isVisible'], 10, 2 );
-		add_action( 'rwmb_meta_boxes', [$this, 'register'] );
+		add_filter( 'rwmb_meta_boxes', [$this, 'register'] );
 	}
 
 	/**
 	 * @return bool
+	 * @filter rwmb_show
 	 */
 	public function isVisible( $bool, array $metabox )
 	{
@@ -45,6 +46,7 @@ class MetaBox extends Component
 
 	/**
 	 * @return array
+	 * @filter rwmb_meta_boxes
 	 */
 	public function register( $metaboxes = [] )
 	{

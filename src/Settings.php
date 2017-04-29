@@ -39,18 +39,19 @@ class Settings extends MetaBox
 
 		$this->id = apply_filters( 'pollux/settings/option', static::ID );
 
-		add_action( 'admin_menu',                              [$this, 'addPage'] );
-		add_action( 'pollux/settings/init',                    [$this, 'addSubmitMetaBox'] );
-		add_filter( 'pollux/settings/instruction',             [$this, 'filterInstruction'], 10, 3 );
-		add_filter( 'wp_redirect',                             [$this, 'filterRedirectOnSave'] );
-		add_action( 'current_screen',                          [$this, 'register'] );
-		add_action( 'admin_menu',                              [$this, 'registerSetting'] );
-		add_action( 'pollux/settings/init',                    [$this, 'reset'] );
-		add_action( 'admin_footer-toplevel_page_' . $this->id, [$this, 'renderFooterScript'] );
+		add_action( 'admin_menu',                             [$this, 'addPage'] );
+		add_action( 'pollux/settings/init',                   [$this, 'addSubmitMetaBox'] );
+		add_action( 'current_screen',                         [$this, 'register'] );
+		add_action( 'admin_menu',                             [$this, 'registerSetting'] );
+		add_action( 'pollux/settings/init',                   [$this, 'reset'] );
+		add_action( "admin_footer-toplevel_page_{$this->id}", [$this, 'renderFooterScript'] );
+		add_filter( 'pollux/settings/instruction',            [$this, 'filterInstruction'], 10, 3 );
+		add_filter( 'wp_redirect',                            [$this, 'filterRedirectOnSave'] );
 	}
 
 	/**
 	 * @return void
+	 * @action admin_menu
 	 */
 	public function addPage()
 	{
@@ -67,6 +68,7 @@ class Settings extends MetaBox
 
 	/**
 	 * @return void
+	 * @action pollux/settings/init
 	 */
 	public function addSubmitMetaBox()
 	{
@@ -85,6 +87,7 @@ class Settings extends MetaBox
 	 * @param string $fieldId
 	 * @param string $metaboxId
 	 * @return string
+	 * @filter pollux/settings/instruction
 	 */
 	public function filterInstruction( $instruction, $fieldId, $metaboxId )
 	{
@@ -94,6 +97,7 @@ class Settings extends MetaBox
 	/**
 	 * @param string $location
 	 * @return string
+	 * @filter wp_redirect
 	 */
 	public function filterRedirectOnSave( $location )
 	{
@@ -110,6 +114,7 @@ class Settings extends MetaBox
 	/**
 	 * @param null|array $settings
 	 * @return array
+	 * @callback register_setting
 	 */
 	public function filterSavedSettings( $settings )
 	{
@@ -121,6 +126,7 @@ class Settings extends MetaBox
 
 	/**
 	 * @return void
+	 * @action current_screen
 	 */
 	public function register( $metaboxes = [] )
 	{
@@ -137,6 +143,7 @@ class Settings extends MetaBox
 
 	/**
 	 * @return void
+	 * @action admin_menu
 	 */
 	public function registerSetting()
 	{
@@ -145,6 +152,7 @@ class Settings extends MetaBox
 
 	/**
 	 * @return void
+	 * @action admin_footer-toplevel_page_{$this->id}
 	 */
 	public function renderFooterScript()
 	{
@@ -157,6 +165,7 @@ class Settings extends MetaBox
 
 	/**
 	 * @return void
+	 * @callback add_menu_page
 	 */
 	public function renderPage()
 	{
@@ -169,6 +178,7 @@ class Settings extends MetaBox
 
 	/**
 	 * @return void
+	 * @callback add_meta_box
 	 */
 	public function renderSubmitMetaBox()
 	{
@@ -186,6 +196,7 @@ class Settings extends MetaBox
 
 	/**
 	 * @return void
+	 * @action pollux/settings/init
 	 */
 	public function reset()
 	{

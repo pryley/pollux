@@ -64,6 +64,7 @@ class PostType extends Component
 
 	/**
 	 * @return void
+	 * @action init
 	 */
 	public function register()
 	{
@@ -80,6 +81,7 @@ class PostType extends Component
 	 * @param string $name
 	 * @param int $postId
 	 * @return void
+	 * @action manage_{$type}_posts_custom_column
 	 */
 	public function printColumnValue( $name, $postId )
 	{
