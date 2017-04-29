@@ -101,6 +101,14 @@ class Settings extends MetaBox
 	}
 
 	/**
+	 * @return array
+	 */
+	public function filterSavedSettings( array $settings )
+	{
+		return apply_filters( 'pollux/settings/save', $settings );
+	}
+
+	/**
 	 * @return void
 	 */
 	public function register( $metaboxes = [] )
@@ -121,7 +129,7 @@ class Settings extends MetaBox
 	 */
 	public function registerSetting()
 	{
-		register_setting( static::ID, static::ID );
+		register_setting( static::ID, static::ID, [$this, 'filterSavedSettings'] );
 	}
 
 	/**
