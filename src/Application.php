@@ -117,6 +117,10 @@ final class Application extends Container
 	 */
 	public function onActivation()
 	{
+		$settings = get_option( Settings::ID );
+		if( !$settings ) {
+			update_option( Settings::ID, [] );
+		}
 	}
 
 	/**
