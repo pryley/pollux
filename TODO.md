@@ -6,9 +6,9 @@
 - [x] PostType
 - [x] SiteMeta
 - [x] Taxonomy
-- [+] Settings
+- [x] Settings
+- [+] Dependant MetaBox Fields
 - [ ] Conditional MetaBox Fields
-- [ ] Dependant MetaBox Fields
 - [ ] Disable Posts
 - [ ] Disable Comments
 - [ ] Color Schemes

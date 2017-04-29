@@ -174,11 +174,40 @@ class Settings extends MetaBox
 			|| filter_input( INPUT_GET, 'action' ) !== 'reset'
 		)return;
 		if( wp_verify_nonce( filter_input( INPUT_GET, '_wpnonce' ), $this->hook )) {
-			delete_option( static::ID );
-			// @todo: now trigger save to restore defaults
+			update_option( static::ID, $this->getDefaults() );
 			return add_settings_error( static::ID, 'reset', __( 'Settings reset to defaults.', 'pollux' ), 'updated' );
 		}
 		add_settings_error( static::ID, 'reset', __( 'Failed to reset settings. Please refresh the page and try again.', 'pollux' ));
+	}
+
+	/**
+	 * @param string $key
+	 * @return array
+	 */
+	protected function filterArrayByKey( array $array, $key )
+	{
+		return array_filter( $array, function( $value ) use( $key ) {
+			return !empty( $value[$key] );
+		});
+	}
+
+	/**
+	 * @return array
+	 */
+	protected function getDefaults()
+	{
+		$metaboxes = $this->filterArrayByKey( $this->metaboxes, 'slug' );
+
+		array_walk( $metaboxes, function( &$metabox ) {
+			$fields = array_map( function( $field ) {
+				$field = wp_parse_args( $field, ['std' => ''] );
+				return [$field['slug'] => $field['std']];
+			}, $this->filterArrayByKey( $metabox['fields'], 'slug' ));
+			$metabox = [
+				$metabox['slug'] => call_user_func_array( 'array_merge', $fields ),
+			];
+		});
+		return call_user_func_array( 'array_merge', $metaboxes );
 	}
 
 	/**
