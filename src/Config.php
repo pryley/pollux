@@ -47,7 +47,7 @@ class Config
 		if( !is_dir( $storagePath )) {
 			mkdir( $storagePath, 0775 );
 		}
-		return sprintf( '%s/%s', $storagePath, $filename );
+		return sprintf( '%s%s', $storagePath, $filename );
 	}
 
 	/**
