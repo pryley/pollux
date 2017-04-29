@@ -1,0 +1,163 @@
+# Copyright (C) 2017 pollux
+# This file is distributed under the same license as the pollux package.
+msgid ""
+msgstr ""
+"Project-Id-Version: pollux\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language-Team: Gemini Labs <support@geminilabs.io>\n"
+"Last-Translator: Paul Ryley <paul@geminilabs.io>\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-Keywordslist: "
+"__;_e;_ex:1,2c;_n:1,2;_n_noop:1,2;_nx:1,2,4c;_nx_noop:1,2,3c;_x:1,2c;esc_"
+"attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c\n"
+"X-Poedit-Searchpath-0: .\n"
+"X-Poedit-Searchpathexcluded-0: *.js\n"
+"X-Poedit-Sourcecharset: UTF-8\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: qps-ploc\n"
+
+#: src/GateKeeper.php:62
+msgid "Sorry, Pollux requires WordPress %s or greater in order to work properly."
+msgstr "Sorry, Pollux requires WordPress %s or greater in order to work properly."
+
+#: src/GateKeeper.php:63
+msgid ""
+"Sorry, Pollux requires PHP %s or greater in order to work properly (your "
+"server is running PHP %s)."
+msgstr ""
+"Sorry, Pollux requires PHP %s or greater in order to work properly (your "
+"server is running PHP %s)."
+
+#: src/GateKeeper.php:66
+msgid "Update WordPress"
+msgstr "Update WordPress"
+
+#: src/GateKeeper.php:67
+msgid ""
+"Please contact your hosting provider or server administrator to upgrade the "
+"version of PHP running on your server, or find an alternate plugin."
+msgstr ""
+"Please contact your hosting provider or server administrator to upgrade the "
+"version of PHP running on your server, or find an alternate plugin."
+
+#: src/GateKeeper.php:70
+msgid "The Pollux plugin was deactivated."
+msgstr "The Pollux plugin was deactivated."
+
+#: src/MetaBox.php:90
+msgid "How to use in your theme"
+msgstr "How to use in your theme"
+
+#: src/PostType.php:214
+msgid "Add New"
+msgstr "Add New"
+
+#: src/Settings.php:59, src/Settings.php:60, src/Settings.php:175
+msgid "Site Settings"
+msgstr "Site Settings"
+
+#: src/Settings.php:77
+msgid "Save Settings"
+msgstr "Save Settings"
+
+#: src/Settings.php:160
+msgid "Are you sure want to do this?"
+msgstr "Are you sure want to do this?"
+
+#: src/Settings.php:191
+msgid "Reset Settings"
+msgstr "Reset Settings"
+
+#: src/Settings.php:193
+msgid "Save"
+msgstr "Save"
+
+#: src/Settings.php:208
+msgid "Settings reset to defaults."
+msgstr "Settings reset to defaults."
+
+#: src/Settings.php:210
+msgid "Failed to reset settings. Please refresh the page and try again."
+msgstr "Failed to reset settings. Please refresh the page and try again."
+
+#: src/PostType.php:215
+msgctxt "Add new post"
+msgid "Add New %s"
+msgstr "Add New %s"
+
+#: src/PostType.php:216
+msgctxt "All posts"
+msgid "All %s"
+msgstr "All %s"
+
+#: src/PostType.php:217
+msgctxt "Edit post"
+msgid "Edit %s"
+msgstr "Edit %s"
+
+#: src/PostType.php:220
+msgctxt "New post"
+msgid "New %s"
+msgstr "New %s"
+
+#: src/PostType.php:221
+msgctxt "No posts found"
+msgid "No %s found"
+msgstr "No %s found"
+
+#: src/PostType.php:222
+msgctxt "No posts found in trash"
+msgid "No %s found in Trash"
+msgstr "No %s found in Trash"
+
+#: src/PostType.php:223
+msgctxt "Search posts"
+msgid "Search %s"
+msgstr "Search %s"
+
+#: src/PostType.php:225
+msgctxt "View post"
+msgid "View %s"
+msgstr "View %s"
+
+#: src/Taxonomy.php:149
+msgctxt "Add new taxonomy"
+msgid "Add New %s"
+msgstr "Add New %s"
+
+#: src/Taxonomy.php:150
+msgctxt "All taxonomies"
+msgid "All %s"
+msgstr "All %s"
+
+#: src/Taxonomy.php:151
+msgctxt "Edit taxonomy"
+msgid "Edit %s"
+msgstr "Edit %s"
+
+#: src/Taxonomy.php:154
+msgctxt "New taxonomy name"
+msgid "New %s Name"
+msgstr "New %s Name"
+
+#: src/Taxonomy.php:155
+msgctxt "No taxonomies found"
+msgid "No %s found"
+msgstr "No %s found"
+
+#: src/Taxonomy.php:156
+msgctxt "Search taxonomies"
+msgid "Search %s"
+msgstr "Search %s"
+
+#: src/Taxonomy.php:158
+msgctxt "Update taxonomy"
+msgid "Update %s"
+msgstr "Update %s"
+
+#: src/Taxonomy.php:159
+msgctxt "View taxonomy"
+msgid "View %s"
+msgstr "View %s"
