@@ -3,7 +3,8 @@
 namespace GeminiLabs\Pollux;
 
 use GeminiLabs\Pollux\Application;
-use GeminiLabs\Pollux\Settings;
+use GeminiLabs\Pollux\Helper;
+use GeminiLabs\Pollux\Settings\Settings;
 
 class Controller
 {
@@ -33,7 +34,7 @@ class Controller
 	 */
 	public function registerAssets()
 	{
-		if( $this->app->screen()->id == sprintf( 'toplevel_page_%s', apply_filters( 'pollux/settings/option', Settings::ID ))) {
+		if(( new Helper )->getCurrentScreen()->id == sprintf( 'toplevel_page_%s', apply_filters( 'pollux/settings/option', Settings::ID ))) {
 			wp_enqueue_script( 'common' );
 			wp_enqueue_script( 'wp-lists' );
 			wp_enqueue_script( 'postbox' );

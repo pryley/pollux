@@ -2,7 +2,7 @@
 
 namespace GeminiLabs\Pollux;
 
-use GeminiLabs\Pollux\Settings;
+use GeminiLabs\Pollux\Settings\Settings;
 
 class SiteMeta
 {

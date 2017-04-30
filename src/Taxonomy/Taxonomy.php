@@ -1,8 +1,9 @@
 <?php
 
-namespace GeminiLabs\Pollux;
+namespace GeminiLabs\Pollux\Taxonomy;
 
 use GeminiLabs\Pollux\Component;
+use GeminiLabs\Pollux\Helper;
 use WP_Query;
 
 class Taxonomy extends Component
@@ -47,7 +48,7 @@ class Taxonomy extends Component
 	 */
 	public function filterByTaxonomy( WP_Query $query )
 	{
-		if( !is_admin() || $this->app->screen()->base != 'edit' )return;
+		if( !is_admin() || ( new Helper )->getCurrentScreen()->base != 'edit' )return;
 		$vars = &$query->query_vars;
 		foreach( array_keys( $this->taxonomies ) as $taxonomy ) {
 			if( !isset( $vars[$taxonomy] ))return;
@@ -137,7 +138,7 @@ class Taxonomy extends Component
 	 */
 	protected function normalizePostTypes( $types )
 	{
-		return $this->toArray( $types );
+		return ( new Helper )->toArray( $types );
 	}
 
 	/**

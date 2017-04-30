@@ -3,6 +3,7 @@
 namespace GeminiLabs\Pollux;
 
 use GeminiLabs\Pollux\Application;
+use GeminiLabs\Pollux\Helper;
 
 abstract class Component
 {
@@ -49,18 +50,6 @@ abstract class Component
 	}
 
 	/**
-	 * @param bool $toLowerCase
-	 * @return string
-	 */
-	protected function getClassname( $toLowerCase = true )
-	{
-		$paths = explode( '\\', get_class( $this ));
-		return wp_validate_boolean( $toLowerCase )
-			? strtolower( end( $paths ))
-			: end( $paths );
-	}
-
-	/**
 	 * @param string $id
 	 * @return array
 	 */
@@ -68,20 +57,11 @@ abstract class Component
 	{
 		$data = wp_parse_args( $data, $defaults );
 		foreach( $defaults as $key => $value ) {
-			$method = $this->app->buildMethodName( $key, 'normalize' );
+			$method = ( new Helper )->buildMethodName( $key, 'normalize' );
 			if( method_exists( $this, $method )) {
 				$data[$key] = $this->$method( $data[$key], $data, $id );
 			}
 		}
 		return $data;
-	}
-
-	/**
-	 * @param mixed $value
-	 * @return array
-	 */
-	protected function toArray( $value )
-	{
-		return array_filter( (array) $value );
 	}
 }

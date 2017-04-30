@@ -1,6 +1,6 @@
 <?php
 
-namespace GeminiLabs\Pollux;
+namespace GeminiLabs\Pollux\Config;
 
 use GeminiLabs\Pollux\Application;
 use Symfony\Component\Yaml\Yaml;

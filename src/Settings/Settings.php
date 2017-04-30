@@ -1,17 +1,14 @@
 <?php
 
-namespace GeminiLabs\Pollux;
+namespace GeminiLabs\Pollux\Settings;
 
 use GeminiLabs\Pollux\Application;
-use GeminiLabs\Pollux\MetaBox;
-use GeminiLabs\Pollux\SettingsMetaBox;
+use GeminiLabs\Pollux\Helper;
+use GeminiLabs\Pollux\MetaBox\MetaBox;
+use GeminiLabs\Pollux\Settings\RWMetaBox;
 
 class Settings extends MetaBox
 {
-	const CONDITIONS = [
-		'hook', 'is_plugin_active', 'is_plugin_inactive',
-	];
-
 	/**
 	 * @var string
 	 */
@@ -26,6 +23,13 @@ class Settings extends MetaBox
 	 * @var string
 	 */
 	public $id;
+
+	/**
+	 * @var array
+	 */
+	protected static $conditions = [
+		'hook', 'is_plugin_active', 'is_plugin_inactive',
+	];
 
 	/**
 	 * {@inheritdoc}
@@ -130,9 +134,9 @@ class Settings extends MetaBox
 	 */
 	public function register()
 	{
-		if( $this->app->screen()->id != $this->hook )return;
+		if(( new Helper )->getCurrentScreen()->id != $this->hook )return;
 		foreach( parent::register() as $metabox ) {
-			new SettingsMetaBox( $metabox );
+			new RWMetaBox( $metabox );
 		}
 		add_screen_option( 'layout_columns', [
 			'max' => 2,

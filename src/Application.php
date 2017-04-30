@@ -3,12 +3,11 @@
 namespace GeminiLabs\Pollux;
 
 use GeminiLabs\Pollux\AliasLoader;
-use GeminiLabs\Pollux\Config;
+use GeminiLabs\Pollux\Config\Config;
 use GeminiLabs\Pollux\Container;
-use GeminiLabs\Pollux\Controller;
 use GeminiLabs\Pollux\Facade;
 use GeminiLabs\Pollux\GateKeeper;
-use GeminiLabs\Pollux\PostType;
+use GeminiLabs\Pollux\PostType\PostType;
 
 final class Application extends Container
 {
@@ -65,38 +64,14 @@ final class Application extends Container
 	{
 		Facade::clearResolvedInstances();
 		Facade::setFacadeApplication( $this );
-		$this->config = (new Config( $this ))->get();
+		$this->config = ( new Config( $this ))->get();
 		$this->registerAliases();
 		$classNames = array(
-			'MetaBox', 'PostType', 'Settings', 'Taxonomy',
+			'MetaBox\MetaBox', 'PostType\PostType', 'Settings\Settings', 'Taxonomy\Taxonomy',
 		);
 		foreach( $classNames as $className ) {
 			$this->make( $className )->init();
  		}
-	}
-
-	/**
-	 * @param string $name
-	 * @param string $path
-	 * @return string
-	 */
-	public function buildClassName( $name, $path = '' )
-	{
-		$className = array_map( 'ucfirst', array_map( 'strtolower', preg_split( '/[-_]/', $name )));
-		$className = implode( '', $className );
-		return !empty( $path )
-			? str_replace( '\\\\', '\\', sprintf( '%s\%s', $path, $className ))
-			: $className;
-	}
-
-	/**
-	 * @param string $name
-	 * @param string $prefix
-	 * @return string
-	 */
-	public function buildMethodName( $name, $prefix = 'get' )
-	{
-		return lcfirst( $this->buildClassName( $prefix . '-' . $name ));
 	}
 
 	/**
@@ -147,7 +122,7 @@ final class Application extends Container
 	{
 		$aliases = array(
 			'PostMeta' => 'GeminiLabs\Pollux\Facades\PostMeta',
-			'SiteMeta' => 'GeminiLabs\Pollux\Facades\PostMeta',
+			'SiteMeta' => 'GeminiLabs\Pollux\Facades\SiteMeta',
 		);
 		AliasLoader::getInstance( $aliases )->register();
 	}
