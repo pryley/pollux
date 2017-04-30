@@ -26,10 +26,13 @@ class MetaBox extends Component
 	 */
 	public function init()
 	{
-		$this->normalize();
+		$this->normalize( $this->app->config['meta_boxes'], [
+			'post_types' => [],
+		]);
 
 		add_filter( 'rwmb_show',       [$this, 'show'], 10, 2 );
 		add_filter( 'rwmb_meta_boxes', [$this, 'register'] );
+		add_filter( 'rwmb_outer_html', [$this, 'renderField'], 10, 2 );
 	}
 
 	/**
@@ -45,6 +48,17 @@ class MetaBox extends Component
 			? ( new Helper )->toArray( func_get_arg(0) )
 			: [];
 		return array_merge( $metaboxes, $this->metaboxes );
+	}
+
+	/**
+	 * @return string
+	 * @filter rwmb_outer_html
+	 */
+	public function renderField( $html, $field )
+	{
+		return $this->validate( $field['condition'] )
+			? $html
+			: '';
 	}
 
 	/**
@@ -107,20 +121,19 @@ class MetaBox extends Component
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * @return void
 	 */
-	protected function normalize()
+	protected function normalize( array $metaboxes, array $defaults = [] )
 	{
-		foreach( $this->app->config['meta_boxes'] as $id => $metabox ) {
-			$defaults = [
+		foreach( $metaboxes as $id => $metabox ) {
+			$data = wp_parse_args( $defaults, [
 				'condition' => [],
 				'fields' => [],
 				'id' => $id,
-				'post_types' => [],
 				'slug' => $id,
-			];
+			]);
 			$this->metaboxes[] = $this->setDependencies(
-				$this->normalizeThis( $metabox, $defaults, $id )
+				$this->normalizeThis( $metabox, $data, $id )
 			);
 		}
 	}
@@ -146,7 +159,7 @@ class MetaBox extends Component
 			$defaults =  [
 				'attributes' => [],
 				'class' => '',
-				// 'condition' => [],
+				'condition' => [],
 				'depends' => '',
 				'id' => $id,
 				'field_name' => '',

@@ -29,7 +29,8 @@ class Settings extends MetaBox
 	 * @var array
 	 */
 	protected static $conditions = [
-		'hook', 'is_plugin_active', 'is_plugin_inactive',
+		'class_exists', 'defined', 'function_exists', 'hook', 'is_plugin_active',
+		'is_plugin_inactive',
 	];
 
 	/**
@@ -42,7 +43,7 @@ class Settings extends MetaBox
 
 		$this->id = apply_filters( 'pollux/settings/option', static::ID );
 
-		$this->normalize();
+		$this->normalize( $this->app->config['settings'] );
 
 		add_action( 'admin_menu',                             [$this, 'addPage'] );
 		add_action( 'pollux/settings/init',                   [$this, 'addSubmitMetaBox'] );
@@ -251,24 +252,6 @@ class Settings extends MetaBox
 	protected function getValue( $key, $group )
 	{
 		return ( new SiteMeta )->get( $group, $key, false );
-	}
-
-	/**
-	 * {@inheritdoc}
-	 */
-	protected function normalize()
-	{
-		foreach( $this->app->config['settings'] as $id => $metabox ) {
-			$defaults = [
-				'condition' => [],
-				'fields' => [],
-				'id' => $id,
-				'slug' => $id,
-			];
-			$this->metaboxes[] = $this->setDependencies(
-				$this->normalizeThis( $metabox, $defaults, $id )
-			);
-		}
 	}
 
 	/**

@@ -28,11 +28,6 @@ abstract class Component
 	abstract public function register();
 
 	/**
-	 * @return void
-	 */
-	abstract protected function normalize();
-
-	/**
 	 * @param string $view
 	 * @return void
 	 */

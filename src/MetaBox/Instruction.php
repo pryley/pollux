@@ -22,21 +22,20 @@ trait Instruction
 	 */
 	protected function addInstructions()
 	{
-		if( !count( array_filter( $this->metaboxes, function( $metabox ) {
-			return $this->show( false, $metabox );
-		})))return;
-		$this->metaboxes[] = [
-			'id' => 'infodiv',
-			'post_types' => $this->getPostTypes(),
-			'title' => __( 'How to use in your theme', 'pollux' ),
-			'context' => 'side',
-			'priority' => 'low',
-			'fields' => [[
-				'slug' => '',
-				'std' => $this->generateInstructions(),
-				'type' => 'custom_html',
-			]],
-		];
+		if( !$this->showInstructions() )return;
+		$this->normalize([
+			'infodiv' => [
+				'context' => 'side',
+				'fields' => [[
+					'slug' => '',
+					'std' => $this->generateInstructions(),
+					'type' => 'custom_html',
+				]],
+				'post_types' => $this->getPostTypes(),
+				'priority' => 'low',
+				'title' => __( 'How to use in your theme', 'pollux' ),
+			],
+		]);
 	}
 
 	/**
@@ -45,10 +44,12 @@ trait Instruction
 	protected function generateInstructions()
 	{
 		return array_reduce( $this->getInstructions(), function( $html, $metabox ) {
-			$fields = array_reduce( array_column( $metabox['fields'], 'slug' ), function( $html, $slug ) use( $metabox ) {
+			$fields = array_reduce( $metabox['fields'], function( $html, $field ) use( $metabox ) {
+				if( !$this->validate( $field['condition'] )) {
+					return $html;
+				}
 				$hook = sprintf( 'pollux/%s/instruction', strtolower(( new Helper )->getClassname( $this )));
-				error_log( print_r( $hook, 1 ));
-				return $html . apply_filters( $hook, "PostMeta::get('{$slug}');", $slug, $metabox['slug'] ) . PHP_EOL;
+				return $html . apply_filters( $hook, "PostMeta::get('{$field['slug']}');", $field['slug'], $metabox['slug'] ) . PHP_EOL;
 			});
 			return $html . sprintf( '<p><strong>%s</strong></p><pre class="my-sites nav-tab-active misc-pub-section">%s</pre>',
 				$metabox['title'],
@@ -66,6 +67,16 @@ trait Instruction
 			return $this->validate( $metabox['condition'] )
 				&& $this->hasPostType( $metabox );
 		});
+	}
+
+	/**
+	 * @return bool
+	 */
+	protected function showInstructions()
+	{
+		return count( array_filter( $this->metaboxes, function( $metabox ) {
+			return $this->show( false, $metabox );
+		})) > 0;
 	}
 
 	/**
@@ -88,4 +99,9 @@ trait Instruction
 	 * @return bool
 	 */
 	abstract protected function hasPostType( array $metabox );
+
+	/**
+	 * @return void
+	 */
+	abstract protected function normalize( array $metaboxes, array $defaults = [] );
 }

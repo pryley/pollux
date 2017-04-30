@@ -4,7 +4,7 @@
 - [x] Taxonomy
 - [x] MetaBox
 - [x] Conditional MetaBoxes
-- [ ] Conditional MetaBox Fields
+- [x] Conditional MetaBox Fields
 - [x] Dependant MetaBox Fields
 - [x] Settings
 - [x] PostMeta
