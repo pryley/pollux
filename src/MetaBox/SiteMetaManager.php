@@ -14,7 +14,7 @@ class SiteMetaManager
 	 */
 	public function get( $group = null, $key = null, $fallback = null )
 	{
-		$options = get_option( apply_filters( 'pollux/settings/option', Settings::ID ));
+		$options = $this->getOption();
 		if( empty( $options )) {
 			return $fallback;
 		}
@@ -25,6 +25,14 @@ class SiteMetaManager
 		return is_string( $key )
 			? $this->normalize( (array) $group, $key, $fallback )
 			: $group;
+	}
+
+	/**
+	 * @return array
+	 */
+	protected function getOption()
+	{
+		return get_option( apply_filters( 'pollux/settings/option', Settings::ID ), [] );
 	}
 
 	/**
