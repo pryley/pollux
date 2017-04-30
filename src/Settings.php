@@ -35,9 +35,9 @@ class Settings extends MetaBox
 		// @todo: run GateKeeper to check dependencies and capability (make sure it it run on the correct hook!)
 		// if( !is_plugin_active( 'meta-box/meta-box.php' ))return;
 
-		$this->normalize();
-
 		$this->id = apply_filters( 'pollux/settings/option', static::ID );
+
+		$this->normalize();
 
 		add_action( 'admin_menu',                             [$this, 'addPage'] );
 		add_action( 'pollux/settings/init',                   [$this, 'addSubmitMetaBox'] );
