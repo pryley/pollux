@@ -45,7 +45,7 @@ trait Condition
 				return !is_numeric( $key );
 			}, ARRAY_FILTER_USE_KEY );
 		}
-		$hook = sprintf( 'pollux/%s/conditions', ( new Helper )->getClassname() );
+		$hook = sprintf( 'pollux/%s/conditions', strtolower(( new Helper )->getClassname( $this )));
 		return array_intersect_key(
 			$conditions,
 			array_flip( apply_filters( $hook, static::$conditions ))

@@ -31,15 +31,13 @@ class Helper
 	}
 
 	/**
-	 * @param bool $toLowerCase
+	 * @param mixed $fromClass
 	 * @return string
 	 */
-	public function getClassname( $toLowerCase = true )
+	public function getClassname( $fromClass )
 	{
-		$paths = explode( '\\', get_class( $this ));
-		return wp_validate_boolean( $toLowerCase )
-			? strtolower( end( $paths ))
-			: end( $paths );
+		$paths = explode( '\\', get_class( $fromClass ));
+		return end( $paths );
 	}
 
 	/**

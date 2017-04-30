@@ -46,7 +46,8 @@ trait Instruction
 	{
 		return array_reduce( $this->getInstructions(), function( $html, $metabox ) {
 			$fields = array_reduce( array_column( $metabox['fields'], 'slug' ), function( $html, $slug ) use( $metabox ) {
-				$hook = sprintf( 'pollux/%s/instruction', ( new Helper )->getClassname() );
+				$hook = sprintf( 'pollux/%s/instruction', strtolower(( new Helper )->getClassname( $this )));
+				error_log( print_r( $hook, 1 ));
 				return $html . apply_filters( $hook, "PostMeta::get('{$slug}');", $slug, $metabox['slug'] ) . PHP_EOL;
 			});
 			return $html . sprintf( '<p><strong>%s</strong></p><pre class="my-sites nav-tab-active misc-pub-section">%s</pre>',
