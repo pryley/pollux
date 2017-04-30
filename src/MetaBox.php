@@ -171,7 +171,9 @@ class MetaBox extends Component
 				'post_types' => [],
 				'slug' => $id,
 			];
-			$this->metaboxes[] = $this->normalizeThis( $metabox, $defaults, $id );
+			$this->metaboxes[] = $this->setDependencies(
+				$this->normalizeThis( $metabox, $defaults, $id )
+			);
 		}
 	}
 
@@ -198,17 +200,30 @@ class MetaBox extends Component
 	}
 
 	/**
+	 * @param string $depends
+	 * @param string $parentId
+	 * @return string
+	 */
+	protected function normalizeDepends( $depends, array $data, $parentId )
+	{
+		return is_string( $depends ) && !empty( $depends )
+			? $this->normalizeId( $depends, $data, $parentId )
+			: '';
+	}
+
+	/**
 	 * @return array
 	 */
 	protected function normalizeFields( array $fields, array $data, $parentId )
 	{
 		return array_map( function( $id, $field ) use( $parentId ) {
 			$defaults =  [
+				'attributes' => [],
+				// 'condition' => [],
+				'depends' => '',
 				'id' => $id,
 				'field_name' => '',
 				'slug' => $id,
-				// 'condition' => [],
-				// 'depends' => [];
 			];
 			return $this->normalizeThis( $field, $defaults, $parentId );
 		}, array_keys( $fields ), $fields );
@@ -231,6 +246,20 @@ class MetaBox extends Component
 	protected function normalizePostTypes( $types )
 	{
 		return $this->toArray( $types );
+	}
+
+	/**
+	 * @return array
+	 */
+	protected function setDependencies( array $metabox )
+	{
+		$fields = &$metabox['fields'];
+		$depends = array_column( $fields, 'depends' );
+		array_walk( $depends, function( $value, $index ) use( &$fields ) {
+			if( empty( $value ))return;
+			$fields[$index]['attributes']['data-depends'] = $value;
+		});
+		return $metabox;
 	}
 
 	/**

@@ -252,7 +252,9 @@ class Settings extends MetaBox
 				'id' => $id,
 				'slug' => $id,
 			];
-			$this->metaboxes[] = $this->normalizeThis( $metabox, $defaults, $id );
+			$this->metaboxes[] = $this->setDependencies(
+				$this->normalizeThis( $metabox, $defaults, $id )
+			);
 		}
 	}
 
