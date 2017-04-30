@@ -22,6 +22,11 @@ abstract class Component
 	abstract public function init();
 
 	/**
+	 * @return void|array
+	 */
+	abstract public function register();
+
+	/**
 	 * @return void
 	 */
 	abstract protected function normalize();

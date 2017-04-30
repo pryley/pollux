@@ -128,7 +128,7 @@ class Settings extends MetaBox
 	 * @return void
 	 * @action current_screen
 	 */
-	public function register( $metaboxes = [] )
+	public function register()
 	{
 		if( $this->app->screen()->id != $this->hook )return;
 		foreach( parent::register() as $metabox ) {

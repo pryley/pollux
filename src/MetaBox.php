@@ -48,11 +48,14 @@ class MetaBox extends Component
 	 * @return array
 	 * @filter rwmb_meta_boxes
 	 */
-	public function register( $metaboxes = [] )
+	public function register()
 	{
 		if( current_user_can( 'switch_themes' )) {
 			$this->addInstructions();
 		}
+		$metaboxes = func_num_args()
+			? $this->toArray( func_get_arg(0) )
+			: [];
 		return array_merge( $metaboxes, $this->metaboxes );
 	}
 
