@@ -2,6 +2,9 @@ var pollux = {
 	metabox: {},
 };
 
+/**
+ * @return bool
+ */
 pollux.metabox.hasValue = function( el )
 {
 	if( el.type === 'checkbox' ) {
@@ -10,11 +13,17 @@ pollux.metabox.hasValue = function( el )
 	return el.value !== '';
 };
 
+/**
+ * @return void
+ */
 pollux.metabox.onChangeValue = function( el )
 {
 	pollux.metabox.setVisibility( el );
 };
 
+/**
+ * @return element
+ */
 pollux.metabox.setVisibility = function( el )
 {
 	var dependency = document.getElementById( el.getAttribute( 'data-depends' ));

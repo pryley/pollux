@@ -2,6 +2,7 @@
 
 namespace GeminiLabs\Pollux\Settings;
 
+use GeminiLabs\Pollux\Helper;
 use GeminiLabs\Pollux\Settings\Settings;
 use GeminiLabs\Pollux\SiteMeta;
 use RW_Meta_Box;
@@ -29,7 +30,7 @@ class RWMetaBox extends RW_Meta_Box
 	 */
 	public function _get_field_meta( $meta, array $field, $saved )
 	{
-		if( !$this->is_edit_screen() || !empty( $meta ) || empty( $field['slug'] )) {
+		if( !$this->is_edit_screen() || !empty(( new Helper )->toArray( $meta )) || empty( $field['slug'] )) {
 			return $meta;
 		}
 		$meta = call_user_func( [RWMB_Field::get_class_name( $field ), 'esc_meta'], ( $saved
