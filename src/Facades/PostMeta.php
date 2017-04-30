@@ -13,6 +13,6 @@ class PostMeta extends Facade
 	 */
 	protected static function getFacadeAccessor()
 	{
-		return \GeminiLabs\Pollux\PostMeta::class;
+		return \GeminiLabs\Pollux\MetaBox\PostMetaManager::class;
 	}
 }

@@ -67,7 +67,10 @@ final class Application extends Container
 		$this->config = ( new Config( $this ))->get();
 		$this->registerAliases();
 		$classNames = array(
-			'MetaBox\MetaBox', 'PostType\PostType', 'Settings\Settings', 'Taxonomy\Taxonomy',
+			'MetaBox\MetaBox',
+			'PostType\PostType',
+			'Settings\Settings',
+			'Taxonomy\Taxonomy',
 		);
 		foreach( $classNames as $className ) {
 			$this->make( $className )->init();

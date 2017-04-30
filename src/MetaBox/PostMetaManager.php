@@ -1,10 +1,10 @@
 <?php
 
-namespace GeminiLabs\Pollux;
+namespace GeminiLabs\Pollux\MetaBox;
 
 use GeminiLabs\Pollux\Application;
 
-class PostMeta
+class PostMetaManager
 {
 	/**
 	 * @param string $metaKey

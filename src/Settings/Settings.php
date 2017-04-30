@@ -3,10 +3,10 @@
 namespace GeminiLabs\Pollux\Settings;
 
 use GeminiLabs\Pollux\Application;
+use GeminiLabs\Pollux\Facades\SiteMeta;
 use GeminiLabs\Pollux\Helper;
 use GeminiLabs\Pollux\MetaBox\MetaBox;
 use GeminiLabs\Pollux\Settings\RWMetaBox;
-use GeminiLabs\Pollux\SiteMeta;
 
 class Settings extends MetaBox
 {
@@ -251,7 +251,7 @@ class Settings extends MetaBox
 	 */
 	protected function getValue( $key, $group )
 	{
-		return ( new SiteMeta )->get( $group, $key, false );
+		return SiteMeta::get( $group, $key, false );
 	}
 
 	/**

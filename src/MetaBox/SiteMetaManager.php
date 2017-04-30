@@ -1,10 +1,10 @@
 <?php
 
-namespace GeminiLabs\Pollux;
+namespace GeminiLabs\Pollux\MetaBox;
 
 use GeminiLabs\Pollux\Settings\Settings;
 
-class SiteMeta
+class SiteMetaManager
 {
 	/**
 	 * @param null|string $group

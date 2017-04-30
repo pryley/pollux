@@ -3,7 +3,7 @@
 namespace GeminiLabs\Pollux\PostType;
 
 use GeminiLabs\Pollux\Helper;
-use GeminiLabs\Pollux\PostMeta;
+use GeminiLabs\Pollux\Facades\PostMeta;
 
 trait Columns
 {
@@ -76,7 +76,7 @@ trait Columns
 	 */
 	protected function getColumnMedia()
 	{
-		return count(( new PostMeta )->get( 'media', [
+		return count( PostMeta::get( 'media', [
 			'fallback' => [],
 			'single' => false,
 		]));

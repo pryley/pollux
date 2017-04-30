@@ -13,6 +13,6 @@ class SiteMeta extends Facade
 	 */
 	protected static function getFacadeAccessor()
 	{
-		return \GeminiLabs\Pollux\SiteMeta::class;
+		return \GeminiLabs\Pollux\MetaBox\SiteMetaManager::class;
 	}
 }

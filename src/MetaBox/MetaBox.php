@@ -4,10 +4,10 @@ namespace GeminiLabs\Pollux\MetaBox;
 
 use GeminiLabs\Pollux\Application;
 use GeminiLabs\Pollux\Component;
+use GeminiLabs\Pollux\Facades\PostMeta;
 use GeminiLabs\Pollux\Helper;
 use GeminiLabs\Pollux\MetaBox\Condition;
 use GeminiLabs\Pollux\MetaBox\Instruction;
-use GeminiLabs\Pollux\PostMeta;
 use RecursiveArrayIterator;
 use RecursiveIteratorIterator;
 
@@ -104,7 +104,7 @@ class MetaBox extends Component
 	 */
 	protected function getValue( $key, $group )
 	{
-		return ( new PostMeta )->get( $key, [
+		return PostMeta::get( $key, [
 			'id' => $this->getPostId(),
 		]);
 	}
