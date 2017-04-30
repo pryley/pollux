@@ -63,6 +63,7 @@ class Config
 			trailingslashit( WP_CONTENT_DIR ),
 			trailingslashit( ABSPATH ),
 			trailingslashit( dirname( ABSPATH )),
+			trailingslashit( dirname( dirname( ABSPATH ))),
 		]);
 		foreach( (array) $configLocations as $location ) {
 			if( !file_exists( $location . $configYaml ))continue;
