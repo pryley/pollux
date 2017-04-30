@@ -5,7 +5,9 @@
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/geminilabs/pollux/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/geminilabs/pollux/?branch=master)
 [![Build Status](https://scrutinizer-ci.com/g/geminilabs/pollux/badges/build.png?b=master)](https://scrutinizer-ci.com/g/geminilabs/pollux/build-status/master)
 
-Pollux is a theme-agnostic scaffolding plugin for WordPress built to complement the [Castor framework](https://github.com/geminilabs/castor-framework).
+Pollux is a theme-agnostic scaffolding plugin for WordPress which allows you to easily add custom Post Types, Taxonomies, Meta Boxes, Global Settings, and more. All that is required is a simple (YML) config file.
+
+Pollux is intended to complement themes built on the [Castor framework](https://github.com/geminilabs/castor-framework) (i.e. [Castor](https://github.com/geminilabs/castor)), but it is not a requirement.
 
 Minimum plugin requirements:
 
