@@ -15,7 +15,7 @@ class Settings extends MetaBox
 	/**
 	 * @var string
 	 */
-	CONST ID = 'pollux-settings';
+	CONST ID = 'pollux_settings';
 
 	/**
 	 * @var string
