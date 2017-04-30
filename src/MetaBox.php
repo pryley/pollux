@@ -10,8 +10,8 @@ use RecursiveIteratorIterator;
 class MetaBox extends Component
 {
 	const CONDITIONS = [
-		'hook', 'is_front_page', 'is_home', 'is_page_template', 'is_plugin_active',
-		'is_plugin_inactive',
+		'class_exists', 'defined', 'function_exists', 'hook', 'is_front_page', 'is_home',
+		'is_page_template', 'is_plugin_active', 'is_plugin_inactive',
 	];
 
 	/**
@@ -231,6 +231,33 @@ class MetaBox extends Component
 	protected function normalizePostTypes( $types )
 	{
 		return $this->toArray( $types );
+	}
+
+	/**
+	 * @param string $value
+	 * @return bool
+	 */
+	protected function validateClassExists( $value )
+	{
+		return class_exists( $value );
+	}
+
+	/**
+	 * @param string $value
+	 * @return bool
+	 */
+	protected function validateDefined( $value )
+	{
+		return defined( $value );
+	}
+
+	/**
+	 * @param string $value
+	 * @return bool
+	 */
+	protected function validateFunctionExists( $value )
+	{
+		return function_exists( $value );
 	}
 
 	/**
