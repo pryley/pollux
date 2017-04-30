@@ -46,118 +46,118 @@ msgstr ""
 msgid "The Pollux plugin was deactivated."
 msgstr "The Pollux plugin was deactivated."
 
-#: src/MetaBox.php:90
+#: src/MetaBox/Instruction.php:31
 msgid "How to use in your theme"
 msgstr "How to use in your theme"
 
-#: src/PostType.php:214
+#: src/PostType/PostType.php:124
 msgid "Add New"
 msgstr "Add New"
 
-#: src/Settings.php:59, src/Settings.php:60, src/Settings.php:175
+#: src/Settings/Settings.php:64, src/Settings/Settings.php:65, src/Settings/Settings.php:180
 msgid "Site Settings"
 msgstr "Site Settings"
 
-#: src/Settings.php:77
+#: src/Settings/Settings.php:82
 msgid "Save Settings"
 msgstr "Save Settings"
 
-#: src/Settings.php:160
+#: src/Settings/Settings.php:165
 msgid "Are you sure want to do this?"
 msgstr "Are you sure want to do this?"
 
-#: src/Settings.php:191
+#: src/Settings/Settings.php:196
 msgid "Reset Settings"
 msgstr "Reset Settings"
 
-#: src/Settings.php:193
+#: src/Settings/Settings.php:198
 msgid "Save"
 msgstr "Save"
 
-#: src/Settings.php:208
+#: src/Settings/Settings.php:213
 msgid "Settings reset to defaults."
 msgstr "Settings reset to defaults."
 
-#: src/Settings.php:210
+#: src/Settings/Settings.php:215
 msgid "Failed to reset settings. Please refresh the page and try again."
 msgstr "Failed to reset settings. Please refresh the page and try again."
 
-#: src/PostType.php:215
+#: src/PostType/PostType.php:125
 msgctxt "Add new post"
 msgid "Add New %s"
 msgstr "Add New %s"
 
-#: src/PostType.php:216
+#: src/PostType/PostType.php:126
 msgctxt "All posts"
 msgid "All %s"
 msgstr "All %s"
 
-#: src/PostType.php:217
+#: src/PostType/PostType.php:127
 msgctxt "Edit post"
 msgid "Edit %s"
 msgstr "Edit %s"
 
-#: src/PostType.php:220
+#: src/PostType/PostType.php:130
 msgctxt "New post"
 msgid "New %s"
 msgstr "New %s"
 
-#: src/PostType.php:221
+#: src/PostType/PostType.php:131
 msgctxt "No posts found"
 msgid "No %s found"
 msgstr "No %s found"
 
-#: src/PostType.php:222
+#: src/PostType/PostType.php:132
 msgctxt "No posts found in trash"
 msgid "No %s found in Trash"
 msgstr "No %s found in Trash"
 
-#: src/PostType.php:223
+#: src/PostType/PostType.php:133
 msgctxt "Search posts"
 msgid "Search %s"
 msgstr "Search %s"
 
-#: src/PostType.php:225
+#: src/PostType/PostType.php:135
 msgctxt "View post"
 msgid "View %s"
 msgstr "View %s"
 
-#: src/Taxonomy.php:149
+#: src/Taxonomy/Taxonomy.php:150
 msgctxt "Add new taxonomy"
 msgid "Add New %s"
 msgstr "Add New %s"
 
-#: src/Taxonomy.php:150
+#: src/Taxonomy/Taxonomy.php:151
 msgctxt "All taxonomies"
 msgid "All %s"
 msgstr "All %s"
 
-#: src/Taxonomy.php:151
+#: src/Taxonomy/Taxonomy.php:152
 msgctxt "Edit taxonomy"
 msgid "Edit %s"
 msgstr "Edit %s"
 
-#: src/Taxonomy.php:154
+#: src/Taxonomy/Taxonomy.php:155
 msgctxt "New taxonomy name"
 msgid "New %s Name"
 msgstr "New %s Name"
 
-#: src/Taxonomy.php:155
+#: src/Taxonomy/Taxonomy.php:156
 msgctxt "No taxonomies found"
 msgid "No %s found"
 msgstr "No %s found"
 
-#: src/Taxonomy.php:156
+#: src/Taxonomy/Taxonomy.php:157
 msgctxt "Search taxonomies"
 msgid "Search %s"
 msgstr "Search %s"
 
-#: src/Taxonomy.php:158
+#: src/Taxonomy/Taxonomy.php:159
 msgctxt "Update taxonomy"
 msgid "Update %s"
 msgstr "Update %s"
 
-#: src/Taxonomy.php:159
+#: src/Taxonomy/Taxonomy.php:160
 msgctxt "View taxonomy"
 msgid "View %s"
 msgstr "View %s"

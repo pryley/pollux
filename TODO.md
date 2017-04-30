@@ -1,15 +1,15 @@
-- [x] Conditional MetaBoxes
 - [x] Config
-- [x] MetaBox
-- [x] Miscellaneous
-- [x] PostMeta
 - [x] PostType
-- [x] SiteMeta
+- [ ] PostType Archive
 - [x] Taxonomy
-- [x] Settings
-- [+] Dependant MetaBox Fields
+- [x] MetaBox
+- [x] Conditional MetaBoxes
+- [x] Dependant MetaBox Fields
 - [ ] Conditional MetaBox Fields
+- [x] Settings
+- [x] PostMeta
+- [x] SiteMeta
+- [x] Miscellaneous
 - [ ] Disable Posts
 - [ ] Disable Comments
 - [ ] Color Schemes
-- [ ] PostType Archive

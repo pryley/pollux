@@ -7,6 +7,7 @@ use GeminiLabs\Pollux\Component;
 use GeminiLabs\Pollux\Helper;
 use GeminiLabs\Pollux\MetaBox\Condition;
 use GeminiLabs\Pollux\MetaBox\Instruction;
+use GeminiLabs\Pollux\PostMeta;
 use RecursiveArrayIterator;
 use RecursiveIteratorIterator;
 
@@ -85,6 +86,16 @@ class MetaBox extends Component
 	}
 
 	/**
+	 * @return string|array
+	 */
+	protected function getValue( $key, $group )
+	{
+		return ( new PostMeta )->get( $key, [
+			'id' => $this->getPostId(),
+		]);
+	}
+
+	/**
 	 * @return bool
 	 */
 	protected function hasPostType( array $metabox )
@@ -134,6 +145,7 @@ class MetaBox extends Component
 		return array_map( function( $id, $field ) use( $parentId ) {
 			$defaults =  [
 				'attributes' => [],
+				'class' => '',
 				// 'condition' => [],
 				'depends' => '',
 				'id' => $id,
@@ -170,9 +182,13 @@ class MetaBox extends Component
 	{
 		$fields = &$metabox['fields'];
 		$depends = array_column( $fields, 'depends' );
-		array_walk( $depends, function( $value, $index ) use( &$fields ) {
+		array_walk( $depends, function( $value, $index ) use( &$fields, $metabox ) {
 			if( empty( $value ))return;
+			$dependency = array_search( $value, array_column( $fields, 'id' ));
 			$fields[$index]['attributes']['data-depends'] = $value;
+			if( !$this->getValue( $fields[$dependency]['slug'], $metabox['slug'] )) {
+				$fields[$index]['class'] = trim( 'hidden ' . $fields[$index]['class'] );
+			}
 		});
 		return $metabox;
 	}

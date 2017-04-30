@@ -6,6 +6,7 @@ use GeminiLabs\Pollux\Application;
 use GeminiLabs\Pollux\Helper;
 use GeminiLabs\Pollux\MetaBox\MetaBox;
 use GeminiLabs\Pollux\Settings\RWMetaBox;
+use GeminiLabs\Pollux\SiteMeta;
 
 class Settings extends MetaBox
 {
@@ -242,6 +243,14 @@ class Settings extends MetaBox
 			];
 		});
 		return call_user_func_array( 'array_merge', $metaboxes );
+	}
+
+	/**
+	 * @return string|array
+	 */
+	protected function getValue( $key, $group )
+	{
+		return ( new SiteMeta )->get( $group, $key, false );
 	}
 
 	/**
