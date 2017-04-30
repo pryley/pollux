@@ -4,6 +4,7 @@ namespace GeminiLabs\Pollux;
 
 use GeminiLabs\Pollux\Application;
 use GeminiLabs\Pollux\Helper;
+use GeminiLabs\Pollux\PostType\Archive;
 use GeminiLabs\Pollux\Settings\Settings;
 
 class Controller
@@ -34,7 +35,14 @@ class Controller
 	 */
 	public function registerAssets()
 	{
-		if(( new Helper )->getCurrentScreen()->id == sprintf( 'toplevel_page_%s', apply_filters( 'pollux/settings/option', Settings::ID ))) {
+		$screenId = ( new Helper )->getCurrentScreen()->id;
+		if( $screenId == sprintf( 'toplevel_page_%s', apply_filters( 'pollux/archive/option', Archive::ID ))) {
+			wp_enqueue_script('editor-expand');
+			if( wp_is_mobile() ) {
+				wp_enqueue_script( 'jquery-touch-punch' );
+			}
+		}
+		if( screenId == sprintf( 'toplevel_page_%s', apply_filters( 'pollux/settings/option', Settings::ID ))) {
 			wp_enqueue_script( 'common' );
 			wp_enqueue_script( 'wp-lists' );
 			wp_enqueue_script( 'postbox' );

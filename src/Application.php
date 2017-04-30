@@ -68,6 +68,7 @@ final class Application extends Container
 		$this->registerAliases();
 		$classNames = array(
 			'MetaBox\MetaBox',
+			'PostType\Archive',
 			'PostType\PostType',
 			'Settings\Settings',
 			'Taxonomy\Taxonomy',
@@ -124,6 +125,7 @@ final class Application extends Container
 	public function registerAliases()
 	{
 		$aliases = array(
+			'ArchiveMeta' => 'GeminiLabs\Pollux\Facades\ArchiveMeta',
 			'PostMeta' => 'GeminiLabs\Pollux\Facades\PostMeta',
 			'SiteMeta' => 'GeminiLabs\Pollux\Facades\SiteMeta',
 		);
