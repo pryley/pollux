@@ -151,6 +151,16 @@ class MetaBox extends Component
 	}
 
 	/**
+	 * @param string $name
+	 * @param string $parentId
+	 * @return string
+	 */
+	protected function normalizeFieldName( $name, array $data, $parentId )
+	{
+		return $this->normalizeId( $name, $data, $parentId );
+	}
+
+	/**
 	 * @return array
 	 */
 	protected function normalizeFields( array $fields, array $data, $parentId )
@@ -161,8 +171,8 @@ class MetaBox extends Component
 				'class' => '',
 				'condition' => [],
 				'depends' => '',
+				'field_name' => $id,
 				'id' => $id,
-				'field_name' => '',
 				'slug' => $id,
 			];
 			return $this->normalizeThis( $field, $defaults, $parentId );
