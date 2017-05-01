@@ -284,11 +284,7 @@ class Settings extends MetaBox
 	 */
 	protected function normalizeFieldName( $name, array $data, $parentId )
 	{
-		if( !empty( $name )) {
-			return $name;
-		}
-		$name = str_replace( sprintf( '%s-%s-', static::id(), $parentId ), '', $data['id'] );
-		return sprintf( '%s[%s][%s]', static::id(), $parentId, $name );
+		return sprintf( '%s[%s][%s]', static::id(), $parentId, $data['slug'] );
 	}
 
 	/**
