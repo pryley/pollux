@@ -19,6 +19,7 @@ depends:
   plugin:
     meta-box/meta-box.php: Meta Box
 
+archives: []
 meta_boxes: []
 post_types: []
 settings: []
