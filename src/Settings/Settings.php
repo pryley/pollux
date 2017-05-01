@@ -178,7 +178,7 @@ class Settings extends MetaBox
 		$this->render( 'settings/index', [
 			'columns' => get_current_screen()->get_columns(),
 			'id' => $this->id,
-			'title' => __( 'Site Settings', 'pollux' ),
+			'heading' => __( 'Site Settings', 'pollux' ),
 		]);
 	}
 

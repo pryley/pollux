@@ -1,7 +1,7 @@
 <?php defined( 'WPINC' ) || die; ?>
 
 <div class="wrap">
-	<h1><?= $title; ?></h1>
+	<h1><?= $heading; ?></h1>
 	<?php settings_errors(); ?>
 	<form method="post" action="options.php" enctype="multipart/form-data" id="<?= $id; ?>">
 		<?php settings_fields( $id ); ?>
