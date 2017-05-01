@@ -49,7 +49,10 @@ class Helper
 	 */
 	public function getClassname( $fromClass )
 	{
-		$paths = explode( '\\', get_class( $fromClass ));
+		$className = is_string( $fromClass )
+			? $fromClass
+			: get_class( $fromClass );
+		$paths = explode( '\\', $className );
 		return end( $paths );
 	}
 
