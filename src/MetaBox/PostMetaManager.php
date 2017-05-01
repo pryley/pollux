@@ -47,7 +47,7 @@ class PostMetaManager
 			'id'       => get_the_ID(),
 			'fallback' => '',
 			'single'   => true,
-			'prefix'   => Application::prefix() ),
+			'prefix'   => Application::prefix(),
 		];
 		return shortcode_atts( $defaults, array_change_key_case( $args ));
 	}

@@ -53,7 +53,6 @@ class Settings extends MetaBox
 		add_action( 'pollux/'.static::ID.'/init',        [$this, 'reset'] );
 		add_action( 'admin_print_footer_scripts',        [$this, 'renderFooterScript'] );
 		add_filter( 'pollux/'.static::ID.'/instruction', [$this, 'filterInstruction'], 10, 3 );
-		add_filter( 'wp_redirect',                       [$this, 'filterRedirectOnSave'] );
 	}
 
 	/**
@@ -63,7 +62,7 @@ class Settings extends MetaBox
 	{
 		$args = func_get_args();
 		$hook = sprintf( 'pollux/%s/%s', static::ID, array_shift( $args ));
-		return do_action_ref_array( $hook, array_filter( $args ));
+		return do_action_ref_array( $hook, $args );
 	}
 
 	/**
@@ -106,7 +105,7 @@ class Settings extends MetaBox
 	{
 		$args = func_get_args();
 		$hook = sprintf( 'pollux/%s/%s', static::ID, array_shift( $args ));
-		return apply_filters_ref_array( $hook, array_filter( $args ));
+		return apply_filters_ref_array( $hook, $args );
 	}
 
 	/**
@@ -122,23 +121,6 @@ class Settings extends MetaBox
 	}
 
 	/**
-	 * @param string $location
-	 * @return string
-	 * @filter wp_redirect
-	 */
-	public function filterRedirectOnSave( $location )
-	{
-		if( strpos( $location, 'settings-updated=true' ) === false
-			|| strpos( $location, sprintf( 'page=%s', static::id() )) === false ) {
-			return $location;
-		}
-		return add_query_arg([
-			'page' => static::id(),
-			'settings-updated' => 'true',
-		], admin_url( 'admin.php' ));
-	}
-
-	/**
 	 * @param null|array $settings
 	 * @return array
 	 * @callback register_setting
@@ -148,7 +130,6 @@ class Settings extends MetaBox
 		if( is_null( $settings )) {
 			$settings = [];
 		}
-		$this->action( 'saved' );
 		return $this->filter( 'save', $settings );
 	}
 
@@ -160,7 +141,7 @@ class Settings extends MetaBox
 	{
 		if(( new Helper )->getCurrentScreen()->id != $this->hook )return;
 		foreach( parent::register() as $metabox ) {
-			new RWMetaBox( $metabox );
+			new RWMetaBox( $metabox, static::ID, $this->hook );
 		}
 		add_screen_option( 'layout_columns', [
 			'max' => 2,
@@ -211,14 +192,15 @@ class Settings extends MetaBox
 	 */
 	public function renderSubmitMetaBox()
 	{
+		global $pagenow;
 		$query = [
 			'_wpnonce' => wp_create_nonce( $this->hook ),
 			'action' => 'reset',
 			'page' => static::id(),
 		];
 		$this->render( 'settings/submit', [
-			'reset' => __( 'Reset', 'pollux' ),
-			'reset_url' => esc_url( add_query_arg( $query, admin_url( 'admin.php' ))),
+			'reset' => __( 'Reset all', 'pollux' ),
+			'reset_url' => esc_url( add_query_arg( $query, admin_url( $pagenow ))),
 			'submit' => get_submit_button( __( 'Save', 'pollux' ), 'primary', 'submit', false ),
 		]);
 	}
@@ -234,9 +216,14 @@ class Settings extends MetaBox
 		)return;
 		if( wp_verify_nonce( filter_input( INPUT_GET, '_wpnonce' ), $this->hook )) {
 			update_option( static::id(), $this->getDefaults() );
-			return add_settings_error( static::id(), 'reset', __( 'All values have been reset to defaults.', 'pollux' ), 'updated' );
+			add_settings_error( static::id(), 'reset', __( 'Reset successful.', 'pollux' ), 'updated' );
 		}
-		add_settings_error( static::id(), 'reset', __( 'Failed to reset values. Please refresh the page and try again.', 'pollux' ));
+		else {
+			add_settings_error( static::id(), 'failed', __( 'Failed to reset. Please try again.', 'pollux' ));
+		}
+		set_transient( 'settings_errors', get_settings_errors(), 30 );
+		wp_safe_redirect( add_query_arg( 'settings-updated', 'true',  wp_get_referer() ));
+		exit;
 	}
 
 	/**

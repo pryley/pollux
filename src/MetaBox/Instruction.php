@@ -15,7 +15,7 @@ trait Instruction
 	/**
 	 * @var array
 	 */
-	public $metaboxes = [];
+	public $metaboxes;
 
 	/**
 	 * @return void
@@ -43,19 +43,18 @@ trait Instruction
 	 */
 	protected function generateInstructions()
 	{
-		return array_reduce( $this->getInstructions(), function( $html, $metabox ) {
+		$instructions = array_reduce( $this->getInstructions(), function( $html, $metabox ) {
 			$fields = array_reduce( $metabox['fields'], function( $html, $field ) use( $metabox ) {
-				if( !$this->validate( $field['condition'] )) {
-					return $html;
-				}
-				$hook = sprintf( 'pollux/%s/instruction', strtolower(( new Helper )->getClassname( $this )));
-				return $html . apply_filters( $hook, "PostMeta::get('{$field['slug']}');", $field['slug'], $metabox['slug'] ) . PHP_EOL;
+				return $this->validate( $field['condition'] )
+					? $html . $this->filter( 'instruction', "PostMeta::get('{$field['slug']}');", $field['slug'], $metabox['slug'] ) . PHP_EOL
+					: $html;
 			});
 			return $html . sprintf( '<p><strong>%s</strong></p><pre class="my-sites nav-tab-active misc-pub-section">%s</pre>',
 				$metabox['title'],
 				$fields
 			);
 		});
+		return $this->filter( 'before/instructions', '' ) . $instructions . $this->filter( 'after/instructions', '' );
 	}
 
 	/**
@@ -74,10 +73,15 @@ trait Instruction
 	 */
 	protected function showInstructions()
 	{
-		return count( array_filter( $this->metaboxes, function( $metabox ) {
+		return $this->filter( 'show/instructions', count( array_filter( $this->metaboxes, function( $metabox ) {
 			return $this->show( false, $metabox );
-		})) > 0;
+		})) > 0 );
 	}
+
+	/**
+	 * @return mixed
+	 */
+	abstract public function filter();
 
 	/**
 	 * @return bool

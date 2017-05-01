@@ -21,18 +21,10 @@ class Archive extends Settings
 	{
 		parent::init();
 
-		add_action( 'pollux/archives/saved',          [$this, 'addCustomNoticeOnSave'] );
-		add_action( 'pollux/archives/editor',         [$this, 'renderEditor'] );
-		add_filter( 'pollux/archives/metabox/submit', [$this, 'filterSubmitMetaBox'] );
-	}
-
-	/**
-	 * @return void
-	 * @action pollux/archives/saved
-	 */
-	public function addCustomNoticeOnSave()
-	{
-		add_settings_error( static::id(), 'updated', __( 'Archive Page saved.', 'pollux' ), 'updated' );
+		add_action( 'pollux/archives/editor',              [$this, 'renderEditor'] );
+		add_filter( 'pollux/archives/metabox/submit',      [$this, 'filterSubmitMetaBox'] );
+		add_filter( 'pollux/archives/before/instructions', [$this, 'generateArchiveInstructions'] );
+		add_filter( 'pollux/archives/show/instructions',   '__return_true' );
 	}
 
 	/**
@@ -62,7 +54,7 @@ class Archive extends Settings
 	 */
 	public function filterInstruction( $instruction, $fieldId, $metaboxId )
 	{
-		return sprintf( "ArchiveMeta::get('%s', '%s');", $metaboxId, $fieldId );
+		return sprintf( "ArchiveMeta::get('%s');", $fieldId );
 	}
 
 	/**
@@ -73,6 +65,19 @@ class Archive extends Settings
 	{
 		$args[1] = __( 'Save Archive', 'pollux' );
 		return $args;
+	}
+
+	/**
+	 * @return string
+	 * @filter pollux/archives/before/instructions
+	 */
+	public function generateArchiveInstructions()
+	{
+		return sprintf( '<pre class="my-sites nav-tab-active misc-pub-section">%s</pre>',
+			array_reduce( ['title', 'content'], function( $instructions, $id ) {
+				return $instructions . $this->filterInstruction( null, $id, null ) . PHP_EOL;
+			})
+		);
 	}
 
 	/**

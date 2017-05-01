@@ -36,6 +36,16 @@ class MetaBox extends Component
 	}
 
 	/**
+	 * @return mixed
+	 */
+	public function filter()
+	{
+		$args = func_get_args();
+		$hook = sprintf( 'pollux/%s/%s', strtolower(( new Helper )->getClassname( $this )), array_shift( $args ));
+		return apply_filters_ref_array( $hook, $args );
+	}
+
+	/**
 	 * @return array
 	 * @filter rwmb_meta_boxes
 	 */
