@@ -36,13 +36,17 @@ class Controller
 	public function registerAssets()
 	{
 		$screenId = ( new Helper )->getCurrentScreen()->id;
-		if( $screenId == sprintf( 'toplevel_page_%s', apply_filters( 'pollux/archive/option', Archive::ID ))) {
-			wp_enqueue_script('editor-expand');
+
+		if(( new Helper )->endsWith( sprintf( '_page_%s', Archive::id() ), $screenId )) {
+			wp_enqueue_script( 'editor-expand' );
+			wp_enqueue_script( 'common' );
+			wp_enqueue_script( 'wp-lists' );
+			wp_enqueue_script( 'postbox' );
 			if( wp_is_mobile() ) {
 				wp_enqueue_script( 'jquery-touch-punch' );
 			}
 		}
-		if( screenId == sprintf( 'toplevel_page_%s', apply_filters( 'pollux/settings/option', Settings::ID ))) {
+		if( $screenId == sprintf( 'toplevel_page_%s', Settings::id() )) {
 			wp_enqueue_script( 'common' );
 			wp_enqueue_script( 'wp-lists' );
 			wp_enqueue_script( 'postbox' );

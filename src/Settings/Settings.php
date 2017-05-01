@@ -13,7 +13,15 @@ class Settings extends MetaBox
 	/**
 	 * @var string
 	 */
-	CONST ID = 'pollux_settings';
+	const ID = 'settings';
+
+	/**
+	 * @var array
+	 */
+	public static $conditions = [
+		'class_exists', 'defined', 'function_exists', 'hook', 'is_plugin_active',
+		'is_plugin_inactive',
+	];
 
 	/**
 	 * @var string
@@ -21,17 +29,12 @@ class Settings extends MetaBox
 	public $hook;
 
 	/**
-	 * @var string
+	 * @return string
 	 */
-	public $id;
-
-	/**
-	 * @var array
-	 */
-	protected static $conditions = [
-		'class_exists', 'defined', 'function_exists', 'hook', 'is_plugin_active',
-		'is_plugin_inactive',
-	];
+	public static function id()
+	{
+		return apply_filters( sprintf( 'pollux/%s/id', static::ID ), Application::prefix() . static::ID );
+	}
 
 	/**
 	 * {@inheritdoc}
@@ -41,18 +44,26 @@ class Settings extends MetaBox
 		// @todo: run GateKeeper to check dependencies and capability (make sure it it run on the correct hook!)
 		// if( !is_plugin_active( 'meta-box/meta-box.php' ))return;
 
-		$this->id = apply_filters( 'pollux/settings/option', static::ID );
+		$this->normalize( $this->app->config[ static::ID ]);
 
-		$this->normalize( $this->app->config['settings'] );
+		add_action( 'admin_menu',                        [$this, 'addPage'] );
+		add_action( 'pollux/'.static::ID.'/init',        [$this, 'addSubmitMetaBox'] );
+		add_action( 'current_screen',                    [$this, 'register'] );
+		add_action( 'admin_menu',                        [$this, 'registerSetting'] );
+		add_action( 'pollux/'.static::ID.'/init',        [$this, 'reset'] );
+		add_action( 'admin_print_footer_scripts',        [$this, 'renderFooterScript'] );
+		add_filter( 'pollux/'.static::ID.'/instruction', [$this, 'filterInstruction'], 10, 3 );
+		add_filter( 'wp_redirect',                       [$this, 'filterRedirectOnSave'] );
+	}
 
-		add_action( 'admin_menu',                             [$this, 'addPage'] );
-		add_action( 'pollux/settings/init',                   [$this, 'addSubmitMetaBox'] );
-		add_action( 'current_screen',                         [$this, 'register'] );
-		add_action( 'admin_menu',                             [$this, 'registerSetting'] );
-		add_action( 'pollux/settings/init',                   [$this, 'reset'] );
-		add_action( "admin_footer-toplevel_page_{$this->id}", [$this, 'renderFooterScript'] );
-		add_filter( 'pollux/settings/instruction',            [$this, 'filterInstruction'], 10, 3 );
-		add_filter( 'wp_redirect',                            [$this, 'filterRedirectOnSave'] );
+	/**
+	 * @return void
+	 */
+	public function action()
+	{
+		$args = func_get_args();
+		$hook = sprintf( 'pollux/%s/%s', static::ID, array_shift( $args ));
+		return do_action_ref_array( $hook, array_filter( $args ));
 	}
 
 	/**
@@ -61,11 +72,11 @@ class Settings extends MetaBox
 	 */
 	public function addPage()
 	{
-		$this->hook = call_user_func_array( 'add_menu_page', apply_filters( 'pollux/settings/page', [
+		$this->hook = call_user_func_array( 'add_menu_page', $this->filter( 'page', [
 			__( 'Site Settings', 'pollux' ),
 			__( 'Site Settings', 'pollux' ),
 			'edit_theme_options',
-			$this->id,
+			static::id(),
 			[$this, 'renderPage'],
 			'dashicons-screenoptions',
 			1313
@@ -74,14 +85,14 @@ class Settings extends MetaBox
 
 	/**
 	 * @return void
-	 * @action pollux/settings/init
+	 * @action pollux/{static::ID}/init
 	 */
 	public function addSubmitMetaBox()
 	{
-		call_user_func_array( 'add_meta_box', apply_filters( 'pollux/settings/metabox/submit', [
+		call_user_func_array( 'add_meta_box', $this->filter( 'metabox/submit', [
 			'submitdiv',
 			__( 'Save Settings', 'pollux' ),
-			[ $this, 'renderSubmitMetaBox'],
+			[$this, 'renderSubmitMetaBox'],
 			$this->hook,
 			'side',
 			'high',
@@ -89,11 +100,21 @@ class Settings extends MetaBox
 	}
 
 	/**
+	 * @return mixed
+	 */
+	public function filter()
+	{
+		$args = func_get_args();
+		$hook = sprintf( 'pollux/%s/%s', static::ID, array_shift( $args ));
+		return apply_filters_ref_array( $hook, array_filter( $args ));
+	}
+
+	/**
 	 * @param string $instruction
 	 * @param string $fieldId
 	 * @param string $metaboxId
 	 * @return string
-	 * @filter pollux/settings/instruction
+	 * @action pollux/{static::ID}/instruction
 	 */
 	public function filterInstruction( $instruction, $fieldId, $metaboxId )
 	{
@@ -108,11 +129,11 @@ class Settings extends MetaBox
 	public function filterRedirectOnSave( $location )
 	{
 		if( strpos( $location, 'settings-updated=true' ) === false
-			|| strpos( $location, sprintf( 'page=%s', $this->id )) === false ) {
+			|| strpos( $location, sprintf( 'page=%s', static::id() )) === false ) {
 			return $location;
 		}
 		return add_query_arg([
-			'page' => $this->id,
+			'page' => static::id(),
 			'settings-updated' => 'true',
 		], admin_url( 'admin.php' ));
 	}
@@ -127,7 +148,8 @@ class Settings extends MetaBox
 		if( is_null( $settings )) {
 			$settings = [];
 		}
-		return apply_filters( 'pollux/settings/save', $settings );
+		$this->action( 'saved' );
+		return $this->filter( 'save', $settings );
 	}
 
 	/**
@@ -144,7 +166,7 @@ class Settings extends MetaBox
 			'max' => 2,
 			'default' => 2,
 		]);
-		do_action( 'pollux/settings/init' );
+		$this->action( 'init' );
 	}
 
 	/**
@@ -153,19 +175,20 @@ class Settings extends MetaBox
 	 */
 	public function registerSetting()
 	{
-		register_setting( $this->id, $this->id, [$this, 'filterSavedSettings'] );
+		register_setting( static::id(), static::id(), [$this, 'filterSavedSettings'] );
 	}
 
 	/**
 	 * @return void
-	 * @action admin_footer-toplevel_page_{$this->id}
+	 * @action admin_print_footer_scripts
 	 */
 	public function renderFooterScript()
 	{
+		if(( new Helper )->getCurrentScreen()->id != $this->hook )return;
 		$this->render( 'settings/script', [
 			'confirm' => __( 'Are you sure want to do this?', 'pollux' ),
 			'hook' => $this->hook,
-			'id' => $this->id,
+			'id' => static::id(),
 		]);
 	}
 
@@ -177,8 +200,8 @@ class Settings extends MetaBox
 	{
 		$this->render( 'settings/index', [
 			'columns' => get_current_screen()->get_columns(),
-			'id' => $this->id,
 			'heading' => __( 'Site Settings', 'pollux' ),
+			'id' => static::id(),
 		]);
 	}
 
@@ -191,10 +214,10 @@ class Settings extends MetaBox
 		$query = [
 			'_wpnonce' => wp_create_nonce( $this->hook ),
 			'action' => 'reset',
-			'page' => $this->id,
+			'page' => static::id(),
 		];
 		$this->render( 'settings/submit', [
-			'reset' => __( 'Reset Settings', 'pollux' ),
+			'reset' => __( 'Reset', 'pollux' ),
 			'reset_url' => esc_url( add_query_arg( $query, admin_url( 'admin.php' ))),
 			'submit' => get_submit_button( __( 'Save', 'pollux' ), 'primary', 'submit', false ),
 		]);
@@ -202,18 +225,18 @@ class Settings extends MetaBox
 
 	/**
 	 * @return void
-	 * @action pollux/settings/init
+	 * @action pollux/{static::ID}/init
 	 */
 	public function reset()
 	{
-		if( filter_input( INPUT_GET, 'page' ) !== $this->id
+		if( filter_input( INPUT_GET, 'page' ) !== static::id()
 			|| filter_input( INPUT_GET, 'action' ) !== 'reset'
 		)return;
 		if( wp_verify_nonce( filter_input( INPUT_GET, '_wpnonce' ), $this->hook )) {
-			update_option( $this->id, $this->getDefaults() );
-			return add_settings_error( $this->id, 'reset', __( 'Settings reset to defaults.', 'pollux' ), 'updated' );
+			update_option( static::id(), $this->getDefaults() );
+			return add_settings_error( static::id(), 'reset', __( 'All values have been reset to defaults.', 'pollux' ), 'updated' );
 		}
-		add_settings_error( $this->id, 'reset', __( 'Failed to reset settings. Please refresh the page and try again.', 'pollux' ));
+		add_settings_error( static::id(), 'reset', __( 'Failed to reset values. Please refresh the page and try again.', 'pollux' ));
 	}
 
 	/**
@@ -264,8 +287,8 @@ class Settings extends MetaBox
 		if( !empty( $name )) {
 			return $name;
 		}
-		$name = str_replace( sprintf( '%s-%s-', $this->id, $parentId ), '', $data['id'] );
-		return sprintf( '%s[%s][%s]', $this->id, $parentId, $name );
+		$name = str_replace( sprintf( '%s-%s-', static::id(), $parentId ), '', $data['id'] );
+		return sprintf( '%s[%s][%s]', static::id(), $parentId, $name );
 	}
 
 	/**
@@ -276,7 +299,7 @@ class Settings extends MetaBox
 	protected function normalizeId( $id, array $data, $parentId )
 	{
 		return $parentId == $id
-			? sprintf( '%s-%s', $this->id, $id )
-			: sprintf( '%s-%s-%s', $this->id, $parentId, $id );
+			? sprintf( '%s-%s', static::id(), $id )
+			: sprintf( '%s-%s-%s', static::id(), $parentId, $id );
 	}
 }

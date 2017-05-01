@@ -48,7 +48,7 @@ abstract class Component
 	 * @param string $id
 	 * @return array
 	 */
-	protected function normalizeThis( array $data, array $defaults, $id )
+	protected function normalizeThis( $data, array $defaults, $id )
 	{
 		$data = wp_parse_args( $data, $defaults );
 		foreach( $defaults as $key => $value ) {

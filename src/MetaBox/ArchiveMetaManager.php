@@ -12,6 +12,6 @@ class ArchiveMetaManager extends SiteMetaManager
 	 */
 	protected function getOption()
 	{
-		return get_option( apply_filters( 'pollux/archive/option', Archive::ID ), [] );
+		return get_option( apply_filters( 'pollux/archives/option', Archive::ID ), [] );
 	}
 }

@@ -32,7 +32,7 @@ class SiteMetaManager
 	 */
 	protected function getOption()
 	{
-		return get_option( apply_filters( 'pollux/settings/option', Settings::ID ), [] );
+		return get_option( Settings::id(), [] );
 	}
 
 	/**

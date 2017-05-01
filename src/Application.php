@@ -20,6 +20,14 @@ final class Application extends Container
 	public $name;
 	public $version;
 
+	/**
+	 * @return string
+	 */
+	public static function prefix()
+	{
+		return apply_filters( 'pollux/prefix', self::PREFIX );
+	}
+
 	public function __construct()
 	{
 		$this->file = realpath( dirname( dirname( __FILE__ )) . '/pollux.php' );
@@ -58,27 +66,6 @@ final class Application extends Container
 	}
 
 	/**
-	 * @return void
-	 */
-	public function bootstrap()
-	{
-		Facade::clearResolvedInstances();
-		Facade::setFacadeApplication( $this );
-		$this->config = ( new Config( $this ))->get();
-		$this->registerAliases();
-		$classNames = array(
-			'MetaBox\MetaBox',
-			'PostType\Archive',
-			'PostType\PostType',
-			'Settings\Settings',
-			'Taxonomy\Taxonomy',
-		);
-		foreach( $classNames as $className ) {
-			$this->make( $className )->init();
- 		}
-	}
-
-	/**
 	 * @param string $checkFor
 	 * @return string|bool
 	 */
@@ -96,10 +83,8 @@ final class Application extends Container
 	 */
 	public function onActivation()
 	{
-		$option = apply_filters( 'pollux/settings/option', Settings::ID );
-		$settings = get_option( $option );
-		if( !$settings ) {
-			update_option( $option, [] );
+		if( !get_option( Settings::id() )) {
+			update_option( Settings::id(), [] );
 		}
 	}
 
@@ -120,9 +105,39 @@ final class Application extends Container
 	}
 
 	/**
+	 * @param string $path
+	 * @return string
+	 */
+	public function url( $path = '' )
+	{
+		return esc_url( plugin_dir_url( $this->file ) . ltrim( trim( $path ), '/' ));
+	}
+
+	/**
 	 * @return void
 	 */
-	public function registerAliases()
+	protected function bootstrap()
+	{
+		Facade::clearResolvedInstances();
+		Facade::setFacadeApplication( $this );
+		$this->config = ( new Config( $this ))->get();
+		$this->registerAliases();
+		$classNames = array(
+			'MetaBox\MetaBox',
+			'PostType\Archive',
+			'PostType\PostType',
+			'Settings\Settings',
+			'Taxonomy\Taxonomy',
+		);
+		foreach( $classNames as $className ) {
+			$this->make( $className )->init();
+ 		}
+	}
+
+	/**
+	 * @return void
+	 */
+	protected function registerAliases()
 	{
 		$aliases = array(
 			'ArchiveMeta' => 'GeminiLabs\Pollux\Facades\ArchiveMeta',
@@ -130,27 +145,5 @@ final class Application extends Container
 			'SiteMeta' => 'GeminiLabs\Pollux\Facades\SiteMeta',
 		);
 		AliasLoader::getInstance( $aliases )->register();
-	}
-
-	/**
-	 * get_current_screen() is unreliable because it is defined on most admin pages, but not all.
-	 * @return WP_Screen|null
-	 */
-	public function screen()
-	{
-		global $current_screen;
-		return isset( $current_screen ) ? $current_screen : (object) [
-			'base' => '',
-			'id' => '',
-		];
-	}
-
-	/**
-	 * @param string $path
-	 * @return string
-	 */
-	public function url( $path = '' )
-	{
-		return esc_url( plugin_dir_url( $this->file ) . ltrim( trim( $path ), '/' ));
 	}
 }

@@ -186,7 +186,7 @@ class MetaBox extends Component
 	 */
 	protected function normalizeId( $id, array $data, $parentId )
 	{
-		return apply_filters( 'pollux/prefix', Application::PREFIX ) . $id;
+		return Application::prefix() . $id;
 	}
 
 	/**

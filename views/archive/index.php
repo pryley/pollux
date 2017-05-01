@@ -11,10 +11,10 @@
 			<div id="post-body" class="metabox-holder columns-<?= $columns; ?>">
 				<div id="post-body-content">
 					<div id="titlediv">
-						<input type="text" id="title" name="title" value="<?= $title; ?>" size="30" spellcheck="true" autocomplete="off">
+						<input type="text" id="title" name="title" value="<?= $title; ?>" placeholder="<?= __( 'Enter title here', 'pollux' ); ?>" size="30" spellcheck="true" autocomplete="off">
 					</div>
 					<div id="postdivrich" class="postarea wp-editor-expand">
-						<?php do_action( 'pollux/archive/editor' ); ?>
+						<?php do_action( 'pollux/archives/editor', $content ); ?>
 						<table id="post-status-info">
 						<tbody>
 						<tr>

@@ -6,15 +6,23 @@ use GeminiLabs\Pollux\Helper;
 
 trait Condition
 {
+	public static $conditions = [
+		'class_exists', 'defined', 'function_exists', 'hook', 'is_front_page', 'is_home',
+		'is_page_template', 'is_plugin_active', 'is_plugin_inactive',
+	];
+
 	/**
 	 * @var Application
 	 */
 	protected $app;
 
-	protected static $conditions = [
-		'class_exists', 'defined', 'function_exists', 'hook', 'is_front_page', 'is_home',
-		'is_page_template', 'is_plugin_active', 'is_plugin_inactive',
-	];
+	/**
+	 * @return string
+	 */
+	public static function conditions()
+	{
+		return apply_filters( 'pollux/conditions', static::$conditions, strtolower(( new Helper )->getClassname( static::class )));
+	}
 
 	/**
 	 * @return bool
@@ -48,7 +56,7 @@ trait Condition
 		$hook = sprintf( 'pollux/%s/conditions', strtolower(( new Helper )->getClassname( $this )));
 		return array_intersect_key(
 			$conditions,
-			array_flip( apply_filters( $hook, static::$conditions ))
+			array_flip( apply_filters( $hook, static::conditions() ))
 		);
 	}
 
