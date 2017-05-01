@@ -31,6 +31,19 @@ class Helper
 	}
 
 	/**
+	 * @param string $needle
+	 * @param string $haystack
+	 * @return bool
+	 */
+	public function endsWith( $needle, $haystack )
+	{
+		$length = strlen( $needle );
+		return $length != 0
+			? substr( $haystack, -$length ) === $needle
+			: true;
+	}
+
+	/**
 	 * @param mixed $fromClass
 	 * @return string
 	 */
@@ -51,6 +64,16 @@ class Helper
 			'base' => '',
 			'id' => '',
 		];
+	}
+
+	/**
+	 * @param string $needle
+	 * @param string $haystack
+	 * @return bool
+	 */
+	public function startsWith( $needle, $haystack )
+	{
+		return substr( $haystack, 0, strlen( $needle )) === $needle;
 	}
 
 	/**
