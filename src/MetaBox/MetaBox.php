@@ -141,6 +141,7 @@ class MetaBox extends Component
 				'fields' => [],
 				'id' => $id,
 				'slug' => $id,
+				'validation' => [],
 			]);
 			$this->metaboxes[] = $this->setDependencies(
 				$this->normalizeThis( $metabox, $data, $id )
@@ -206,6 +207,21 @@ class MetaBox extends Component
 	protected function normalizePostTypes( $types )
 	{
 		return ( new Helper )->toArray( $types );
+	}
+
+	/**
+	 * @return array
+	 */
+	protected function normalizeValidation( array $validation, array $data, $parentId )
+	{
+		foreach( ['messages', 'rules'] as $key ) {
+			if( empty( $validation[$key] ))continue;
+			foreach( $validation[$key] as $id => $value ) {
+				$validation[$key][$this->normalizeFieldName( $id, ['slug' => $id], $parentId )] = $value;
+				unset( $validation[$key][$id] );
+			}
+		}
+		return $validation;
 	}
 
 	/**
