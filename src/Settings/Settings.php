@@ -128,7 +128,7 @@ class Settings extends MetaBox
 		if( is_null( $settings )) {
 			$settings = [];
 		}
-		return $this->filter( 'save', $settings );
+		return $this->filter( 'save', array_merge( $settings, $this->getSettings() ));
 	}
 
 	/**
@@ -252,6 +252,11 @@ class Settings extends MetaBox
 			];
 		});
 		return call_user_func_array( 'array_merge', $metaboxes );
+	}
+
+	protected function getSettings()
+	{
+		return (array) SiteMeta::all();
 	}
 
 	/**

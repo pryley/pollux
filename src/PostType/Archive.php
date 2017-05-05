@@ -120,6 +120,11 @@ class Archive extends Settings
 		return [];
 	}
 
+	protected function getSettings()
+	{
+		return (array) ArchiveMeta::all();
+	}
+
 	/**
 	 * @return string|array
 	 */
