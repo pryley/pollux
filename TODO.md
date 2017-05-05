@@ -1,6 +1,6 @@
 - [x] Config
 - [x] PostType
-- [=] PostType Archive
+- [x] PostType Archive
 - [x] Taxonomy
 - [x] MetaBox
 - [x] Conditional MetaBoxes

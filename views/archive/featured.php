@@ -1,14 +1,14 @@
 <?php defined( 'WPINC' ) || die; ?>
 
 <p class="hide-if-no-js">
-	<a href="<?= $thickbox_url; ?>" id="set-post-thumbnail" class="thickbox"><?= $thumbnail; ?></a>
+	<a href="#" id="pollux-set-featured"><?= $thumbnail; ?></a>
 </p>
 
-<?php if( get_post( $image_id )) : ?>
+<?php if( $image_id != -1 ) : ?>
 
 <p class="hide-if-no-js howto" id="set-post-thumbnail-desc"><?= $edit_image; ?></p>
 <p class="hide-if-no-js">
-	<a href="#" id="remove-post-thumbnail"><?= $remove_image; ?></a>
+	<a href="#" id="pollux-remove-featured"><?= $remove_image; ?></a>
 </p>
 
 <?php endif; ?>

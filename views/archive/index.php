@@ -7,6 +7,7 @@
 		<?php settings_fields( $id ); ?>
 		<?php wp_nonce_field( 'closedpostboxes', 'closedpostboxesnonce', false ); ?>
 		<?php wp_nonce_field( 'meta-box-order', 'meta-box-order-nonce', false ); ?>
+		<input type="hidden" id="archive-type" name="archive-type" value="<?= $post_type; ?>">
 		<div id="poststuff">
 			<div id="post-body" class="metabox-holder columns-<?= $columns; ?>">
 				<div id="post-body-content">

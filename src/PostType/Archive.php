@@ -14,6 +14,8 @@ class Archive extends Settings
 	 */
 	CONST ID = 'archives';
 
+	public static $current;
+
 	public $hooks = [];
 
 	/**
@@ -23,10 +25,12 @@ class Archive extends Settings
 	{
 		parent::init();
 
-		add_action( 'pollux/archives/init',              [$this, 'registerFeaturedImageMetaBox'] );
-		add_action( 'pollux/archives/editor',            [$this, 'renderEditor'], 10, 2 );
-		add_filter( 'pollux/archives/metabox/submit',    [$this, 'filterSubmitMetaBox'] );
-		add_filter( 'pollux/archives/show/instructions', '__return_true' );
+		add_action( 'wp_ajax_pollux/archives/featured/html', [$this, 'getFeaturedImageHtml'] );
+		add_action( 'pollux/archives/init',                  [$this, 'registerFeaturedImageMetaBox'] );
+		add_action( 'pollux/archives/editor',                [$this, 'renderEditor'], 10, 2 );
+		add_action( 'wp_ajax_pollux/archives/featured',      [$this, 'setFeaturedImage'] );
+		add_filter( 'pollux/archives/metabox/submit',        [$this, 'filterSubmitMetaBox'] );
+		add_filter( 'pollux/archives/show/instructions',     '__return_true' );
 	}
 
 	/**
@@ -40,7 +44,7 @@ class Archive extends Settings
 			$this->hooks[$type] = call_user_func_array( 'add_submenu_page', $this->filter( 'page', [
 				$page,
 				sprintf( _x( '%s Archive', 'post archive', 'pollux' ), $labels->singular_name ),
-				__( 'Archive', 'pollux' ),
+				sprintf( _x( '%s Archive', 'post archive', 'pollux' ), $labels->singular_name ),
 				'edit_theme_options',
 				sprintf( '%s_archive', $type ),
 				[$this, 'renderPage'],
@@ -79,6 +83,20 @@ class Archive extends Settings
 	{
 		$args[1] = __( 'Save Archive', 'pollux' );
 		return $args;
+	}
+
+	/**
+	 * @todo: Use gatekeeper to check capability, wp_die(-1) on fail;
+	 * @return string|null
+	 * @action wp_ajax_pollux/archives/featured/html
+	 */
+	public function getFeaturedImageHtml()
+	{
+		check_ajax_referer( sprintf( '%s-options', static::id() ));
+		static::$current = filter_input( INPUT_POST, 'post_type' );
+		ob_start();
+		$this->renderFeaturedImageMetaBox( intval( filter_input( INPUT_POST, 'thumbnail_id' )));
+		wp_send_json_success( ob_get_clean() );
 	}
 
 	/**
@@ -139,9 +157,11 @@ class Archive extends Settings
 	 * @return void
 	 * @callback add_meta_box
 	 */
-	public function renderFeaturedImageMetaBox()
+	public function renderFeaturedImageMetaBox( $imageId = null )
 	{
-		$imageId = ArchiveMeta::get( 'featured', -1, $this->getPostType() );
+		if( !is_numeric( $imageId )) {
+			$imageId = ArchiveMeta::get( 'featured', -1, $this->getPostType() );
+		}
 		$imageSize = isset( wp_get_additional_image_sizes()['post-thumbnail'] )
 			? 'post-thumbnail'
 			: [266, 266];
@@ -155,7 +175,6 @@ class Archive extends Settings
 			'image_id' => $imageId,
 			'post_type' => $this->getPostType(),
 			'remove_image' => __( 'Remove featured image', 'pollux' ),
-			'thickbox_url' => '',
 			'thumbnail' => $thumbnail,
 		]);
 	}
@@ -193,9 +212,10 @@ class Archive extends Settings
 	protected function getPostType()
 	{
 		$type = array_search( $this->hook, $this->hooks );
-		return !empty( $type ) && is_string( $type )
-			? $type
-			: '';
+		if( !empty( $type ) && is_string( $type )) {
+			static::$current = $type;
+		}
+		return static::$current;
 	}
 
 	/**
