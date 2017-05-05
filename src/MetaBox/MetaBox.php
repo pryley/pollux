@@ -41,13 +41,23 @@ class MetaBox extends Component
 	}
 
 	/**
+	 * @param string $name
+	 * @param mixed ...$args
+	 * @return void
+	 */
+	public function action( $name, ...$args )
+	{
+		return do_action_ref_array( sprintf( 'pollux/%s/%s', static::ID, $name ), $args );
+	}
+
+	/**
+	 * @param string $name
+	 * @param mixed ...$args
 	 * @return mixed
 	 */
-	public function filter()
+	public function filter( $name, ...$args )
 	{
-		$args = func_get_args();
-		$hook = sprintf( 'pollux/%s/%s', strtolower(( new Helper )->getClassname( $this )), array_shift( $args ));
-		return apply_filters_ref_array( $hook, $args );
+		return apply_filters_ref_array( sprintf( 'pollux/%s/%s', static::ID, $name ), $args );
 	}
 
 	/**

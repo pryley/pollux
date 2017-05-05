@@ -79,9 +79,11 @@ trait Instruction
 	}
 
 	/**
+	 * @param string $name
+	 * @param mixed ...$args
 	 * @return mixed
 	 */
-	abstract public function filter();
+	abstract public function filter( $name, ...$args );
 
 	/**
 	 * @return bool

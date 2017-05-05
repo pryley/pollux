@@ -58,16 +58,6 @@ class Settings extends MetaBox
 
 	/**
 	 * @return void
-	 */
-	public function action()
-	{
-		$args = func_get_args();
-		$hook = sprintf( 'pollux/%s/%s', static::ID, array_shift( $args ));
-		return do_action_ref_array( $hook, $args );
-	}
-
-	/**
-	 * @return void
 	 * @action admin_menu
 	 */
 	public function addPage()
@@ -97,16 +87,6 @@ class Settings extends MetaBox
 			'side',
 			'high',
 		]));
-	}
-
-	/**
-	 * @return mixed
-	 */
-	public function filter()
-	{
-		$args = func_get_args();
-		$hook = sprintf( 'pollux/%s/%s', static::ID, array_shift( $args ));
-		return apply_filters_ref_array( $hook, $args );
 	}
 
 	/**

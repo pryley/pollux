@@ -6,10 +6,12 @@ use GeminiLabs\Pollux\Settings\Settings;
 
 /**
  * SiteMeta::all();
- * SiteMeta::global();
- * SiteMeta::global('seo_enabled','fallback');
- * SiteMeta::get('global');
- * SiteMeta::get('global','seo_enabled','fallback');
+ * SiteMeta::group();
+ * SiteMeta::group('option','fallback');
+ * SiteMeta::get('group');
+ * SiteMeta::get('group','option','fallback');
+ *
+ * @property object all
  */
 class SiteMetaManager
 {
