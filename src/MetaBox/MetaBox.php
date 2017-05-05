@@ -31,7 +31,7 @@ class MetaBox extends Component
 	 */
 	public function init()
 	{
-		$this->normalize( $this->app->config['meta_boxes'], [
+		$this->normalize( $this->app->config[static::ID], [
 			'post_types' => [],
 		]);
 
