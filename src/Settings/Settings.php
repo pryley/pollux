@@ -44,15 +44,16 @@ class Settings extends MetaBox
 		// @todo: run GateKeeper to check dependencies and capability (make sure it it run on the correct hook!)
 		// if( !is_plugin_active( 'meta-box/meta-box.php' ))return;
 
-		$this->normalize( $this->app->config[ static::ID ]);
+		$this->normalize( $this->app->config[static::ID] );
 
-		add_action( 'admin_menu',                        [$this, 'addPage'] );
-		add_action( 'pollux/'.static::ID.'/init',        [$this, 'addSubmitMetaBox'] );
-		add_action( 'current_screen',                    [$this, 'register'] );
-		add_action( 'admin_menu',                        [$this, 'registerSetting'] );
-		add_action( 'pollux/'.static::ID.'/init',        [$this, 'reset'] );
-		add_action( 'admin_print_footer_scripts',        [$this, 'renderFooterScript'] );
-		add_filter( 'pollux/'.static::ID.'/instruction', [$this, 'filterInstruction'], 10, 3 );
+		add_action( 'admin_menu',                                [$this, 'addPage'] );
+		add_action( 'pollux/'.static::ID.'/init',                [$this, 'addSubmitMetaBox'] );
+		add_action( 'current_screen',                            [$this, 'register'] );
+		add_action( 'admin_menu',                                [$this, 'registerSetting'] );
+		add_action( 'pollux/'.static::ID.'/init',                [$this, 'reset'] );
+		add_action( 'admin_print_footer_scripts',                [$this, 'renderFooterScript'] );
+		add_filter( 'pollux/'.static::ID.'/instruction',         [$this, 'filterInstruction'], 10, 3 );
+		add_filter( 'pollux/'.static::ID.'/before/instructions', [$this, 'filterBeforeInstructions'] );
 	}
 
 	/**
@@ -106,6 +107,15 @@ class Settings extends MetaBox
 		$args = func_get_args();
 		$hook = sprintf( 'pollux/%s/%s', static::ID, array_shift( $args ));
 		return apply_filters_ref_array( $hook, $args );
+	}
+
+	/**
+	 * @return string
+	 * @filter pollux/{static::ID}/before/instructions
+	 */
+	public function filterBeforeInstructions()
+	{
+		return '<pre class="my-sites nav-tab-active misc-pub-section">SiteMeta::all();</pre>';
 	}
 
 	/**
