@@ -110,14 +110,12 @@ class Settings extends MetaBox
 
 	/**
 	 * @param string $instruction
-	 * @param string $fieldId
-	 * @param string $metaboxId
 	 * @return string
 	 * @action pollux/{static::ID}/instruction
 	 */
-	public function filterInstruction( $instruction, $fieldId, $metaboxId )
+	public function filterInstruction( $instruction, array $field, array $metabox )
 	{
-		return sprintf( "SiteMeta::get('%s', '%s');", $metaboxId, $fieldId );
+		return sprintf( "SiteMeta::%s('%s');", $metabox['slug'], $field['slug'] );
 	}
 
 	/**

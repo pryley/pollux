@@ -47,14 +47,12 @@ class Archive extends Settings
 
 	/**
 	 * @param string $instruction
-	 * @param string $fieldId
-	 * @param string $metaboxId
 	 * @return string
 	 * @action pollux/{static::ID}/instruction
 	 */
-	public function filterInstruction( $instruction, $fieldId, $metaboxId )
+	public function filterInstruction( $instruction, array $field, array $metabox )
 	{
-		return sprintf( "ArchiveMeta::get('%s');", $fieldId );
+		return sprintf( "ArchiveMeta::%s('%s');", $metabox['slug'], $field['slug'] );
 	}
 
 	/**

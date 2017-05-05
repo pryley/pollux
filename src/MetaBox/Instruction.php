@@ -46,7 +46,7 @@ trait Instruction
 		$instructions = array_reduce( $this->getInstructions(), function( $html, $metabox ) {
 			$fields = array_reduce( $metabox['fields'], function( $html, $field ) use( $metabox ) {
 				return $this->validate( $field['condition'] )
-					? $html . $this->filter( 'instruction', "PostMeta::get('{$field['slug']}');", $field['slug'], $metabox['slug'] ) . PHP_EOL
+					? $html . $this->filter( 'instruction', "PostMeta::get('{$field['slug']}');", $field, $metabox ) . PHP_EOL
 					: $html;
 			});
 			return $html . sprintf( '<p><strong>%s</strong></p><pre class="my-sites nav-tab-active misc-pub-section">%s</pre>',
