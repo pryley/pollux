@@ -17,6 +17,11 @@ class MetaBox extends Component
 	use Instruction;
 
 	/**
+	 * @var string
+	 */
+	const ID = 'metaboxes';
+
+	/**
 	 * @var array
 	 */
 	public $metaboxes = [];
