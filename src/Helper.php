@@ -62,10 +62,15 @@ class Helper
 	 */
 	public function getCurrentScreen()
 	{
-		global $current_screen;
-		return isset( $current_screen ) ? $current_screen : (object) [
+		global $current_screen, $pagenow;
+		if( isset( $current_screen )) {
+			$current_screen->pagenow = $pagenow;
+			return $current_screen;
+		}
+		return (object) [
 			'base' => '',
 			'id' => '',
+			'pagenow' => $pagenow,
 		];
 	}
 
