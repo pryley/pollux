@@ -18,27 +18,6 @@ trait Instruction
 	public $metaboxes;
 
 	/**
-	 * @return void
-	 */
-	protected function addInstructions()
-	{
-		if( !$this->showInstructions() )return;
-		$this->normalize([
-			'infodiv' => [
-				'context' => 'side',
-				'fields' => [[
-					'slug' => '',
-					'std' => $this->generateInstructions(),
-					'type' => 'custom_html',
-				]],
-				'post_types' => $this->getPostTypes(),
-				'priority' => 'low',
-				'title' => __( 'How to use in your theme', 'pollux' ),
-			],
-		]);
-	}
-
-	/**
 	 * @return string
 	 */
 	protected function generateInstructions()
@@ -66,6 +45,27 @@ trait Instruction
 			return $this->validate( $metabox['condition'] )
 				&& $this->hasPostType( $metabox );
 		});
+	}
+
+	/**
+	 * @return void
+	 */
+	protected function initInstructions()
+	{
+		if( !$this->showInstructions() )return;
+		return [
+			'infodiv' => [
+				'context' => 'side',
+				'fields' => [[
+					'slug' => '',
+					'std' => $this->generateInstructions(),
+					'type' => 'custom_html',
+				]],
+				'post_types' => $this->getPostTypes(),
+				'priority' => 'low',
+				'title' => __( 'How to use in your theme', 'pollux' ),
+			],
+		];
 	}
 
 	/**
@@ -105,9 +105,4 @@ trait Instruction
 	 * @return bool
 	 */
 	abstract protected function hasPostType( array $metabox );
-
-	/**
-	 * @return void
-	 */
-	abstract protected function normalize( array $metaboxes, array $defaults = [] );
 }

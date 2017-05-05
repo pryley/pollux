@@ -67,7 +67,10 @@ class MetaBox extends Component
 	public function register()
 	{
 		if( current_user_can( 'switch_themes' )) {
-			$this->addInstructions();
+			$instructions = $this->initInstructions();
+			if( is_array( $instructions )) {
+				$this->normalize( $instructions );
+			}
 		}
 		$metaboxes = func_num_args()
 			? ( new Helper )->toArray( func_get_arg(0) )
