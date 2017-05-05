@@ -4,6 +4,12 @@ namespace GeminiLabs\Pollux\MetaBox;
 
 use GeminiLabs\Pollux\Application;
 
+/**
+ * PostMeta::get('media');
+ * PostMeta::get('media',[
+ *    'fallback' => [],
+ * ]);
+ */
 class PostMetaManager
 {
 	/**

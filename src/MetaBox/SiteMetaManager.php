@@ -4,35 +4,82 @@ namespace GeminiLabs\Pollux\MetaBox;
 
 use GeminiLabs\Pollux\Settings\Settings;
 
+/**
+ * SiteMeta::all();
+ * SiteMeta::global();
+ * SiteMeta::global('seo_enabled','fallback');
+ * SiteMeta::get('global');
+ * SiteMeta::get('global','seo_enabled','fallback');
+ */
 class SiteMetaManager
 {
-	/**
-	 * @param null|string $group
-	 * @param null|string $key
-	 * @param mixed $fallback
-	 * @return mixed
-	 */
-	public function get( $group = null, $key = null, $fallback = null )
+	protected $options;
+
+	public function __construct()
 	{
-		$options = $this->getOption();
-		if( empty( $options )) {
-			return $fallback;
-		}
-		if( !is_string( $group )) {
-			return $options;
-		}
-		$group = $this->normalize( $options, $group, $fallback );
-		return is_string( $key )
-			? $this->normalize( (array) $group, $key, $fallback )
-			: $group;
+		$this->options = get_option( Settings::id(), [] );
 	}
 
 	/**
-	 * @return array
+	 * @param string $group
+	 * @return object|array|null
 	 */
-	protected function getOption()
+	public function __call( $group, $args )
 	{
-		return get_option( Settings::id(), [] );
+		$args = array_pad( $args, 2, null );
+		$group = $this->$group;
+		if( is_object( $group )) {
+			return $group;
+		}
+		return $this->get( $group, $args[0], $args[1] );
+	}
+
+	/**
+	 * @param string $group
+	 * @return object|array|null
+	 */
+	public function __get( $group )
+	{
+		if( $group == 'all' ) {
+			return (object) $this->options;
+		}
+		if( empty( $group )) {
+			$group = $this->getDefaultGroup();
+		}
+		return isset( $this->options[$group] )
+			? $this->options[$group]
+			: null;
+	}
+
+	/**
+	 * @param string $group
+	 * @param string|null $key
+	 * @param mixed $fallback
+	 * @return mixed
+	 */
+	public function get( $group = '', $key = '', $fallback = null )
+	{
+		if( func_num_args() < 1 ) {
+			return $this->all;
+		}
+		if( is_string( $group )) {
+			$group = $this->$group;
+		}
+		if( !is_array( $group )) {
+			return $fallback;
+		}
+		if( is_null( $key )) {
+			return $group;
+		}
+		return $this->getValue( $group, $key, $fallback );
+	}
+
+	/**
+	 * @return string
+	 */
+	protected function getDefaultGroup()
+	{
+		return '';
 	}
 
 	/**
@@ -40,17 +87,13 @@ class SiteMetaManager
 	 * @param mixed $fallback
 	 * @return mixed
 	 */
-	protected function normalize( array $options, $key, $fallback )
+	protected function getValue( array $group, $key, $fallback )
 	{
-		if( !array_key_exists( $key, $options )) {
+		if( !array_key_exists( $key, $group )) {
 			return $fallback;
 		}
-		$option = $options[$key];
-		$option = is_array( $option )
-			? array_filter( $option )
-			: trim( $option );
-		return empty( $option )
+		return empty( $group[$key] ) && !is_null( $fallback )
 			? $fallback
-			: $option;
+			: $group[$key];
 	}
 }
