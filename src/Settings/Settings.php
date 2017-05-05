@@ -118,7 +118,18 @@ class Settings extends MetaBox
 		if( is_null( $settings )) {
 			$settings = [];
 		}
-		return $this->filter( 'save', array_merge( $settings, $this->getSettings() ));
+		return $this->filter( 'save', array_merge( $this->getSettings(), $settings ));
+	}
+
+	/**
+	 * @param string $key
+	 * @param mixed $fallback
+	 * @param string $group
+	 * @return string|array
+	 */
+	public function getMetaValue( $key, $fallback = '', $group = '' )
+	{
+		return SiteMeta::get( $group, $key, $fallback );
 	}
 
 	/**
@@ -129,7 +140,7 @@ class Settings extends MetaBox
 	{
 		if(( new Helper )->getCurrentScreen()->id != $this->hook )return;
 		foreach( parent::register() as $metabox ) {
-			new RWMetaBox( $metabox, static::ID, $this->hook );
+			new RWMetaBox( $metabox, static::ID, $this );
 		}
 		add_screen_option( 'layout_columns', [
 			'max' => 2,
@@ -247,14 +258,6 @@ class Settings extends MetaBox
 	protected function getSettings()
 	{
 		return (array) SiteMeta::all();
-	}
-
-	/**
-	 * @return string|array
-	 */
-	protected function getValue( $key, $group )
-	{
-		return SiteMeta::get( $group, $key, false );
 	}
 
 	/**

@@ -48,7 +48,7 @@ trait Instruction
 	}
 
 	/**
-	 * @return void
+	 * @return null|array
 	 */
 	protected function initInstructions()
 	{

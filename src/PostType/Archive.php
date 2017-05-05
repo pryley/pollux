@@ -82,6 +82,17 @@ class Archive extends Settings
 	}
 
 	/**
+	 * @param string $key
+	 * @param mixed $fallback
+	 * @param string $group
+	 * @return string|array
+	 */
+	public function getMetaValue( $key, $fallback = '', $group = '' )
+	{
+		return ArchiveMeta::get( $key, $fallback, $group );
+	}
+
+	/**
 	 * @return void
 	 * @action current_screen
 	 */
@@ -204,13 +215,5 @@ class Archive extends Settings
 	protected function getSettings()
 	{
 		return (array) ArchiveMeta::all();
-	}
-
-	/**
-	 * @return string|array
-	 */
-	protected function getValue( $key, $group )
-	{
-		return ArchiveMeta::get( $key, '', $group );
 	}
 }

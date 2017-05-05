@@ -20,7 +20,7 @@ depends:
     meta-box/meta-box.php: Meta Box
 
 archives: []
-meta_boxes: []
+metaboxes: []
 post_types: []
 settings: []
 taxonomies: []

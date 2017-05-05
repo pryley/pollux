@@ -61,6 +61,19 @@ class MetaBox extends Component
 	}
 
 	/**
+	 * @param string $key
+	 * @param mixed $fallback
+	 * @param string $group
+	 * @return string|array
+	 */
+	public function getMetaValue( $key, $fallback = '', $group = '' )
+	{
+		return PostMeta::get( $key, [
+			'id' => $this->getPostId(),
+		]);
+	}
+
+	/**
 	 * @return array
 	 * @filter rwmb_meta_boxes
 	 */
@@ -125,16 +138,6 @@ class MetaBox extends Component
 			),
 			false
 		));
-	}
-
-	/**
-	 * @return string|array
-	 */
-	protected function getValue( $key, $group )
-	{
-		return PostMeta::get( $key, [
-			'id' => $this->getPostId(),
-		]);
 	}
 
 	/**
@@ -253,7 +256,7 @@ class MetaBox extends Component
 			if( empty( $value ))return;
 			$dependency = array_search( $value, array_column( $fields, 'id' ));
 			$fields[$index]['attributes']['data-depends'] = $value;
-			if( !$this->getValue( $fields[$dependency]['slug'], $metabox['slug'] )) {
+			if( !$this->getMetaValue( $fields[$dependency]['slug'], '', $metabox['slug'] )) {
 				$fields[$index]['class'] = trim( 'hidden ' . $fields[$index]['class'] );
 			}
 		});

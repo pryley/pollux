@@ -2,23 +2,21 @@
 
 namespace GeminiLabs\Pollux\Settings;
 
-use GeminiLabs\Pollux\Facades\SiteMeta;
 use GeminiLabs\Pollux\Helper;
-use GeminiLabs\Pollux\Settings\Settings;
 use RW_Meta_Box;
 use RWMB_Field;
 
 class RWMetaBox extends RW_Meta_Box
 {
-	protected $pollux_hook;
+	protected $pollux_caller;
 	protected $pollux_id;
 
-	public function __construct( $metabox, $id = null, $hook = null )
+	public function __construct( $metabox, $id = null, $caller )
 	{
 		parent::__construct( $metabox );
 		$this->meta_box = static::normalize( $this->meta_box );
 
-		$this->pollux_hook = $hook;
+		$this->pollux_caller = $caller;
 		$this->pollux_id = $id;
 
 		remove_action( 'add_meta_boxes', [$this, 'add_meta_boxes'] );
@@ -41,7 +39,7 @@ class RWMetaBox extends RW_Meta_Box
 			return $meta;
 		}
 		$meta = call_user_func( [RWMB_Field::get_class_name( $field ), 'esc_meta'], ( $saved
-			? SiteMeta::get( $this->meta_box['slug'], $field['slug'], $meta )
+			? $this->pollux_caller->getMetaValue( $field['slug'], $meta, $this->meta_box['slug'] )
 			: $field['std']
 		));
 		return $this->_normalize_field_meta( $meta, $field );
@@ -87,7 +85,7 @@ class RWMetaBox extends RW_Meta_Box
 	 */
 	public function is_edit_screen( $screen = null )
 	{
-		return get_current_screen()->id == $this->pollux_hook;
+		return get_current_screen()->id == $this->pollux_caller->hook;
 	}
 
 	/**
@@ -96,7 +94,7 @@ class RWMetaBox extends RW_Meta_Box
 	public function is_saved()
 	{
 		foreach( array_column( $this->fields, 'slug' ) as $field ) {
-			if( !is_null( SiteMeta::get( $this->meta_box['slug'], $field, null ))) {
+			if( !is_null( $this->pollux_caller->getMetaValue( $field, null, $this->meta_box['slug'] ))) {
 				return true;
 			}
 		}

@@ -7,10 +7,10 @@ use GeminiLabs\Pollux\PostType\Archive;
 
 /**
  * ArchiveMeta::all();
- * ArchiveMeta::post();
- * ArchiveMeta::post('title','fallback');
- * ArchiveMeta::get('title');
- * ArchiveMeta::get('title','fallback','post');
+ * ArchiveMeta::group();
+ * ArchiveMeta::group('option','fallback');
+ * ArchiveMeta::get('group');
+ * ArchiveMeta::get('group','option','fallback');
  */
 class ArchiveMetaManager extends SiteMetaManager
 {
