@@ -35,6 +35,8 @@ class Taxonomy extends Component
 	 */
 	public function init()
 	{
+		if( empty( $this->app->config['taxonomies'] ))return;
+
 		$this->normalize();
 
 		add_action( 'restrict_manage_posts', [ $this, 'printFilters'] );

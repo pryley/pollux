@@ -45,6 +45,8 @@ class PostType extends Component
 	 */
 	public function init()
 	{
+		if( empty( $this->app->config['post_types'] ))return;
+
 		$this->setColumns();
 		$this->normalize();
 		$this->initColumns();

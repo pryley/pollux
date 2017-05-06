@@ -41,6 +41,11 @@ class Settings extends MetaBox
 	 */
 	public function init()
 	{
+		if( empty( $this->app->config[static::ID] ))return;
+		if( is_bool( $this->app->config[static::ID] )) {
+			$this->app->config[static::ID] = [];
+		}
+
 		// @todo: run GateKeeper to check dependencies and capability (make sure it it run on the correct hook!)
 		// if( !is_plugin_active( 'meta-box/meta-box.php' ))return;
 
