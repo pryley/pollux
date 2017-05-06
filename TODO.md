@@ -11,5 +11,7 @@
 - [x] SiteMeta
 - [x] Miscellaneous
 - [x] Disable Posts
-- [ ] Disable Comments
+- [ ] GateKeeper (plugin depends)
+- [ ] Auto-generate language file for config file
 - [ ] Color Schemes
+- [ ] Settings page to change plugin config
