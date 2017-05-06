@@ -3,6 +3,7 @@
 namespace GeminiLabs\Pollux;
 
 use GeminiLabs\Pollux\Application;
+use WP_Screen;
 
 class Helper
 {
@@ -58,20 +59,14 @@ class Helper
 
 	/**
 	 * get_current_screen() is unreliable because it is defined on most admin pages, but not all.
-	 * @return WP_Screen|null
+	 * @return WP_Screen
 	 */
 	public function getCurrentScreen()
 	{
 		global $current_screen, $pagenow;
-		if( isset( $current_screen )) {
-			$current_screen->pagenow = $pagenow;
-			return $current_screen;
-		}
-		return (object) [
-			'base' => '',
-			'id' => '',
-			'pagenow' => $pagenow,
-		];
+		$screen = WP_Screen::get( $current_screen );
+		$screen->pagenow = $pagenow;
+		return $screen;
 	}
 
 	/**

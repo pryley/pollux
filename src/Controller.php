@@ -6,6 +6,7 @@ use GeminiLabs\Pollux\Application;
 use GeminiLabs\Pollux\Helper;
 use GeminiLabs\Pollux\PostType\Archive;
 use GeminiLabs\Pollux\Settings\Settings;
+use WP_Screen;
 
 class Controller
 {
@@ -37,21 +38,9 @@ class Controller
 	{
 		$screen = ( new Helper )->getCurrentScreen();
 
-		if(( new Helper )->endsWith( '_archive', $screen->id ) && $screen->pagenow == 'edit.php' ) {
-			wp_enqueue_script( 'editor-expand' );
-			wp_enqueue_script( 'common' );
-			wp_enqueue_script( 'wp-lists' );
-			wp_enqueue_script( 'post' );
-			wp_enqueue_script( 'postbox' );
-			if( wp_is_mobile() ) {
-				wp_enqueue_script( 'jquery-touch-punch' );
-			}
-		}
-		if( $screen->id == sprintf( 'toplevel_page_%s', Settings::id() )) {
-			wp_enqueue_script( 'common' );
-			wp_enqueue_script( 'wp-lists' );
-			wp_enqueue_script( 'postbox' );
-		}
+		$this->registerArchiveAssets( $screen );
+		$this->registerSettingsAssets( $screen );
+
 		wp_enqueue_style( 'pollux/main.css',
 			$this->app->url( 'assets/main.css' ),
 			apply_filters( 'pollux/enqueue/css/deps', [] ),
@@ -93,5 +82,34 @@ class Controller
 		if( !$this->app->config['remove_wordpress_menu'] )return;
 		global $wp_admin_bar;
 		$wp_admin_bar->remove_menu( 'wp-logo' );
+	}
+
+	/**
+	 * @return void
+	 */
+	protected function registerArchiveAssets( WP_Screen $screen )
+	{
+		if(( new Helper )->endsWith( '_archive', $screen->id ) && $screen->pagenow == 'edit.php' ) {
+			wp_enqueue_script( 'common' );
+			wp_enqueue_script( 'editor-expand' );
+			wp_enqueue_script( 'post' );
+			wp_enqueue_script( 'postbox' );
+			wp_enqueue_script( 'wp-lists' );
+			if( wp_is_mobile() ) {
+				wp_enqueue_script( 'jquery-touch-punch' );
+			}
+		}
+	}
+
+	/**
+	 * @return void
+	 */
+	protected function registerSettingsAssets( WP_Screen $screen )
+	{
+		if( $screen->id == sprintf( 'toplevel_page_%s', Settings::id() )) {
+			wp_enqueue_script( 'common' );
+			wp_enqueue_script( 'postbox' );
+			wp_enqueue_script( 'wp-lists' );
+		}
 	}
 }

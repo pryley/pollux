@@ -20,3 +20,5 @@ spl_autoload_register( function( $class )
 		break;
 	}
 });
+
+require_once( ABSPATH . 'wp-admin/includes/class-wp-screen.php' );
