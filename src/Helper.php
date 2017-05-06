@@ -3,7 +3,6 @@
 namespace GeminiLabs\Pollux;
 
 use GeminiLabs\Pollux\Application;
-use WP_Screen;
 
 class Helper
 {
@@ -63,8 +62,13 @@ class Helper
 	 */
 	public function getCurrentScreen()
 	{
-		global $current_screen, $pagenow;
-		$screen = WP_Screen::get( $current_screen );
+		global $hook_suffix, $pagenow;
+		$screen = function_exists( 'get_current_screen' )
+			? get_current_screen()
+			: (object) [
+				'base' => $hook_suffix,
+				'id' => $hook_suffix,
+			];
 		$screen->pagenow = $pagenow;
 		return $screen;
 	}
