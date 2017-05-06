@@ -65,7 +65,6 @@ class Controller
 	{
 		if( !$this->app->config['remove_dashboard_widgets'] )return;
 		$widgets = apply_filters( 'pollux/dashoard/widgets', [
-			'dashboard_primary',
 			'dashboard_quick_press',
 		]);
 		foreach( $widgets as $widget ) {

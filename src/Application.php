@@ -125,6 +125,7 @@ final class Application extends Container
 		$classNames = array(
 			'MetaBox\MetaBox',
 			'PostType\Archive',
+			'PostType\DisablePosts',
 			'PostType\PostType',
 			'Settings\Settings',
 			'Taxonomy\Taxonomy',

@@ -10,6 +10,6 @@
 - [x] PostMeta
 - [x] SiteMeta
 - [x] Miscellaneous
-- [ ] Disable Posts
+- [x] Disable Posts
 - [ ] Disable Comments
 - [ ] Color Schemes
