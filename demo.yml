@@ -1,0 +1,158 @@
+archives: true
+#   post:
+#     title: __('Images', 'pollux')
+#     fields:
+#       media:
+#         type: image_advanced
+#         max_file_uploads: 1
+
+disable_posts: false
+
+post_types:
+  gallery:
+    single: __('Gallery', 'pollux')
+    plural: __('Galleries', 'pollux')
+    menu_icon: dashicons-images-alt2
+    menu_position: 20
+    supports:
+      - title
+    columns:
+      - title
+      - slug
+      - media
+      - date
+    public: false
+    show_ui: true
+    has_archive: false
+
+taxonomies:
+  project_type:
+    single: __('Project Type', 'pollux')
+    plural: __('Project Types', 'pollux')
+    post_types:
+      - page
+      - gallery
+    rewrite: false
+
+metaboxes:
+  contact_options:
+    post_types: page
+    title: __('Contact Options', 'pollux')
+    condition:
+      is_page_template: template-contact.php
+    fields:
+      address:
+        name: __('Address', 'pollux')
+        type: text
+        class: full-width
+        std: Palladium House, 1-4 Argyll St, Soho, London W1F 7TA, UK
+      location:
+        name: __('Location', 'pollux')
+        type: map
+        std: 51.514156, -0.140278, 16
+        address_field: address
+        api_key: ''
+      shortcode:
+        name: __('Custom Form', 'pollux')
+        placeholder: __('Enter a custom Contact Form shortcode here', 'pollux')
+        type: text
+        class: full-width
+        desc: __('Replace the default contact form by entering a custom contact form shortcode here.', 'pollux')
+  gallery_options:
+    post_types: page
+    title: __('Gallery Options', 'pollux')
+    condition:
+      is_page_template: template-galley.php
+    fields:
+      gallery:
+        type: post
+        name: __('Gallery', 'pollux')
+        placeholder: __('Select a gallery', 'pollux')
+        field_type: select
+        post_type: gallery
+      images_per_page:
+        type: number
+        name: __('Images Per Page', 'pollux')
+        size: 4
+      lazyload:
+        type: checkbox
+        name: __('Lazyload Images?', 'pollux')
+      pagination:
+        type: checkbox
+        name: __('Use Pagination?', 'pollux')
+  gallery_media:
+    post_types: gallery
+    title: __('Gallery Media', 'pollux')
+    fields:
+      media:
+        type: image_advanced
+        size: thumbnail
+    validation:
+      rules:
+        media:
+          required: true
+
+settings:
+  global:
+    title: __('SEO Settings', 'pollux')
+    fields:
+      seo_enabled:
+        type: checkbox
+        name: __('Enable SEO?', 'pollux')
+      seo_title:
+        type: text
+        name: __('SEO Title (prefix)', 'pollux')
+        depends: seo_enabled
+        attributes:
+          class: large-text
+      seo_description:
+        type: textarea
+        name: __('SEO Description', 'pollux')
+        depends: seo_enabled
+        attributes:
+          class: large-text
+      seo_keywords:
+        type: text
+        name: __('SEO Keywords', 'pollux')
+        depends: seo_enabled
+        attributes:
+          class: large-text
+      robots:
+        name: Robots
+        desc: sprintf('<a href="http://www.robotstxt.org/meta.html" target="_blank">%s</a>', __('What is this?', 'pollux'))
+        type: select
+        default: index, follow
+        options:
+          - index, follow
+          - index, nofollow
+          - noindex, follow
+          - noindex, nofollow
+  contact:
+    title: __('Contact Details', 'pollux')
+    fields:
+      email:
+        type: text
+        name: __('Email', 'pollux')
+  services:
+    title: __('3rd Party Services', 'pollux')
+    fields:
+      google_analytics:
+        type: text
+        name: __('Google Analytics ID', 'pollux')
+        desc: sprintf('<a href="https://www.google.com/analytics/" target="_blank">%s</a>', __('What is this?', 'pollux'))
+        placeholder: UA-XXXXXXXX-Y
+      google_maps:
+        condition:
+          is_plugin_active: meta-box/meta-box.php
+        type: text
+        name: __('Google Maps API key', 'pollux')
+        desc: sprintf('<a href="https://developers.google.com/maps/documentation/javascript/get-api-key" target="_blank">%s</a>', __('What is this?', 'pollux'))
+    validation:
+      rules:
+        google_analytics:
+          required: true
+          minlength: 5
+      messages:
+        google_analytics:
+          required: This is required
+
