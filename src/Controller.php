@@ -26,6 +26,17 @@ class Controller
 	}
 
 	/**
+	 * @return array
+	 * @filter plugin_action_links_pollux/pollux.php
+	 */
+	public function filterPluginLinks( array $links )
+	{
+		$settings_url = admin_url( sprintf( 'options-general.php?page=%s', $this->app->id ));
+		$links[] = sprintf( '<a href="%s">%s</a>', $settings_url, __( 'Settings', 'pollux' ));
+		return $links;
+	}
+
+	/**
 	 * @return void
 	 * @filter admin_footer_text
 	 */

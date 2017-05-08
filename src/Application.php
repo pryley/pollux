@@ -52,12 +52,14 @@ final class Application extends Container
 	{
 		$this->bootstrap();
 
+		$basename = plugin_basename( $this->file );
 		$controller = $this->make( 'Controller' );
 
 		add_action( 'admin_enqueue_scripts',           array( $controller, 'registerAssets' ));
 		add_action( 'admin_menu',                      array( $controller, 'registerPage' ));
 		add_action( 'admin_init',                      array( $controller, 'removeDashboardWidgets' ));
 		add_action( 'wp_before_admin_bar_render',      array( $controller, 'removeWordPressMenu' ));
+		add_filter( "plugin_action_links_{$basename}", array( $controller, 'filterPluginLinks' ));
 		add_filter( 'admin_footer_text',               array( $controller, 'filterWordPressFooter' ));
 
 		// Disallow indexing of the site on non-production environments
