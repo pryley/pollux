@@ -3,10 +3,12 @@ var autoprefixer    = require('gulp-autoprefixer');
 var babel           = require('gulp-babel');
 var bump            = require('gulp-bump');
 var checktextdomain = require('gulp-checktextdomain');
+var concat          = require('gulp-concat');
 var cssnano         = require('gulp-cssnano');
 var gulp            = require('gulp');
 var gulpif          = require('gulp-if');
 var jshint          = require('gulp-jshint');
+var mergeStream     = require('merge-stream');
 var plumber         = require('gulp-plumber');
 var potomo          = require('gulp-potomo');
 var pseudo          = require('gulp-pseudo-i18n');
@@ -36,15 +38,19 @@ gulp.task('jshint', function() {
 /* JS Task
  -------------------------------------------------- */
 gulp.task('js', function() {
-  return gulp.src(config.watch.js)
+  var streams = mergeStream();
+  for(var key in config.scripts) {
+    streams.add(gulp.src(config.scripts[key]).pipe(concat(key)));
+  }
+  return streams
   .pipe(plumber({
     errorHandler: function(error) {
     console.log(error.message);
     this.emit('end');
   }}))
-  .pipe(babel({
-    presets: ["env"]
-  }))
+  // .pipe(babel({
+  //   presets: ["env"]
+  // }))
   .pipe(gulpif(args.production, uglify({
     preserveComments: 'license',
   })))
@@ -54,6 +60,23 @@ gulp.task('js', function() {
 /* CSS Task
  -------------------------------------------------- */
 gulp.task('css', function() {
+  var streams = mergeStream();
+  for(var key in config.styles) {
+    streams.add(gulp.src(config.styles[key]).pipe(concat(key)));
+  }
+  return streams
+  .pipe(plumber({
+    errorHandler: function(error) {
+    console.log(error.message);
+    this.emit('end');
+  }}))
+  .pipe(gulpif(args.production, cssnano()))
+  .pipe(gulp.dest(config.dest.css))
+});
+
+/* SCSS Task
+ -------------------------------------------------- */
+gulp.task('scss', function() {
   return gulp.src(config.watch.scss)
   .pipe(plumber({
     errorHandler: function(error) {
@@ -138,17 +161,17 @@ gulp.task('bump', function() {
  -------------------------------------------------- */
 gulp.task('watch', function() {
   gulp.watch(config.watch.js, ['jshint', 'js']);
-  gulp.watch(config.watch.scss, ['css']);
+  gulp.watch(config.watch.scss, ['scss']);
 });
 
 /* Default Task
  -------------------------------------------------- */
 gulp.task('default', function() {
-  gulp.start('css', 'jshint', 'js')
+  gulp.start('css', 'scss', 'jshint', 'js')
 });
 
 /* Build Task
  -------------------------------------------------- */
 gulp.task('build', function() {
-  gulp.start('css', 'jshint', 'js', 'languages')
+  gulp.start('css', 'scss', 'jshint', 'js', 'languages')
 });

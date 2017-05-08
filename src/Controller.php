@@ -39,6 +39,7 @@ class Controller
 		$screen = ( new Helper )->getCurrentScreen();
 
 		$this->registerArchiveAssets( $screen );
+		$this->registerCodemirrorAssets( $screen );
 		$this->registerSettingsAssets( $screen );
 
 		wp_enqueue_style( 'pollux/main.css',
@@ -97,6 +98,25 @@ class Controller
 			if( wp_is_mobile() ) {
 				wp_enqueue_script( 'jquery-touch-punch' );
 			}
+		}
+	}
+
+	/**
+	 * @return void
+	 */
+	protected function registerCodemirrorAssets( WP_Screen $screen )
+	{
+		if( $screen->id == 'settings_page_pollux' && $screen->pagenow == 'options-general.php' ) {
+			wp_enqueue_style( 'pollux/codemirror.css',
+				$this->app->url( 'assets/codemirror.css' ),
+				[],
+				$this->app->version
+			);
+			wp_enqueue_script( 'pollux/codemirror.js',
+				$this->app->url( 'assets/codemirror.js' ),
+				['pollux/main.js'],
+				$this->app->version
+			);
 		}
 	}
 
