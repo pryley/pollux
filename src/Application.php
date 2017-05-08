@@ -161,11 +161,11 @@ final class Application extends Container
 	 */
 	protected function registerAliases()
 	{
-		$aliases = array(
+		$aliases = apply_filters( 'pollux/aliases', array(
 			'ArchiveMeta' => 'GeminiLabs\Pollux\Facades\ArchiveMeta',
 			'PostMeta' => 'GeminiLabs\Pollux\Facades\PostMeta',
 			'SiteMeta' => 'GeminiLabs\Pollux\Facades\SiteMeta',
-		);
+		));
 		AliasLoader::getInstance( $aliases )->register();
 	}
 }
