@@ -54,10 +54,11 @@ final class Application extends Container
 
 		$controller = $this->make( 'Controller' );
 
-		add_action( 'admin_enqueue_scripts',      array( $controller, 'registerAssets' ));
-		add_action( 'admin_init',                 array( $controller, 'removeDashboardWidgets' ));
-		add_action( 'wp_before_admin_bar_render', array( $controller, 'removeWordPressMenu' ));
-		add_filter( 'admin_footer_text',          array( $controller, 'filterWordPressFooter' ));
+		add_action( 'admin_enqueue_scripts',           array( $controller, 'registerAssets' ));
+		add_action( 'admin_menu',                      array( $controller, 'registerPage' ));
+		add_action( 'admin_init',                      array( $controller, 'removeDashboardWidgets' ));
+		add_action( 'wp_before_admin_bar_render',      array( $controller, 'removeWordPressMenu' ));
+		add_filter( 'admin_footer_text',               array( $controller, 'filterWordPressFooter' ));
 
 		// Disallow indexing of the site on non-production environments
 		if( !$this->environment( 'production' ) && !is_admin() ) {

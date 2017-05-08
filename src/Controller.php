@@ -11,6 +11,11 @@ use WP_Screen;
 class Controller
 {
 	/**
+	 * @var string
+	 */
+	public $hook;
+
+	/**
 	 * @var Application
 	 */
 	protected $app;
@@ -60,6 +65,22 @@ class Controller
 
 	/**
 	 * @return void
+	 * @action admin_menu
+	 */
+	public function registerPage()
+	{
+		$this->hook = add_submenu_page(
+			'options-general.php',
+			__( 'Pollux', 'pollux' ),
+			__( 'Pollux', 'pollux' ),
+			'manage_options',
+			$this->app->id,
+			[$this, 'renderPage']
+		);
+	}
+
+	/**
+	 * @return void
 	 * @action admin_init
 	 */
 	public function removeDashboardWidgets()
@@ -82,6 +103,18 @@ class Controller
 		if( !$this->app->config['remove_wordpress_menu'] )return;
 		global $wp_admin_bar;
 		$wp_admin_bar->remove_menu( 'wp-logo' );
+	}
+
+	/**
+	 * @return void
+	 * @callback add_submenu_page
+	 */
+	public function renderPage()
+	{
+		$this->app->render( 'index', [
+			'heading' => __( 'Pollux Settings', 'pollux' ),
+			'id' => $this->hook,
+		]);
 	}
 
 	/**
