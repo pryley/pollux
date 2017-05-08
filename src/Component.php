@@ -28,23 +28,6 @@ abstract class Component
 	abstract public function register();
 
 	/**
-	 * @param string $view
-	 * @return void
-	 */
-	public function render( $view, array $data = [] )
-	{
-		$file = apply_filters( 'pollux/views/file',
-			$this->app->path( sprintf( 'views/%s.php', str_replace( '.php', '', $view ))),
-			$view,
-			$data
-		);
-		if( file_exists( $file )) {
-			extract( $data );
-			return include $file;
-		}
-	}
-
-	/**
 	 * @param string $id
 	 * @return array
 	 */

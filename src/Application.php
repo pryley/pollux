@@ -105,6 +105,24 @@ final class Application extends Container
 	}
 
 	/**
+	 * @param string $view
+	 * @return bool
+	 */
+	public function render( $view, array $data = [] )
+	{
+		$file = apply_filters( 'pollux/views/file',
+			$this->path( sprintf( 'views/%s.php', str_replace( '.php', '', $view ))),
+			$view,
+			$data
+		);
+		if( file_exists( $file )) {
+			extract( $data );
+			return include $file;
+		}
+		return false;
+	}
+
+	/**
 	 * @param string $path
 	 * @return string
 	 */

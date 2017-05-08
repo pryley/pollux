@@ -170,7 +170,7 @@ class Settings extends MetaBox
 	public function renderFooterScript()
 	{
 		if(( new Helper )->getCurrentScreen()->id != $this->hook )return;
-		$this->render( 'settings/script', [
+		$this->app->render( 'settings/script', [
 			'confirm' => __( 'Are you sure want to do this?', 'pollux' ),
 			'hook' => $this->hook,
 			'id' => static::id(),
@@ -183,7 +183,7 @@ class Settings extends MetaBox
 	 */
 	public function renderPage()
 	{
-		$this->render( 'settings/index', [
+		$this->app->render( 'settings/index', [
 			'columns' => get_current_screen()->get_columns(),
 			'heading' => __( 'Site Settings', 'pollux' ),
 			'id' => static::id(),
@@ -202,7 +202,7 @@ class Settings extends MetaBox
 			'action' => 'reset',
 			'page' => static::id(),
 		];
-		$this->render( 'settings/submit', [
+		$this->app->render( 'settings/submit', [
 			'reset' => __( 'Reset all', 'pollux' ),
 			'reset_url' => esc_url( add_query_arg( $query, admin_url( $pagenow ))),
 			'submit' => get_submit_button( __( 'Save', 'pollux' ), 'primary', 'submit', false ),

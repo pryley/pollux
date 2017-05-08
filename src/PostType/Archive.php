@@ -169,7 +169,7 @@ class Archive extends Settings
 			? wp_get_attachment_image( $imageId, $imageSize )
 			: __( 'Set Featured Image', 'pollux' );
 
-		$this->render( 'archive/featured', [
+		$this->app->render( 'archive/featured', [
 			'edit_image' => __( 'Click the image to edit or update', 'pollux' ),
 			'id' => static::id(),
 			'image_id' => $imageId,
@@ -181,14 +181,14 @@ class Archive extends Settings
 
 	/**
 	 * @return void
-	 * @callback add_menu_page
+	 * @callback add_submenu_page
 	 */
 	public function renderPage()
 	{
 		$type = $this->getPostType();
 		if( empty( $type ))return;
 		$labels = get_post_type_labels( get_post_type_object( $type ));
-		$this->render( 'archive/index', [
+		$this->app->render( 'archive/index', [
 			'columns' => get_current_screen()->get_columns(),
 			'content' => ArchiveMeta::get( 'content', '', $type ),
 			'heading' => sprintf( _x( '%s Archive', 'post archive', 'pollux' ), $labels->singular_name ),
