@@ -41,7 +41,7 @@
 .cm-s-pollux .cm-comment {
 	color: #969896;
 }
-.cm-s-pollux .CodeMirror-line > span::after {
+.cm-s-pollux .CodeMirror-line>span::after {
 	display: none;
 }
 .cm-s-pollux .cm-whitespace::before {
@@ -65,7 +65,7 @@
 	border: 1px solid rgba(27,31,35,0.3);
 	border-radius: 3px;
 }
-.cm-trailingspace {
+.cm-s-pollux .cm-trailingspace {
 	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAACCAYAAAB/qH1jAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3QUXCToH00Y1UgAAACFJREFUCNdjPMDBUc/AwNDAAAFMTAwMDA0OP34wQgX/AQBYgwYEx4f9lQAAAABJRU5ErkJggg==);
 	background-position: bottom left;
 	background-repeat: repeat-x;
@@ -95,22 +95,22 @@
 	background-color: #fff;
 }
 
-.CodeMirror-lint-marker-error,
-.CodeMirror-lint-marker-warning {
+.CodeMirror-lint-marker-warning,
+.CodeMirror-lint-marker-error {
 	display: block;
 	position: relative;
 	height: 20px;
 	background-image: none;
 }
-.CodeMirror-lint-message-error,
-.CodeMirror-lint-message-warning {
+.CodeMirror-lint-message-warning,
+.CodeMirror-lint-message-error {
 	position: relative;
 	background-image: none;
 }
-.CodeMirror-lint-marker-error::before,
 .CodeMirror-lint-marker-warning::before,
-.CodeMirror-lint-message-error::before,
-.CodeMirror-lint-message-warning::before {
+.CodeMirror-lint-marker-error::before,
+.CodeMirror-lint-message-warning::before,
+.CodeMirror-lint-message-error::before {
 	display: block;
 	position: absolute;
 	left: 0;

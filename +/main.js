@@ -103,7 +103,7 @@ pollux.metabox.setVisibility = function( el )
 pollux.tabs.init = function()
 {
 	pollux.tabs.tabs = document.querySelectorAll( '.pollux-tabs a' );
-	pollux.tabs.views = document.querySelectorAll( '#pollux-config .table' );
+	pollux.tabs.views = document.querySelectorAll( '.pollux-config .form-table' );
 
 	[].forEach.call( pollux.tabs.tabs, function( tab, index ) {
 		var active = location.hash ? tab.getAttribute( 'href' ) === location.hash : index === 0;
@@ -123,7 +123,7 @@ pollux.tabs.onClick = function( ev )
 	ev.preventDefault();
 	this.blur();
 	var hash = this.getAttribute( 'href' );
-	var view = document.querySelector( '#pollux-config ' + hash );
+	var view = document.querySelector( '.pollux-config ' + hash );
 	pollux.tabs.setTab( this );
 	view.removeAttribute( 'id' );
 	location.hash = hash;
@@ -155,13 +155,15 @@ pollux.tabs.setView = function( idx )
 	});
 };
 
+/**
+ * @return void
+ */
 pollux.editors.init = function()
 {
 	[].forEach.call( document.querySelectorAll( '.pollux-code' ), function( editor ) {
 		var cmeditor = CodeMirror.fromTextArea( editor, {
 			gutters: ['CodeMirror-lint-markers'],
 			highlightSelectionMatches: { wordsOnly: true },
-			indentWithTabs: false,
 			lineNumbers: true,
 			lint: true,
 			mode: 'text/yaml',
