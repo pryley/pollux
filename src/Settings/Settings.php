@@ -51,31 +51,14 @@ class Settings extends MetaBox
 
 		$this->normalize( $this->app->config[static::ID] );
 
-		add_action( 'admin_menu',                                [$this, 'addPage'] );
 		add_action( 'pollux/'.static::ID.'/init',                [$this, 'addSubmitMetaBox'] );
 		add_action( 'current_screen',                            [$this, 'register'] );
+		add_action( 'admin_menu',                                [$this, 'registerPage'] );
 		add_action( 'admin_menu',                                [$this, 'registerSetting'] );
 		add_action( 'pollux/'.static::ID.'/init',                [$this, 'reset'] );
 		add_action( 'admin_print_footer_scripts',                [$this, 'renderFooterScript'] );
 		add_filter( 'pollux/'.static::ID.'/instruction',         [$this, 'filterInstruction'], 10, 3 );
 		add_filter( 'pollux/'.static::ID.'/before/instructions', [$this, 'filterBeforeInstructions'] );
-	}
-
-	/**
-	 * @return void
-	 * @action admin_menu
-	 */
-	public function addPage()
-	{
-		$this->hook = call_user_func_array( 'add_menu_page', $this->filter( 'page', [
-			__( 'Site Settings', 'pollux' ),
-			__( 'Site Settings', 'pollux' ),
-			'edit_theme_options',
-			static::id(),
-			[$this, 'renderPage'],
-			'dashicons-screenoptions',
-			1313
-		]));
 	}
 
 	/**
@@ -152,6 +135,23 @@ class Settings extends MetaBox
 			'default' => 2,
 		]);
 		$this->action( 'init' );
+	}
+
+	/**
+	 * @return void
+	 * @action admin_menu
+	 */
+	public function registerPage()
+	{
+		$this->hook = call_user_func_array( 'add_menu_page', $this->filter( 'page', [
+			__( 'Site Settings', 'pollux' ),
+			__( 'Site Settings', 'pollux' ),
+			'edit_theme_options',
+			static::id(),
+			[$this, 'renderPage'],
+			'dashicons-screenoptions',
+			1313
+		]));
 	}
 
 	/**

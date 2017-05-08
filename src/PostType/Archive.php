@@ -34,25 +34,6 @@ class Archive extends Settings
 	}
 
 	/**
-	 * @return void
-	 * @action admin_menu
-	 */
-	public function addPage()
-	{
-		foreach( $this->getPostTypesWithArchive() as $type => $page ) {
-			$labels = get_post_type_labels( get_post_type_object( $type ));
-			$this->hooks[$type] = call_user_func_array( 'add_submenu_page', $this->filter( 'page', [
-				$page,
-				sprintf( _x( '%s Archive', 'post archive', 'pollux' ), $labels->singular_name ),
-				sprintf( _x( '%s Archive', 'post archive', 'pollux' ), $labels->singular_name ),
-				'edit_theme_options',
-				sprintf( '%s_archive', $type ),
-				[$this, 'renderPage'],
-			]));
-		}
-	}
-
-	/**
 	 * @return string
 	 * @filter pollux/{static::ID}/before/instructions
 	 */
@@ -131,6 +112,25 @@ class Archive extends Settings
 	{
 		if( !current_user_can( 'upload_files' ))return;
 		add_meta_box( 'postimagediv', __( 'Featured Image', 'pollux' ), [$this, 'renderFeaturedImageMetaBox'], null, 'side', 'low' );
+	}
+
+	/**
+	 * @return void
+	 * @action admin_menu
+	 */
+	public function registerPage()
+	{
+		foreach( $this->getPostTypesWithArchive() as $type => $page ) {
+			$labels = get_post_type_labels( get_post_type_object( $type ));
+			$this->hooks[$type] = call_user_func_array( 'add_submenu_page', $this->filter( 'page', [
+				$page,
+				sprintf( _x( '%s Archive', 'post archive', 'pollux' ), $labels->singular_name ),
+				sprintf( _x( '%s Archive', 'post archive', 'pollux' ), $labels->singular_name ),
+				'edit_theme_options',
+				sprintf( '%s_archive', $type ),
+				[$this, 'renderPage'],
+			]));
+		}
 	}
 
 	/**
