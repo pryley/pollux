@@ -57,6 +57,7 @@ final class Application extends Container
 
 		add_action( 'admin_enqueue_scripts',           array( $controller, 'registerAssets' ));
 		add_action( 'admin_menu',                      array( $controller, 'registerPage' ));
+		add_action( 'admin_menu',                      array( $controller, 'registerSetting' ));
 		add_action( 'admin_init',                      array( $controller, 'removeDashboardWidgets' ));
 		add_action( 'wp_before_admin_bar_render',      array( $controller, 'removeWordPressMenu' ));
 		add_filter( "plugin_action_links_{$basename}", array( $controller, 'filterPluginLinks' ));
@@ -86,9 +87,6 @@ final class Application extends Container
 	 */
 	public function onActivation()
 	{
-		if( !get_option( Settings::id() )) {
-			update_option( Settings::id(), [] );
-		}
 	}
 
 	/**

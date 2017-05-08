@@ -37,6 +37,17 @@ class Controller
 	}
 
 	/**
+	 * @param null|array $config
+	 * @return array
+	 * @callback register_setting
+	 */
+	public function filterSavedSettings( $config )
+	{
+		$config['updated'] = time();
+		return $config;
+	}
+
+	/**
 	 * @return void
 	 * @filter admin_footer_text
 	 */
@@ -92,6 +103,16 @@ class Controller
 
 	/**
 	 * @return void
+	 * @action admin_menu
+	 */
+	public function registerSetting()
+	{
+		$id = sprintf( '%sconfig', Application::PREFIX );
+		register_setting( $id, $id, [$this, 'filterSavedSettings'] );
+	}
+
+	/**
+	 * @return void
 	 * @action admin_init
 	 */
 	public function removeDashboardWidgets()
@@ -124,7 +145,7 @@ class Controller
 	{
 		$this->app->render( 'index', [
 			'heading' => __( 'Pollux Settings', 'pollux' ),
-			'id' => $this->hook,
+			'id' => sprintf( '%sconfig', Application::PREFIX ),
 		]);
 	}
 
