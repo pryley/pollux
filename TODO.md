@@ -12,9 +12,8 @@
 - [x] Miscellaneous
 - [x] Disable Posts
 - [x] Settings page to change plugin config
-- [ ] HELP tabs for pollux
 - [ ] GateKeeper (plugin depends)
 - [ ] Auto-generate language file for config file
-- [ ] Color Schemes
+- [ ] HELP tabs for pollux
 - [ ] Write test suite
-
+- [ ] Color Schemes
