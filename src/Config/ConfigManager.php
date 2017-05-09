@@ -10,7 +10,7 @@ use Symfony\Component\Yaml\Exception\ParseException;
 use Symfony\Component\Yaml\Yaml;
 
 /**
- * @property $updated
+ * @property int $updated
  */
 class ConfigManager extends SiteMetaManager
 {
@@ -18,9 +18,14 @@ class ConfigManager extends SiteMetaManager
 		'__', '_n', '_x', 'sprintf',
 	];
 
-	public function __construct()
+	/**
+	 * @var Application
+	 */
+	protected $app;
+
+	public function __construct( Application $app )
 	{
-		$this->app = Application::getInstance();
+		$this->app = $app;
 		$this->options = $this->buildConfig();
 	}
 
@@ -140,7 +145,7 @@ class ConfigManager extends SiteMetaManager
 	/**
 	 * @return array
 	 */
-	public function setTimestamp( array $config, $timestamp = false )
+	public function setTimestamp( array $config, $timestamp = null )
 	{
 		$timestamp || $timestamp = time();
 		$config['updated'] = $timestamp;
@@ -156,7 +161,7 @@ class ConfigManager extends SiteMetaManager
 	}
 
 	/**
-	 * @return string
+	 * @return string|null
 	 */
 	protected function dumpYaml( array $array )
 	{
@@ -204,7 +209,7 @@ class ConfigManager extends SiteMetaManager
 		}
 		catch( ParseException $e ) {
 			// http://api.symfony.com/3.2/Symfony/Component/Yaml/Exception/ParseException.html
-			error_log( print_r( sprintf("Unable to parse the YAML string: %s", $e->getMessage()), 1 ));
+			error_log( print_r( sprintf( 'Unable to parse the YAML string: %s', $e->getMessage() ), 1 ));
 			error_log( print_r( $e->getParsedFile(), 1 ));
 			error_log( print_r( $e->getParsedLine(), 1 ));
 			error_log( print_r( $e->getSnippet(), 1 ));
