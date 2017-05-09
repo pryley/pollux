@@ -5,18 +5,9 @@ remove_dashboard_widgets: false
 remove_wordpress_footer: false
 remove_wordpress_menu: false
 
-columns:
-  author: __('Author', 'pollux')
-  categories: __('Categories', 'pollux')
-  comments: __('Comments', 'pollux')
-  date: __('Date', 'pollux')
-  image: __('Image', 'pollux')
-  media: __('Media', 'pollux')
-  slug: __('Slug', 'pollux')
-  title: __('Title', 'pollux')
-
 archives: []
-depends: []
+columns: []
+dependencies: []
 metaboxes: []
 post_types: []
 settings: []

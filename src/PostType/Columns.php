@@ -106,13 +106,18 @@ trait Columns
 	 */
 	protected function setColumns()
 	{
-		$comments = sprintf(
-			'<span class="vers comment-grey-bubble" title="%1$s"><span class="screen-reader-text">%1$s</span></span>',
-			$this->app->config->columns['comments']
+		$defaults = [
+			'author' => __( 'Author', 'pollux' ),
+			'categories' => __( 'Categories', 'pollux' ),
+			'comments' => sprintf( '<span class="vers comment-grey-bubble" title="%1$s"><span class="screen-reader-text">%1$s</span></span>', __( 'Comments', 'pollux' )),
+			'date' => __( 'Date', 'pollux' ),
+			'image' => __( 'Image', 'pollux' ),
+			'media' => __( 'Media', 'pollux' ),
+			'slug' => __( 'Slug', 'pollux' ),
+			'title' => __( 'Title', 'pollux' ),
+		];
+		$this->columns = apply_filters( 'pollux/post_type/columns',
+			wp_parse_args( $this->app->config->columns, $defaults )
 		);
-		$columns = wp_parse_args( $this->app->config->columns, [
-			'comments' => $comments,
-		]);
-		$this->columns = apply_filters( 'pollux/post_type/columns', $columns );
 	}
 }
