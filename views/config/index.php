@@ -5,7 +5,6 @@
 
 	<h2 class="pollux-tabs nav-tab-wrapper">
 		<a class="nav-tab" href="#general"><?= __( 'General', 'pollux' ); ?></a>
-		<a class="nav-tab" href="#dependencies"><?= __( 'Dependencies', 'pollux' ); ?></a>
 		<a class="nav-tab" href="#metaboxes"><?= __( 'Meta Boxes', 'pollux' ); ?></a>
 		<a class="nav-tab" href="#post_types"><?= __( 'Post Types', 'pollux' ); ?></a>
 		<a class="nav-tab" href="#taxonomies"><?= __( 'Taxonomies', 'pollux' ); ?></a>
@@ -47,20 +46,6 @@
 								<?= __( 'Remove the WordPress Menu From the Admin Bar', 'pollux' ); ?>
 							</label>
 						</fieldset>
-					</td>
-				</tr>
-			</tbody>
-		</table>
-
-		<table class="form-table" id="dependencies">
-			<tbody>
-				<tr>
-					<th scope="row">
-						<label for="pollux_dependencies"><?= __( 'Plugin Dependencies', 'pollux' ); ?></label>
-					</th>
-					<td>
-						<textarea id="pollux_dependencies" name="pollux_config[dependencies]" rows="10" cols="50" class="large-text code pollux-code" placeholder=""><?= $config->yaml->dependencies; ?></textarea>
-						<p class="description"></p>
 					</td>
 				</tr>
 			</tbody>

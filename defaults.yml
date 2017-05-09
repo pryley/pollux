@@ -7,7 +7,6 @@ remove_wordpress_menu: false
 
 archives: []
 columns: []
-dependencies: []
 metaboxes: []
 post_types: []
 settings: []
