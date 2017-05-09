@@ -41,21 +41,21 @@ class Settings extends MetaBox
 	 */
 	public function init()
 	{
-		if( empty( $this->app->config[static::ID] ))return;
-		if( is_bool( $this->app->config[static::ID] )) {
-			$this->app->config[static::ID] = [];
-		}
+		// if( empty( $this->app->config->{static::ID} ))return;
+		// if( is_bool( $this->app->config->{static::ID} )) {
+		// 	$this->app->config->{static::ID} = [];
+		// }
 
 		// @todo: run GateKeeper to check dependencies and capability (make sure it it run on the correct hook!)
 		// if( !is_plugin_active( 'meta-box/meta-box.php' ))return;
 
-		$this->normalize( $this->app->config[static::ID] );
+		$this->normalize( $this->app->config->{static::ID} );
 
 		add_action( 'pollux/'.static::ID.'/init',                [$this, 'addSubmitMetaBox'] );
 		add_action( 'current_screen',                            [$this, 'register'] );
 		add_action( 'admin_menu',                                [$this, 'registerPage'] );
 		add_action( 'admin_menu',                                [$this, 'registerSetting'] );
-		add_action( 'pollux/'.static::ID.'/init',                [$this, 'reset'] );
+		add_action( 'pollux/'.static::ID.'/init',                [$this, 'resetPage'] );
 		add_action( 'admin_print_footer_scripts',                [$this, 'renderFooterScript'] );
 		add_filter( 'pollux/'.static::ID.'/instruction',         [$this, 'filterInstruction'], 10, 3 );
 		add_filter( 'pollux/'.static::ID.'/before/instructions', [$this, 'filterBeforeInstructions'] );
@@ -213,7 +213,7 @@ class Settings extends MetaBox
 	 * @return void
 	 * @action pollux/{static::ID}/init
 	 */
-	public function reset()
+	public function resetPage()
 	{
 		if( filter_input( INPUT_GET, 'page' ) !== static::id()
 			|| filter_input( INPUT_GET, 'action' ) !== 'reset'

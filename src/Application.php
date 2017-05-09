@@ -3,7 +3,7 @@
 namespace GeminiLabs\Pollux;
 
 use GeminiLabs\Pollux\AliasLoader;
-use GeminiLabs\Pollux\Config\Config;
+use GeminiLabs\Pollux\Config\ConfigManager;
 use GeminiLabs\Pollux\Container;
 use GeminiLabs\Pollux\Facade;
 use GeminiLabs\Pollux\GateKeeper;
@@ -56,8 +56,6 @@ final class Application extends Container
 		$controller = $this->make( 'Controller' );
 
 		add_action( 'admin_enqueue_scripts',           array( $controller, 'registerAssets' ));
-		add_action( 'admin_menu',                      array( $controller, 'registerPage' ));
-		add_action( 'admin_menu',                      array( $controller, 'registerSetting' ));
 		add_action( 'admin_init',                      array( $controller, 'removeDashboardWidgets' ));
 		add_action( 'wp_before_admin_bar_render',      array( $controller, 'removeWordPressMenu' ));
 		add_filter( "plugin_action_links_{$basename}", array( $controller, 'filterPluginLinks' ));
@@ -139,9 +137,10 @@ final class Application extends Container
 	{
 		Facade::clearResolvedInstances();
 		Facade::setFacadeApplication( $this );
-		$this->config = ( new Config( $this ))->get();
 		$this->registerAliases();
+		$this->config = $this->make( ConfigManager::class )->compile();
 		$classNames = array(
+			'Config\Config',
 			'MetaBox\MetaBox',
 			'PostType\Archive',
 			'PostType\DisablePosts',
@@ -159,11 +158,10 @@ final class Application extends Container
 	 */
 	protected function registerAliases()
 	{
-		$aliases = apply_filters( 'pollux/aliases', array(
+		AliasLoader::getInstance( apply_filters( 'pollux/aliases', array(
 			'ArchiveMeta' => 'GeminiLabs\Pollux\Facades\ArchiveMeta',
 			'PostMeta' => 'GeminiLabs\Pollux\Facades\PostMeta',
 			'SiteMeta' => 'GeminiLabs\Pollux\Facades\SiteMeta',
-		));
-		AliasLoader::getInstance( $aliases )->register();
+		)))->register();
 	}
 }

@@ -31,9 +31,9 @@ class MetaBox extends Component
 	 */
 	public function init()
 	{
-		if( empty( $this->app->config[static::ID] ))return;
+		if( empty( $this->app->config->{static::ID} ))return;
 
-		$this->normalize( $this->app->config[static::ID], [
+		$this->normalize( $this->app->config->{static::ID}, [
 			'post_types' => [],
 		]);
 

@@ -23,7 +23,7 @@ class DisablePosts
 	 */
 	public function init()
 	{
-		if( !$this->app->config['disable_posts'] )return;
+		if( !$this->app->config->disable_posts )return;
 
 		add_action( 'init',               [$this, 'disable'] );
 		add_action( 'wp_dashboard_setup', [$this, 'modifyDashboardWidgets'] );

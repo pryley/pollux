@@ -108,9 +108,9 @@ trait Columns
 	{
 		$comments = sprintf(
 			'<span class="vers comment-grey-bubble" title="%1$s"><span class="screen-reader-text">%1$s</span></span>',
-			$this->app->config['columns']['comments']
+			$this->app->config->columns['comments']
 		);
-		$columns = wp_parse_args( $this->app->config['columns'], [
+		$columns = wp_parse_args( $this->app->config->columns, [
 			'comments' => $comments,
 		]);
 		$this->columns = apply_filters( 'pollux/post_type/columns', $columns );

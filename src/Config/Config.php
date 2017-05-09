@@ -3,18 +3,29 @@
 namespace GeminiLabs\Pollux\Config;
 
 use GeminiLabs\Pollux\Application;
-use Symfony\Component\Yaml\Yaml;
+use GeminiLabs\Pollux\Config\ConfigManager;
 
 class Config
 {
-	const RAW_STRINGS = [
-		'__', '_n', '_x', 'sprintf',
-	];
+	const ID = 'config';
+
+	/**
+	 * @var string
+	 */
+	public $hook;
 
 	/**
 	 * @var Application
 	 */
 	protected $app;
+
+	/**
+	 * @return string
+	 */
+	public static function id()
+	{
+		return Application::PREFIX . static::ID;
+	}
 
 	public function __construct( Application $app )
 	{
@@ -22,91 +33,89 @@ class Config
 	}
 
 	/**
+	 * @return void
+	 */
+	public function init()
+	{
+		if( $this->app->config->disable_config )return;
+
+		add_action( 'admin_menu',     [$this, 'registerPage'] );
+		add_action( 'admin_menu',     [$this, 'registerSetting'] );
+		add_action( 'current_screen', [$this, 'resetPage'] );
+	}
+
+	/**
 	 * @return array
+	 * @callback register_setting
 	 */
-	public function get()
+	public function filterSavedSettings( array $settings )
 	{
-		$configFile = $this->getFile();
-		$configYaml = $this->getYaml();
-		if( $this->shouldGenerate( $configYaml )) {
-			file_put_contents( $configFile, sprintf( '<?php // DO NOT MODIFY THIS FILE DIRECTLY!%sreturn %s;',
-				PHP_EOL,
-				$this->parseYaml( $configYaml )
-			));
-		}
-		return include $configFile;
+		return $this->app->make( ConfigManager::class )->setTimestamp( $settings );
 	}
 
 	/**
-	 * @return string
+	 * @return void
+	 * @action admin_menu
 	 */
-	public function getFile( $filename = 'pollux-config.php' )
+	public function registerPage()
 	{
-		$filename = apply_filters( 'pollux/config/dist/file', $filename );
-		$storagePath = trailingslashit( apply_filters( 'pollux/config/dist/location', WP_CONTENT_DIR ));
-		if( !is_dir( $storagePath )) {
-			mkdir( $storagePath, 0775 );
-		}
-		return sprintf( '%s%s', $storagePath, $filename );
+		$this->hook = add_submenu_page(
+			'options-general.php',
+			__( 'Pollux', 'pollux' ),
+			__( 'Pollux', 'pollux' ),
+			'manage_options',
+			$this->app->id,
+			[$this, 'renderPage']
+		);
 	}
 
 	/**
-	 * @return string
+	 * @return void
+	 * @action admin_menu
 	 */
-	public function getYaml()
+	public function registerSetting()
 	{
-		$theme = wp_get_theme();
-		$configYaml = apply_filters( 'pollux/config/src/file', 'pollux.yml' );
-		$configLocations = apply_filters( 'pollux/config/src/location', [
-			trailingslashit( trailingslashit( $theme->theme_root ) . $theme->stylesheet ),
-			trailingslashit( trailingslashit( $theme->theme_root ) . $theme->template ),
-			trailingslashit( WP_CONTENT_DIR ),
-			trailingslashit( ABSPATH ),
-			trailingslashit( dirname( ABSPATH )),
-			trailingslashit( dirname( dirname( ABSPATH ))),
+		register_setting( static::id(), static::id(), [$this, 'filterSavedSettings'] );
+	}
+
+	/**
+	 * @return void
+	 * @callback add_submenu_page
+	 */
+	public function renderPage()
+	{
+		$this->app->render( 'config/script' );
+		$query = [
+			'page' => $this->app->id,
+			'action' => 'reset',
+			'_wpnonce' => wp_create_nonce( static::id() ),
+		];
+		$this->app->render( 'config/index', [
+			'config' => $this->app->make( ConfigManager::class ),
+			'heading' => __( 'Pollux Settings', 'pollux' ),
+			'id' => static::id(),
+			'reset_url' => esc_url( add_query_arg( $query, admin_url( 'options-general.php' ))),
 		]);
-		foreach( (array) $configLocations as $location ) {
-			if( !file_exists( $location . $configYaml ))continue;
-			return $location . $configYaml;
+	}
+
+	/**
+	 * @return void
+	 * @action pollux/{static::ID}/init
+	 */
+	public function resetPage()
+	{
+		if( filter_input( INPUT_GET, 'page' ) !== $this->app->id
+			|| filter_input( INPUT_GET, 'action' ) !== 'reset'
+		)return;
+		if( wp_verify_nonce( filter_input( INPUT_GET, '_wpnonce' ), static::id() )) {
+			delete_option( static::id() );
+			add_settings_error( static::id(), 'reset', __( 'Reset successful.', 'pollux' ), 'updated' );
 		}
-		return $this->app->path( 'defaults.yml' );
-	}
-
-	/**
-	 * @param string $yamlFile
-	 * @return string
-	 */
-	public function parseYaml( $yamlFile )
-	{
-		$config = wp_parse_args(
-			Yaml::parse( file_get_contents( $yamlFile )),
-			Yaml::parse( file_get_contents( $this->app->path( 'defaults.yml' )))
-		);
-		return $this->parseRawStrings( var_export( $config, true ));
-	}
-
-	/**
-	 * @param string $config
-	 * @return string
-	 */
-	protected function parseRawStrings( $config )
-	{
-		$strings = apply_filters( 'pollux/config/raw_strings', static::RAW_STRINGS );
-		return stripslashes(
-			preg_replace( '/(\')((' . implode( '|', $strings ) . ')\(?.+\))(\')/', '$2', $config )
-		);
-	}
-
-	/**
-	 * @param string $configYaml
-	 * @return bool
-	 */
-	protected function shouldGenerate( $configYaml )
-	{
-		$configFile = $this->getFile();
-		if( !file_exists( $configFile )) {
-			return true;
+		else {
+			add_settings_error( static::id(), 'failed', __( 'Failed to reset. Please try again.', 'pollux' ));
 		}
-		return filemtime( $configYaml ) >= filemtime( $configFile );
+		set_transient( 'settings_errors', get_settings_errors(), 30 );
+		wp_safe_redirect( add_query_arg( 'settings-updated', 'true',  wp_get_referer() ));
+		exit;
 	}
 }

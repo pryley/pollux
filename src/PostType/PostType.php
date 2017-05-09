@@ -45,7 +45,7 @@ class PostType extends Component
 	 */
 	public function init()
 	{
-		if( empty( $this->app->config['post_types'] ))return;
+		if( empty( $this->app->config->post_types ))return;
 
 		$this->setColumns();
 		$this->normalize();
@@ -74,7 +74,7 @@ class PostType extends Component
 	 */
 	protected function normalize()
 	{
-		foreach( $this->app->config['post_types'] as $type => $args ) {
+		foreach( $this->app->config->post_types as $type => $args ) {
 			$this->types[$type] = apply_filters( 'pollux/post_type/args',
 				$this->normalizeThis( $args, static::POST_TYPE_DEFAULTS, $type ),
 				$type

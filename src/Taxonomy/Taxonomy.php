@@ -35,7 +35,7 @@ class Taxonomy extends Component
 	 */
 	public function init()
 	{
-		if( empty( $this->app->config['taxonomies'] ))return;
+		if( empty( $this->app->config->taxonomies ))return;
 
 		$this->normalize();
 
@@ -103,7 +103,7 @@ class Taxonomy extends Component
 	 */
 	protected function normalize()
 	{
-		foreach( $this->app->config['taxonomies'] as $taxonomy => $args ) {
+		foreach( $this->app->config->taxonomies as $taxonomy => $args ) {
 			$this->taxonomies[$taxonomy] = apply_filters( 'pollux/taxonomy/args',
 				$this->normalizeThis( $args, static::TAXONOMY_DEFAULTS, $taxonomy )
 			);

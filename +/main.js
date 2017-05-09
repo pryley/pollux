@@ -102,11 +102,13 @@ pollux.metabox.setVisibility = function( el )
  */
 pollux.tabs.init = function()
 {
+	pollux.tabs.active = document.querySelector( '#pollux-active-tab' );
+	pollux.tabs.referrer = document.querySelector( 'input[name="_wp_http_referer"]' );
 	pollux.tabs.tabs = document.querySelectorAll( '.pollux-tabs a' );
 	pollux.tabs.views = document.querySelectorAll( '.pollux-config .form-table' );
 
 	[].forEach.call( pollux.tabs.tabs, function( tab, index ) {
-		var active = location.hash ? tab.getAttribute( 'href' ) === location.hash : index === 0;
+		var active = location.hash ? tab.getAttribute( 'href' ).slice(1) === location.hash.slice(2) : index === 0;
 		if( active ) {
 			pollux.tabs.setTab( tab );
 		}
@@ -122,12 +124,17 @@ pollux.tabs.onClick = function( ev )
 {
 	ev.preventDefault();
 	this.blur();
-	var hash = this.getAttribute( 'href' );
-	var view = document.querySelector( '.pollux-config ' + hash );
 	pollux.tabs.setTab( this );
-	view.removeAttribute( 'id' );
-	location.hash = hash;
-	view.setAttribute( 'id', hash.slice( 1 ));
+	location.hash = '!' + this.getAttribute( 'href' ).slice(1);
+};
+
+/**
+ * @return void
+ */
+pollux.tabs.setReferrer = function( index )
+{
+	var referrerUrl = pollux.tabs.referrer.value.split('#')[0] + '#!' + pollux.tabs.views[index].id;
+	pollux.tabs.referrer.value = referrerUrl;
 };
 
 /**
@@ -138,6 +145,8 @@ pollux.tabs.setTab = function( el )
 	[].forEach.call( pollux.tabs.tabs, function( tab, index ) {
 		var action = pollux.classListAction( tab === el );
 		if( action === 'add' ) {
+			pollux.tabs.active.value = pollux.tabs.views[index].id;
+			pollux.tabs.setReferrer( index );
 			pollux.tabs.setView( index );
 		}
 		tab.classList[action]( 'nav-tab-active' );
@@ -160,8 +169,9 @@ pollux.tabs.setView = function( idx )
  */
 pollux.editors.init = function()
 {
-	[].forEach.call( document.querySelectorAll( '.pollux-code' ), function( editor ) {
-		var cmeditor = CodeMirror.fromTextArea( editor, {
+	pollux.editors.all = [];
+	[].forEach.call( document.querySelectorAll( '.pollux-code' ), function( editor, index ) {
+		pollux.editors.all[index] = CodeMirror.fromTextArea( editor, {
 			gutters: ['CodeMirror-lint-markers'],
 			highlightSelectionMatches: { wordsOnly: true },
 			lineNumbers: true,
@@ -174,12 +184,17 @@ pollux.editors.init = function()
 			theme: 'pollux',
 			viewportMargin: Infinity,
 		});
-		cmeditor.setOption( 'extraKeys', {
+		pollux.editors.all[index].setOption( 'extraKeys', {
 			Tab: function( cm ) {
 				var spaces = Array( cm.getOption( 'indentUnit' ) + 1 ).join( ' ' );
 				cm.replaceSelection( spaces );
 			},
 		});
+		pollux.editors.all[index].display.wrapper.setAttribute( 'data-disabled', editor.getAttribute( 'data-disabled' ));
+		if( editor.readOnly ) {
+			pollux.editors.all[index].setOption( 'theme', 'disabled' );
+			pollux.editors.all[index].setOption( 'readOnly', 'nocursor' );
+		}
 	});
 };
 

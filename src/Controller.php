@@ -3,6 +3,7 @@
 namespace GeminiLabs\Pollux;
 
 use GeminiLabs\Pollux\Application;
+use GeminiLabs\Pollux\Config\Config;
 use GeminiLabs\Pollux\Helper;
 use GeminiLabs\Pollux\PostType\Archive;
 use GeminiLabs\Pollux\Settings\Settings;
@@ -10,11 +11,6 @@ use WP_Screen;
 
 class Controller
 {
-	/**
-	 * @var string
-	 */
-	public $hook;
-
 	/**
 	 * @var Application
 	 */
@@ -32,19 +28,10 @@ class Controller
 	public function filterPluginLinks( array $links )
 	{
 		$settings_url = admin_url( sprintf( 'options-general.php?page=%s', $this->app->id ));
-		$links[] = sprintf( '<a href="%s">%s</a>', $settings_url, __( 'Settings', 'pollux' ));
+		$links[] = $this->app->config->disable_config
+			? sprintf( '<span class="network_only">%s</span>', __( 'Settings Disabled', 'pollux' ))
+			: sprintf( '<a href="%s">%s</a>', $settings_url, __( 'Settings', 'pollux' ));
 		return $links;
-	}
-
-	/**
-	 * @param null|array $config
-	 * @return array
-	 * @callback register_setting
-	 */
-	public function filterSavedSettings( $config )
-	{
-		$config['updated'] = time();
-		return $config;
 	}
 
 	/**
@@ -53,7 +40,7 @@ class Controller
 	 */
 	public function filterWordPressFooter( $text )
 	{
-		if( $this->app->config['remove_wordpress_footer'] )return;
+		if( $this->app->config->remove_wordpress_footer )return;
 		return $text;
 	}
 
@@ -87,37 +74,11 @@ class Controller
 
 	/**
 	 * @return void
-	 * @action admin_menu
-	 */
-	public function registerPage()
-	{
-		$this->hook = add_submenu_page(
-			'options-general.php',
-			__( 'Pollux', 'pollux' ),
-			__( 'Pollux', 'pollux' ),
-			'manage_options',
-			$this->app->id,
-			[$this, 'renderPage']
-		);
-	}
-
-	/**
-	 * @return void
-	 * @action admin_menu
-	 */
-	public function registerSetting()
-	{
-		$id = sprintf( '%sconfig', Application::PREFIX );
-		register_setting( $id, $id, [$this, 'filterSavedSettings'] );
-	}
-
-	/**
-	 * @return void
 	 * @action admin_init
 	 */
 	public function removeDashboardWidgets()
 	{
-		if( !$this->app->config['remove_dashboard_widgets'] )return;
+		if( !$this->app->config->remove_dashboard_widgets )return;
 		$widgets = apply_filters( 'pollux/dashoard/widgets', [
 			'dashboard_quick_press',
 		]);
@@ -132,21 +93,9 @@ class Controller
 	 */
 	public function removeWordPressMenu()
 	{
-		if( !$this->app->config['remove_wordpress_menu'] )return;
+		if( !$this->app->config->remove_wordpress_menu )return;
 		global $wp_admin_bar;
 		$wp_admin_bar->remove_menu( 'wp-logo' );
-	}
-
-	/**
-	 * @return void
-	 * @callback add_submenu_page
-	 */
-	public function renderPage()
-	{
-		$this->app->render( 'index', [
-			'heading' => __( 'Pollux Settings', 'pollux' ),
-			'id' => sprintf( '%sconfig', Application::PREFIX ),
-		]);
 	}
 
 	/**

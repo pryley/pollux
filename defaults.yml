@@ -1,9 +1,9 @@
-debug: false
-disable_comments: false
+disable_config: false
 disable_posts: false
-remove_dashboard_widgets: true
-remove_wordpress_footer: true
-remove_wordpress_menu: true
+enable_archive_meta: false
+remove_dashboard_widgets: false
+remove_wordpress_footer: false
+remove_wordpress_menu: false
 
 columns:
   author: __('Author', 'pollux')
@@ -15,11 +15,8 @@ columns:
   slug: __('Slug', 'pollux')
   title: __('Title', 'pollux')
 
-depends:
-  plugin:
-    meta-box/meta-box.php: Meta Box
-
 archives: []
+depends: []
 metaboxes: []
 post_types: []
 settings: []

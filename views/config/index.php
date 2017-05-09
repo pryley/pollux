@@ -1,0 +1,144 @@
+<?php defined( 'WPINC' ) || die; ?>
+
+<div class="wrap">
+	<h1><?= $heading; ?></h1>
+
+	<h2 class="pollux-tabs nav-tab-wrapper">
+		<a class="nav-tab" href="#general"><?= __( 'General', 'pollux' ); ?></a>
+		<a class="nav-tab" href="#dependencies"><?= __( 'Dependencies', 'pollux' ); ?></a>
+		<a class="nav-tab" href="#metaboxes"><?= __( 'Meta Boxes', 'pollux' ); ?></a>
+		<a class="nav-tab" href="#post_types"><?= __( 'Post Types', 'pollux' ); ?></a>
+		<a class="nav-tab" href="#taxonomies"><?= __( 'Taxonomies', 'pollux' ); ?></a>
+	</h2>
+
+	<form class="pollux-config" method="post" action="options.php" enctype="multipart/form-data">
+
+		<?php settings_fields( $id ); ?>
+
+		<input type="hidden" id="pollux-active-tab" name="_active_tab">
+
+		<table class="form-table" id="general">
+			<tbody>
+				<tr>
+					<td>
+						<fieldset>
+							<label for="disable_posts">
+								<input type="checkbox" id="disable_posts" name="pollux_config[disable_posts]" value="1" <?php checked( $config->disable_posts ); ?>>
+								<?= __( 'Disable Posts', 'pollux' ); ?>
+							</label>
+							<br>
+							<label for="enable_archive_meta">
+								<input type="checkbox" id="enable_archive_meta" name="pollux_config[enable_archive_meta]" value="1" <?php checked( $config->enable_archive_meta ); ?>>
+								<?= __( 'Enable Archive Page Meta', 'pollux' ); ?>
+							</label>
+							<br>
+							<label for="remove_dashboard_widgets">
+								<input type="checkbox" id="remove_dashboard_widgets" name="pollux_config[remove_dashboard_widgets]" value="1" <?php checked( $config->remove_dashboard_widgets ); ?>>
+								<?= __( 'Remove Dashboard Widgets', 'pollux' ); ?>
+							</label>
+							<br>
+							<label for="remove_wordpress_footer">
+								<input type="checkbox" id="remove_wordpress_footer" name="pollux_config[remove_wordpress_footer]" value="1" <?php checked( $config->remove_wordpress_footer ); ?>>
+								<?= __( 'Remove the WordPress Admin Footer', 'pollux' ); ?>
+							</label>
+							<br>
+							<label for="remove_wordpress_menu">
+								<input type="checkbox" id="remove_wordpress_menu" name="pollux_config[remove_wordpress_menu]" value="1" <?php checked( $config->remove_wordpress_menu ); ?>>
+								<?= __( 'Remove the WordPress Menu From the Admin Bar', 'pollux' ); ?>
+							</label>
+						</fieldset>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<table class="form-table" id="dependencies">
+			<tbody>
+				<tr>
+					<th scope="row">
+						<label for="pollux_depends"><?= __( 'Site Dependencies', 'pollux' ); ?></label>
+					</th>
+					<td>
+						<textarea id="pollux_depends" name="pollux_config[depends]" rows="10" cols="50" class="large-text code pollux-code" placeholder=""><?= $config->yaml->depends; ?></textarea>
+						<p class="description"></p>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<table class="form-table" id="metaboxes">
+			<tbody>
+				<tr>
+					<th scope="row">
+						<label for="pollux_archives"><?= __( 'Archive Meta Boxes', 'pollux' ); ?></label>
+					</th>
+					<td>
+						<textarea id="pollux_archives" name="pollux_config[archives]" rows="10" cols="50" class="large-text code pollux-code" placeholder="" data-disabled="<?= __( 'Archive Page Meta is not enabled.', 'pollux' ); ?>" <?= !$config->enable_archive_meta ? 'readonly' : ''; ?>><?= $config->yaml->archives; ?></textarea>
+						<p class="description"></p>
+					</td>
+				</tr>
+				<tr>
+					<th scope="row">
+						<label for="pollux_metaboxes"><?= __( 'Post Type Meta Boxes', 'pollux' ); ?></label>
+					</th>
+					<td>
+						<textarea id="pollux_metaboxes" name="pollux_config[metaboxes]" rows="10" cols="50" class="large-text code pollux-code" placeholder=""><?= $config->yaml->metaboxes; ?></textarea>
+						<p class="description"></p>
+					</td>
+				</tr>
+				<tr>
+					<th scope="row">
+						<label for="pollux_settings"><?= __( 'Site Settings Meta Boxes', 'pollux' ); ?></label>
+					</th>
+					<td>
+						<textarea id="pollux_settings" name="pollux_config[settings]" rows="10" cols="50" class="large-text code pollux-code" placeholder=""><?= $config->yaml->settings; ?></textarea>
+						<p class="description"></p>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<table class="form-table" id="post_types">
+			<tbody>
+				<tr>
+					<th scope="row">
+						<label for="pollux_post_types"><?= __( 'Post Types', 'pollux' ); ?></label>
+					</th>
+					<td>
+						<textarea id="pollux_post_types" name="pollux_config[post_types]" rows="10" cols="50" class="large-text code pollux-code" placeholder=""><?= $config->yaml->post_types; ?></textarea>
+						<p class="description"></p>
+					</td>
+				</tr>
+				<tr>
+					<th scope="row">
+						<label for="pollux_columns"><?= __( 'Post Type Columns', 'pollux' ); ?></label>
+					</th>
+					<td>
+						<textarea id="pollux_columns" name="pollux_config[columns]" rows="10" cols="50" class="large-text code pollux-code" placeholder=""><?= $config->yaml->columns; ?></textarea>
+						<p class="description"></p>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<table class="form-table" id="taxonomies">
+			<tbody>
+				<tr>
+					<th scope="row">
+						<label for="pollux_taxonomies"><?= __( 'Taxonomies', 'pollux' ); ?></label>
+					</th>
+					<td>
+						<textarea id="pollux_taxonomies" name="pollux_config[taxonomies]" rows="10" cols="50" class="large-text code pollux-code" placeholder=""><?= $config->yaml->taxonomies; ?></textarea>
+						<p class="description"></p>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<p class="submit">
+			<input type="submit" name="submit" id="submit" class="button button-primary" value="Save Changes">
+			<a href="<?= $reset_url; ?>" id="reset" class="button pollux-reset"><?= __( 'Reset to Defaults', 'pollux' ); ?></a>
+		</p>
+
+	</form>
+</div>

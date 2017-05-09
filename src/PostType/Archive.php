@@ -23,6 +23,8 @@ class Archive extends Settings
 	 */
 	public function init()
 	{
+		if( !$this->app->config->enable_archive_meta )return;
+
 		parent::init();
 
 		add_action( 'wp_ajax_pollux/archives/featured/html', [$this, 'getFeaturedImageHtml'] );

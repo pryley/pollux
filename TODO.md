@@ -11,7 +11,10 @@
 - [x] SiteMeta
 - [x] Miscellaneous
 - [x] Disable Posts
+- [x] Settings page to change plugin config
+- [ ] HELP tabs for pollux
 - [ ] GateKeeper (plugin depends)
 - [ ] Auto-generate language file for config file
 - [ ] Color Schemes
-- [ ] Settings page to change plugin config
+- [ ] Write test suite
+
