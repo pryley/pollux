@@ -56,10 +56,10 @@
 			<tbody>
 				<tr>
 					<th scope="row">
-						<label for="pollux_depends"><?= __( 'Site Dependencies', 'pollux' ); ?></label>
+						<label for="pollux_dependencies"><?= __( 'Plugin Dependencies', 'pollux' ); ?></label>
 					</th>
 					<td>
-						<textarea id="pollux_depends" name="pollux_config[depends]" rows="10" cols="50" class="large-text code pollux-code" placeholder=""><?= $config->yaml->depends; ?></textarea>
+						<textarea id="pollux_dependencies" name="pollux_config[dependencies]" rows="10" cols="50" class="large-text code pollux-code" placeholder=""><?= $config->yaml->dependencies; ?></textarea>
 						<p class="description"></p>
 					</td>
 				</tr>
