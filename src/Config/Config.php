@@ -95,6 +95,7 @@ class Config
 			'heading' => __( 'Pollux Settings', 'pollux' ),
 			'id' => static::id(),
 			'reset_url' => esc_url( add_query_arg( $query, admin_url( 'options-general.php' ))),
+			'has_meta_box' => $this->app->gatekeeper->hasDependency( 'meta-box/meta-box.php' ),
 		]);
 	}
 

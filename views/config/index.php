@@ -58,7 +58,16 @@
 						<label for="pollux_archives"><?= __( 'Archive Meta Boxes', 'pollux' ); ?></label>
 					</th>
 					<td>
-						<textarea id="pollux_archives" name="pollux_config[archives]" rows="10" cols="50" class="large-text code pollux-code" placeholder="" data-disabled="<?= __( 'Archive Page is not enabled.', 'pollux' ); ?>" <?= !$config->enable_archive_page ? 'readonly' : ''; ?>><?= $config->yaml->archives; ?></textarea>
+						<?php
+							$readonly = !$config->enable_archive_page || !$has_meta_box
+								? ' readonly'
+								: '';
+
+							$data_disabled = !$has_meta_box
+								? __( 'This field requires the Meta Box plugin.', 'pollux' )
+								: __( 'Archive Page is not enabled.', 'pollux' );
+						?>
+						<textarea id="pollux_archives" name="pollux_config[archives]" rows="10" cols="50" class="large-text code pollux-code" placeholder="" data-disabled="<?= $data_disabled; ?>"<?= $readonly; ?>><?= $config->yaml->archives; ?></textarea>
 						<p class="description"></p>
 					</td>
 				</tr>
@@ -67,7 +76,7 @@
 						<label for="pollux_metaboxes"><?= __( 'Post Type Meta Boxes', 'pollux' ); ?></label>
 					</th>
 					<td>
-						<textarea id="pollux_metaboxes" name="pollux_config[metaboxes]" rows="10" cols="50" class="large-text code pollux-code" placeholder=""><?= $config->yaml->metaboxes; ?></textarea>
+						<textarea id="pollux_metaboxes" name="pollux_config[metaboxes]" rows="10" cols="50" class="large-text code pollux-code" placeholder="" data-disabled="<?= __( 'This field requires the Meta Box plugin.', 'pollux' ); ?>" <?= !$has_meta_box ? 'readonly' : ''; ?>><?= $config->yaml->metaboxes; ?></textarea>
 						<p class="description"></p>
 					</td>
 				</tr>
@@ -76,7 +85,7 @@
 						<label for="pollux_settings"><?= __( 'Site Settings Meta Boxes', 'pollux' ); ?></label>
 					</th>
 					<td>
-						<textarea id="pollux_settings" name="pollux_config[settings]" rows="10" cols="50" class="large-text code pollux-code" placeholder=""><?= $config->yaml->settings; ?></textarea>
+						<textarea id="pollux_settings" name="pollux_config[settings]" rows="10" cols="50" class="large-text code pollux-code" placeholder="" data-disabled="<?= __( 'This field requires the Meta Box plugin.', 'pollux' ); ?>" <?= !$has_meta_box ? 'readonly' : ''; ?>><?= $config->yaml->settings; ?></textarea>
 						<p class="description"></p>
 					</td>
 				</tr>
