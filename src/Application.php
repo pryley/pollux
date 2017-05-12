@@ -18,6 +18,7 @@ final class Application extends Container
 	public $gatekeeper;
 	public $id;
 	public $name;
+	public $notices = [];
 	public $version;
 
 	/**
