@@ -20,17 +20,6 @@ class ArchiveMetaManager extends SiteMetaManager
 	}
 
 	/**
-	 * @param string|null $key
-	 * @param mixed $fallback
-	 * @param string $group
-	 * @return mixed
-	 */
-	public function get( $key = '', $fallback = null, $group = '' )
-	{
-		return parent::get( $group, $key, $fallback );
-	}
-
-	/**
 	 * @return string
 	 */
 	protected function getDefaultGroup()

@@ -200,7 +200,7 @@ class ConfigManager extends SiteMetaManager
 	}
 
 	/**
-	 * @return mixed
+	 * @return array
 	 */
 	protected function parseYaml( $value )
 	{
