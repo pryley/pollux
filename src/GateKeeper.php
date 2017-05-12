@@ -249,11 +249,12 @@ class GateKeeper
 	 */
 	protected function addInvalidPHPVersionNotice()
 	{
-		$this->notice->addError([
-			$this->notice->title( __( 'The Pollux plugin was deactivated.', 'pollux' )),
-			sprintf( __( 'Sorry, Pollux requires PHP %s or greater in order to work properly (your server is running PHP %s).', 'pollux' ), self::MIN_PHP_VERSION, PHP_VERSION ),
-			__( 'Please contact your hosting provider or server administrator to upgrade the version of PHP running on your server, or find an alternate plugin.', 'pollux' ),
-		]);
+		$message1 = sprintf( __( 'Pollux requires PHP %s or greater in order to work properly (your server is running PHP %s).', 'pollux' ), self::MIN_PHP_VERSION, PHP_VERSION );
+		$message2 = __( 'Please contact your webhosting provider or server administrator to upgrade the version of PHP running on your server, or use a different plugin.', 'pollux' );
+		$this->printDeactivationNotice( sprintf( '%s %s',
+			$message1,
+			$message2
+		));
 	}
 
 	/**
@@ -261,11 +262,14 @@ class GateKeeper
 	 */
 	protected function addInvalidWPVersionNotice()
 	{
-		$this->notice->addError([
-			$this->notice->title( __( 'The Pollux plugin was deactivated.', 'pollux' )),
-			sprintf( __( 'Sorry, Pollux requires WordPress %s or greater in order to work properly.', 'pollux' ), self::MIN_WORDPRESS_VERSION ),
-			$this->notice->button( __( 'Update WordPress', 'pollux' ), self_admin_url( 'update-core.php' )),
-		]);
+		$message = sprintf( __( 'Pollux requires WordPress %s or greater in order to work properly.', 'pollux' ), self::MIN_WORDPRESS_VERSION );
+		if( current_user_can( 'update_core' )) {
+			$message .= PHP_EOL . PHP_EOL . sprintf( '<a href="%s" class="button button-small">%s</a>',
+				self_admin_url( 'update-core.php' ),
+				__( 'Update WordPress', 'pollux' )
+			);
+		}
+		$this->printDeactivationNotice( $message );
 	}
 
 	/**
@@ -416,6 +420,17 @@ class GateKeeper
 	protected function getPluginSlug( $plugin )
 	{
 		return substr( $plugin, 0, strrpos( $plugin, '/' ));
+	}
+
+	/**
+	 * @return void
+	 */
+	protected function printDeactivationNotice( $message )
+	{
+		printf( '<div class="notice notice-error is-dismissible"><p><strong>%s</strong></p>%s</div>',
+			__( 'The Pollux plugin was deactivated.', 'pollux' ),
+			wpautop( $message )
+		);
 	}
 
 	/**
