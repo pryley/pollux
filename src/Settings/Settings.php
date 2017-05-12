@@ -10,10 +10,10 @@ use GeminiLabs\Pollux\Settings\RWMetaBox;
 
 class Settings extends MetaBox
 {
-	/**
-	 * @var string
-	 */
 	const ID = 'settings';
+
+	const CAPABILITY = 'edit_theme_options';
+	const DEPENDENCY = 'meta-box/meta-box.php';
 
 	const CONDITIONS = [
 		'class_exists', 'defined', 'function_exists', 'hook', 'is_plugin_active',
@@ -38,13 +38,7 @@ class Settings extends MetaBox
 	 */
 	public function init()
 	{
-		// if( empty( $this->app->config->{static::ID} ))return;
-		// if( is_bool( $this->app->config->{static::ID} )) {
-		// 	$this->app->config->{static::ID} = [];
-		// }
-
-		// @todo: run GateKeeper to check dependencies and capability (make sure it it run on the correct hook!)
-		// if( !is_plugin_active( 'meta-box/meta-box.php' ))return;
+		if( !$this->canProceed() )return;
 
 		$this->normalize( $this->app->config->{static::ID} );
 
@@ -56,6 +50,12 @@ class Settings extends MetaBox
 		add_action( 'admin_print_footer_scripts',                [$this, 'renderFooterScript'] );
 		add_filter( 'pollux/'.static::ID.'/instruction',         [$this, 'filterInstruction'], 10, 3 );
 		add_filter( 'pollux/'.static::ID.'/before/instructions', [$this, 'filterBeforeInstructions'] );
+	}
+
+	public function canProceed()
+	{
+		return $this->app->gatekeeper->hasDependency( static::DEPENDENCY )
+			&& !empty( $this->app->config->{static::ID} );
 	}
 
 	/**
@@ -124,8 +124,10 @@ class Settings extends MetaBox
 	public function register()
 	{
 		if(( new Helper )->getCurrentScreen()->id != $this->hook )return;
-		foreach( parent::register() as $metabox ) {
-			new RWMetaBox( $metabox, static::ID, $this );
+		if( $this->app->gatekeeper->hasDependency( self::DEPENDENCY )) {
+			foreach( parent::register() as $metabox ) {
+				new RWMetaBox( $metabox, static::ID, $this );
+			}
 		}
 		add_screen_option( 'layout_columns', [
 			'max' => 2,
@@ -143,7 +145,7 @@ class Settings extends MetaBox
 		$this->hook = call_user_func_array( 'add_menu_page', $this->filter( 'page', [
 			__( 'Site Settings', 'pollux' ),
 			__( 'Site Settings', 'pollux' ),
-			'edit_theme_options',
+			static::CAPABILITY,
 			static::id(),
 			[$this, 'renderPage'],
 			'dashicons-screenoptions',

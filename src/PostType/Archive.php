@@ -9,10 +9,10 @@ use GeminiLabs\Pollux\Settings\Settings;
 
 class Archive extends Settings
 {
-	/**
-	 * @var string
-	 */
 	CONST ID = 'archives';
+
+	const CAPABILITY = 'edit_others_posts';
+	const DEPENDENCY = '';
 
 	public static $current;
 
@@ -31,6 +31,12 @@ class Archive extends Settings
 		add_action( 'wp_ajax_pollux/archives/featured',      [$this, 'setFeaturedImage'] );
 		add_filter( 'pollux/archives/metabox/submit',        [$this, 'filterSubmitMetaBox'] );
 		add_filter( 'pollux/archives/show/instructions',     '__return_true' );
+	}
+
+	public function canProceed()
+	{
+		return $this->app->gatekeeper->hasDependency( static::DEPENDENCY )
+			&& $this->app->config->enable_archive_page;
 	}
 
 	/**
@@ -126,7 +132,7 @@ class Archive extends Settings
 				$page,
 				sprintf( _x( '%s Archive', 'post archive', 'pollux' ), $labels->singular_name ),
 				sprintf( _x( '%s Archive', 'post archive', 'pollux' ), $labels->singular_name ),
-				'edit_theme_options',
+				static::CAPABILITY,
 				sprintf( '%s_archive', $type ),
 				[$this, 'renderPage'],
 			]));

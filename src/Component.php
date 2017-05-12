@@ -7,6 +7,9 @@ use GeminiLabs\Pollux\Helper;
 
 abstract class Component
 {
+	const DEPENDENCY = '';
+	const CAPABILITY = '';
+
 	/**
 	 * @var Application
 	 */

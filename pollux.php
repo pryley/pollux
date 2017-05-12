@@ -30,7 +30,7 @@ $app = Application::getInstance();
 register_activation_hook( __FILE__, array( $app, 'onActivation' ));
 register_deactivation_hook( __FILE__, array( $app, 'onDeactivation' ));
 
-if( $app->gatekeeper->proceed() ) {
+if( $app->gatekeeper->canActivate() ) {
 	$app->register( new Provider );
 	$app->init();
 }
