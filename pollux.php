@@ -7,14 +7,13 @@
  * Plugin Name: Pollux
  * Plugin URI:  https://wordpress.org/plugins/pollux
  * Description: Pollux is a theme-agnostic scaffolding plugin for WordPress.
- * Version:     2.0.0-alpha
+ * Version:     1.0.0
  * Author:      Paul Ryley
  * Author URI:  http://geminilabs.io
  * License:     GPL3
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain: pollux
  * Domain Path: languages
- * Network:     true
  */
 
 defined( 'WPINC' ) || die;
