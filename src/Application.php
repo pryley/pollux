@@ -39,9 +39,10 @@ final class Application extends Container
 			'name' => 'Plugin Name',
 			'version' => 'Version',
 		), 'plugin' );
-		array_walk( $data, function( $value, $key ) {
+
+		foreach( $data as $key => $value ) {
 			$this->$key = $value;
-		});
+		}
 	}
 
 	/**
