@@ -1,12 +1,4 @@
-archives: true
-#   post:
-#     title: __('Images', 'pollux')
-#     fields:
-#       media:
-#         type: image_advanced
-#         max_file_uploads: 1
-
-disable_posts: false
+# Place this file in either the same location as your wp-config.php, or one dir above it.
 
 post_types:
   gallery:
@@ -155,4 +147,3 @@ settings:
       messages:
         google_analytics:
           required: This is required
-
