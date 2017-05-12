@@ -6,6 +6,13 @@ use BadMethodCallException;
 use Exception;
 use GeminiLabs\Pollux\Application;
 
+/**
+ * @property array $all
+ * @method void addError( mixed $messages, bool $dismissible = true )
+ * @method void addInfo( mixed $messages, bool $dismissible = true )
+ * @method void addSuccess( mixed $messages, bool $dismissible = true )
+ * @method void addWarning( mixed $messages, bool $dismissible = true )
+ */
 class Notice
 {
 	/**
@@ -18,12 +25,6 @@ class Notice
 		$this->app = $app;
 	}
 
-	/**
-	 * @method void addError( mixed $messages, array $args )
-	 * @method void addInfo( mixed $messages, array $args )
-	 * @method void addSuccess( mixed $messages, array $args )
-	 * @method void addWarning( mixed $messages, array $args )
-	 */
 	public function __call( $name, $args )
 	{
 		$method = strtolower( $name );
@@ -34,9 +35,6 @@ class Notice
 		throw new BadMethodCallException( sprintf( 'Not a valid method: %s', $name ));
 	}
 
-	/**
-	 * @property array $all
-	 */
 	public function __get( $property )
 	{
 		if( $property == 'all' ) {
@@ -50,7 +48,7 @@ class Notice
 	 */
 	public function activateButton( array $plugin )
 	{
-		$actionUrl = self_admin_url( sprintf( 'plugins.php?action=activate&plugin=%s', $plugin['plugin'] ));
+		$actionUrl = self_admin_url( sprintf( 'options-general.php?page=%s&action=activate&plugin=%s', $this->app->id, $plugin['plugin'] ));
 		return $this->button( sprintf( '%s %s', __( 'Activate', 'pollux' ), $plugin['name'] ), [
 			'data-name' => $plugin['name'],
 			'data-plugin' => $plugin['plugin'],
@@ -61,8 +59,6 @@ class Notice
 
 	/**
 	 * @param string $title
-	 * @param string $url
-	 * @param string $attributes
 	 * @return string
 	 */
 	public function button( $title, array $atts = [] )
@@ -79,7 +75,7 @@ class Notice
 	}
 
 	/**
-	 * @return void
+	 * @return string
 	 */
 	public function generate( array $notice, $unset = true )
 	{

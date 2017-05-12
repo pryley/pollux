@@ -18,146 +18,311 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Language: qps-ploc\n"
 
-#: src/GateKeeper.php:62
-msgid "Sorry, Pollux requires WordPress %s or greater in order to work properly."
-msgstr "Sorry, Pollux requires WordPress %s or greater in order to work properly."
+#: src/Controller.php:32
+msgid "Settings Disabled"
+msgstr "Settings Disabled"
 
-#: src/GateKeeper.php:63
-msgid ""
-"Sorry, Pollux requires PHP %s or greater in order to work properly (your "
-"server is running PHP %s)."
-msgstr ""
-"Sorry, Pollux requires PHP %s or greater in order to work properly (your "
-"server is running PHP %s)."
+#: src/Controller.php:33
+msgid "Settings"
+msgstr "Settings"
 
-#: src/GateKeeper.php:66
-msgid "Update WordPress"
-msgstr "Update WordPress"
+#: src/Controller.php:149
+msgid "Activating %s..."
+msgstr "Activating %s..."
 
-#: src/GateKeeper.php:67
-msgid ""
-"Please contact your hosting provider or server administrator to upgrade the "
-"version of PHP running on your server, or find an alternate plugin."
-msgstr ""
-"Please contact your hosting provider or server administrator to upgrade the "
-"version of PHP running on your server, or find an alternate plugin."
+#: src/Controller.php:150
+msgid "%s activated!"
+msgstr "%s activated!"
 
-#: src/GateKeeper.php:70
+#: src/GateKeeper.php:257
+msgid "Pollux requires the latest version of the following plugins:"
+msgstr "Pollux requires the latest version of the following plugins:"
+
+#: src/GateKeeper.php:268, src/GateKeeper.php:280
 msgid "The Pollux plugin was deactivated."
 msgstr "The Pollux plugin was deactivated."
 
-#: src/MetaBox/Instruction.php:31
+#: src/GateKeeper.php:269
+msgid ""
+"Sorry, Pollux requires PHP %s or greater in order to work properly (your "
+"server is running PHP %s)."
+msgstr ""
+"Sorry, Pollux requires PHP %s or greater in order to work properly (your "
+"server is running PHP %s)."
+
+#: src/GateKeeper.php:270
+msgid ""
+"Please contact your hosting provider or server administrator to upgrade the "
+"version of PHP running on your server, or find an alternate plugin."
+msgstr ""
+"Please contact your hosting provider or server administrator to upgrade the "
+"version of PHP running on your server, or find an alternate plugin."
+
+#: src/GateKeeper.php:281
+msgid "Sorry, Pollux requires WordPress %s or greater in order to work properly."
+msgstr "Sorry, Pollux requires WordPress %s or greater in order to work properly."
+
+#: src/GateKeeper.php:282
+msgid "Update WordPress"
+msgstr "Update WordPress"
+
+#: src/Notice.php:52
+msgid "Activate"
+msgstr "Activate"
+
+#: src/Notice.php:97
+msgid "Install"
+msgstr "Install"
+
+#: src/Notice.php:111
+msgid "Update"
+msgstr "Update"
+
+#: src/Config/Config.php:64, src/Config/Config.php:65
+msgid "Pollux"
+msgstr "Pollux"
+
+#: src/Config/Config.php:95
+msgid "Pollux Settings"
+msgstr "Pollux Settings"
+
+#: src/Config/Config.php:112, src/Settings/Settings.php:222
+msgid "Reset successful."
+msgstr "Reset successful."
+
+#: src/Config/Config.php:115, src/Settings/Settings.php:225
+msgid "Failed to reset. Please try again."
+msgstr "Failed to reset. Please try again."
+
+#: src/MetaBox/Instruction.php:66
 msgid "How to use in your theme"
 msgstr "How to use in your theme"
 
-#: src/PostType/PostType.php:124
+#: src/PostType/Archive.php:71
+msgid "Save Archive"
+msgstr "Save Archive"
+
+#: src/PostType/Archive.php:120
+msgid "Featured Image"
+msgstr "Featured Image"
+
+#: src/PostType/Archive.php:176
+msgid "Set Featured Image"
+msgstr "Set Featured Image"
+
+#: src/PostType/Archive.php:179
+msgid "Click the image to edit or update"
+msgstr "Click the image to edit or update"
+
+#: src/PostType/Archive.php:183
+msgid "Remove featured image"
+msgstr "Remove featured image"
+
+#: src/PostType/Columns.php:110
+msgid "Author"
+msgstr "Author"
+
+#: src/PostType/Columns.php:111
+msgid "Categories"
+msgstr "Categories"
+
+#: src/PostType/Columns.php:112
+msgid "Comments"
+msgstr "Comments"
+
+#: src/PostType/Columns.php:113
+msgid "Date"
+msgstr "Date"
+
+#: src/PostType/Columns.php:114
+msgid "Image"
+msgstr "Image"
+
+#: src/PostType/Columns.php:115
+msgid "Media"
+msgstr "Media"
+
+#: src/PostType/Columns.php:116
+msgid "Slug"
+msgstr "Slug"
+
+#: src/PostType/Columns.php:117
+msgid "Title"
+msgstr "Title"
+
+#: src/PostType/PostType.php:126
 msgid "Add New"
 msgstr "Add New"
 
-#: src/Settings/Settings.php:64, src/Settings/Settings.php:65, src/Settings/Settings.php:180
-msgid "Site Settings"
-msgstr "Site Settings"
-
-#: src/Settings/Settings.php:82
+#: src/Settings/Settings.php:69
 msgid "Save Settings"
 msgstr "Save Settings"
 
-#: src/Settings/Settings.php:165
+#: src/Settings/Settings.php:146, src/Settings/Settings.php:147, src/Settings/Settings.php:187
+msgid "Site Settings"
+msgstr "Site Settings"
+
+#: src/Settings/Settings.php:173, views/config/script.php:7
 msgid "Are you sure want to do this?"
 msgstr "Are you sure want to do this?"
 
-#: src/Settings/Settings.php:196
-msgid "Reset Settings"
-msgstr "Reset Settings"
+#: src/Settings/Settings.php:205
+msgid "Reset all"
+msgstr "Reset all"
 
-#: src/Settings/Settings.php:198
+#: src/Settings/Settings.php:207
 msgid "Save"
 msgstr "Save"
 
-#: src/Settings/Settings.php:213
-msgid "Settings reset to defaults."
-msgstr "Settings reset to defaults."
+#: views/archive/index.php:15
+msgid "Enter title here"
+msgstr "Enter title here"
 
-#: src/Settings/Settings.php:215
-msgid "Failed to reset settings. Please refresh the page and try again."
-msgstr "Failed to reset settings. Please refresh the page and try again."
+#: views/archive/index.php:23
+msgid "Word count: %s"
+msgstr "Word count: %s"
 
-#: src/PostType/PostType.php:125
+#: views/config/index.php:7
+msgid "General"
+msgstr "General"
+
+#: views/config/index.php:8
+msgid "Meta Boxes"
+msgstr "Meta Boxes"
+
+#: views/config/index.php:9, views/config/index.php:90
+msgid "Post Types"
+msgstr "Post Types"
+
+#: views/config/index.php:10, views/config/index.php:113
+msgid "Taxonomies"
+msgstr "Taxonomies"
+
+#: views/config/index.php:26
+msgid "Disable Posts"
+msgstr "Disable Posts"
+
+#: views/config/index.php:31
+msgid "Enable Archive Page"
+msgstr "Enable Archive Page"
+
+#: views/config/index.php:36
+msgid "Remove Dashboard Widgets"
+msgstr "Remove Dashboard Widgets"
+
+#: views/config/index.php:41
+msgid "Remove the WordPress Admin Footer"
+msgstr "Remove the WordPress Admin Footer"
+
+#: views/config/index.php:46
+msgid "Remove the WordPress Menu From the Admin Bar"
+msgstr "Remove the WordPress Menu From the Admin Bar"
+
+#: views/config/index.php:58
+msgid "Archive Meta Boxes"
+msgstr "Archive Meta Boxes"
+
+#: views/config/index.php:61
+msgid "Archive Page is not enabled."
+msgstr "Archive Page is not enabled."
+
+#: views/config/index.php:67
+msgid "Post Type Meta Boxes"
+msgstr "Post Type Meta Boxes"
+
+#: views/config/index.php:76
+msgid "Site Settings Meta Boxes"
+msgstr "Site Settings Meta Boxes"
+
+#: views/config/index.php:99
+msgid "Post Type Columns"
+msgstr "Post Type Columns"
+
+#: views/config/index.php:125
+msgid "Reset to Defaults"
+msgstr "Reset to Defaults"
+
+#: src/PostType/Archive.php:133, src/PostType/Archive.php:134, src/PostType/Archive.php:200
+msgctxt "post archive"
+msgid "%s Archive"
+msgstr "%s Archive"
+
+#: src/PostType/PostType.php:127
 msgctxt "Add new post"
 msgid "Add New %s"
 msgstr "Add New %s"
 
-#: src/PostType/PostType.php:126
+#: src/PostType/PostType.php:128
 msgctxt "All posts"
 msgid "All %s"
 msgstr "All %s"
 
-#: src/PostType/PostType.php:127
+#: src/PostType/PostType.php:129
 msgctxt "Edit post"
 msgid "Edit %s"
 msgstr "Edit %s"
 
-#: src/PostType/PostType.php:130
+#: src/PostType/PostType.php:132
 msgctxt "New post"
 msgid "New %s"
 msgstr "New %s"
 
-#: src/PostType/PostType.php:131
+#: src/PostType/PostType.php:133
 msgctxt "No posts found"
 msgid "No %s found"
 msgstr "No %s found"
 
-#: src/PostType/PostType.php:132
+#: src/PostType/PostType.php:134
 msgctxt "No posts found in trash"
 msgid "No %s found in Trash"
 msgstr "No %s found in Trash"
 
-#: src/PostType/PostType.php:133
+#: src/PostType/PostType.php:135
 msgctxt "Search posts"
 msgid "Search %s"
 msgstr "Search %s"
 
-#: src/PostType/PostType.php:135
+#: src/PostType/PostType.php:137
 msgctxt "View post"
 msgid "View %s"
 msgstr "View %s"
 
-#: src/Taxonomy/Taxonomy.php:150
+#: src/Taxonomy/Taxonomy.php:152
 msgctxt "Add new taxonomy"
 msgid "Add New %s"
 msgstr "Add New %s"
 
-#: src/Taxonomy/Taxonomy.php:151
+#: src/Taxonomy/Taxonomy.php:153
 msgctxt "All taxonomies"
 msgid "All %s"
 msgstr "All %s"
 
-#: src/Taxonomy/Taxonomy.php:152
+#: src/Taxonomy/Taxonomy.php:154
 msgctxt "Edit taxonomy"
 msgid "Edit %s"
 msgstr "Edit %s"
 
-#: src/Taxonomy/Taxonomy.php:155
+#: src/Taxonomy/Taxonomy.php:157
 msgctxt "New taxonomy name"
 msgid "New %s Name"
 msgstr "New %s Name"
 
-#: src/Taxonomy/Taxonomy.php:156
+#: src/Taxonomy/Taxonomy.php:158
 msgctxt "No taxonomies found"
 msgid "No %s found"
 msgstr "No %s found"
 
-#: src/Taxonomy/Taxonomy.php:157
+#: src/Taxonomy/Taxonomy.php:159
 msgctxt "Search taxonomies"
 msgid "Search %s"
 msgstr "Search %s"
 
-#: src/Taxonomy/Taxonomy.php:159
+#: src/Taxonomy/Taxonomy.php:161
 msgctxt "Update taxonomy"
 msgid "Update %s"
 msgstr "Update %s"
 
-#: src/Taxonomy/Taxonomy.php:160
+#: src/Taxonomy/Taxonomy.php:162
 msgctxt "View taxonomy"
 msgid "View %s"
 msgstr "View %s"

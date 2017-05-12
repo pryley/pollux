@@ -52,47 +52,49 @@ class GateKeeper
 		$this->app = pollux_app();
 		$this->notice = pollux_app()->make( 'Notice' );
 
-		add_action( 'wp_ajax_pollux/dependency/activate', array( $this, 'ajaxActivatePlugin' ));
-		add_action( 'wp_ajax_pollux/dependency/updated',  array( $this, 'ajaxIsPluginActive' ));
-		add_action( 'admin_notices',                      array( $this, 'printNotices' ));
-		add_action( 'current_screen',                     array( $this, 'setDependencyNotice' ));
+		add_action( 'current_screen',                         array( $this, 'activatePlugin' ));
+		add_action( 'wp_ajax_pollux/dependency/activate_url', array( $this, 'ajaxActivatePluginLink' ));
+		add_action( 'admin_notices',                          array( $this, 'printNotices' ));
+		add_action( 'current_screen',                         array( $this, 'setDependencyNotice' ));
 	}
 
 	/**
 	 * @return void
 	 */
-	public function ajaxIsPluginActive()
+	public function activatePlugin()
+	{
+		if( get_current_screen()->id != sprintf( 'settings_page_%s', $this->app->id )
+			|| filter_input( INPUT_GET, 'action' ) != 'activate'
+		)return;
+		$plugin = filter_input( INPUT_GET, 'plugin' );
+		check_admin_referer( 'activate-plugin_' . $plugin );
+		$result = activate_plugin( $plugin, null, is_network_admin(), true );
+		if( is_wp_error( $result )) {
+			wp_die( $result->get_error_message() );
+		}
+		wp_safe_redirect( wp_get_referer() );
+		exit;
+	}
+
+	/**
+	 * @return void
+	 */
+	public function ajaxActivatePluginLink()
 	{
 		check_ajax_referer( 'updates' );
 		$plugin = filter_input( INPUT_POST, 'plugin' );
 		if( !$this->isPluginDependency( $plugin )) {
 			wp_send_json_error();
 		}
-		$status = [
-			'updated' => $plugin,
-			'pluginName' => $this->getPluginInformation( $plugin, 'name' ),
-		];
-		if( !$this->isPluginActive( $plugin )) {
-			$actionUrl = self_admin_url( sprintf( 'plugins.php?action=activate&plugin=%s', $plugin ));
-			$status['activateUrl'] = wp_nonce_url( $actionUrl, sprintf( 'activate-plugin_%s', $plugin ));
-		}
-		wp_send_json_success( $status );
-	}
-
-	/**
-	 * @return void
-	 */
-	public function ajaxActivatePlugin()
-	{
-		check_ajax_referer( 'updates' );
-		$plugin = filter_input( INPUT_POST, 'plugin' );
-		if( !$this->isPluginDependency( $plugin ) || is_wp_error( activate_plugin( $plugin, null, is_network_admin(), true ))) {
-			wp_send_json_error();
-		}
+		$activateUrl = add_query_arg([
+			'_wpnonce' => wp_create_nonce( sprintf( 'activate-plugin_%s', $plugin )),
+			'action' => 'activate',
+			'page' => $this->app->id,
+			'plugin' => $plugin,
+		], self_admin_url( 'options-general.php' ));
 		wp_send_json_success([
-			'activate' => $plugin,
-			'pluginName' => $this->getPluginInformation( $plugin, 'name' ),
-			'slug' => $this->getPluginSlug( $plugin ),
+			'activate_url' => $activateUrl,
+			filter_input( INPUT_POST, 'type' ) => $plugin,
 		]);
 	}
 
@@ -122,28 +124,6 @@ class GateKeeper
 	}
 
 	/**
-	 * @return void|null
-	 */
-	public function getDependencyAction()
-	{
-		if( get_current_screen()->id != 'settings_page_pollux' )return;
-
-		$action = filter_input( INPUT_GET, 'action' );
-		$plugin = filter_input( INPUT_GET, 'plugin' );
-
-		if( $action == 'activate' ) {
-			$this->activatePlugin( $plugin );
-		}
-		else if( $action == 'install' ) {
-			$this->installPlugin( $plugin );
-		}
-		else if( filter_input( INPUT_GET, '_error_nonce' )) {
-			wp_safe_redirect( remove_query_arg( '_error_nonce' ));
-			exit;
-		}
-	}
-
-	/**
 	 * @return bool
 	 */
 	public function hasDependency( $plugin )
@@ -152,6 +132,19 @@ class GateKeeper
 			return true;
 		}
 		return $this->isPluginInstalled( $plugin ) && $this->isPluginValid( $plugin );
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function hasPendingDependencies()
+	{
+		foreach( static::DEPENDENCIES as $plugin => $data ) {
+			if( !$this->isPluginDependency( $plugin ))continue;
+			$this->isPluginActive( $plugin );
+			$this->isPluginVersionValid( $plugin );
+		}
+		return !empty( $this->errors );
 	}
 
 	/**
@@ -236,19 +229,6 @@ class GateKeeper
 	}
 
 	/**
-	 * @return bool
-	 */
-	public function hasPendingDependencies()
-	{
-		foreach( static::DEPENDENCIES as $plugin => $data ) {
-			if( !$this->isPluginDependency( $plugin ))continue;
-			$this->isPluginActive( $plugin );
-			$this->isPluginVersionValid( $plugin );
-		}
-		return !empty( $this->errors );
-	}
-
-	/**
 	 * @return void|null
 	 */
 	public function setDependencyNotice()
@@ -257,26 +237,11 @@ class GateKeeper
 			|| $this->app->config->disable_config
 			|| !$this->hasPendingDependencies()
 		)return;
-
-		$plugins = '';
-		$actions = '';
-
-		foreach( $this->errors as $plugin => $errors ) {
-			$plugins .= $this->getPluginLink( $plugin );
-			if( in_array( 'not_found', $errors ) && current_user_can( 'install_plugins' )) {
-				$actions .= $this->notice->installButton( $this->getPluginRequirements( $plugin ));
-			}
-			else if( in_array( 'wrong_version', $errors ) && current_user_can( 'update_plugins' )) {
-				$actions .= $this->notice->updateButton( $this->getPluginInformation( $plugin ));
-			}
-			else if( in_array( 'inactive', $errors ) && current_user_can( 'activate_plugins' )) {
-				$actions .= $this->notice->activateButton( $this->getPluginInformation( $plugin ));
-			}
-		}
-		$this->notice->addWarning([
-			sprintf( '<strong>%s</strong> %s', __( 'Pollux requires the latest version of the following plugins:', 'pollux' ), $plugins ),
-			$actions,
-		]);
+		$message = sprintf( '<strong>%s:</strong> %s',
+			__( 'Pollux requires the latest version of the following plugins', 'pollux' ),
+			$this->getDependencyLinks()
+		);
+		$this->notice->addWarning( [$message, $this->getDependencyActions()] );
 	}
 
 	/**
@@ -304,8 +269,9 @@ class GateKeeper
 	}
 
 	/**
+	 * @param string $plugin
 	 * @param string $error
-	 * @param bool $bool
+	 * @param bool $isValid
 	 * @return bool
 	 */
 	protected function catchError( $plugin, $error, $isValid )
@@ -328,6 +294,36 @@ class GateKeeper
 	{
 		require_once ABSPATH . 'wp-admin/includes/plugin.php';
 		return array_merge( get_plugins(), $this->getMustUsePlugins() );
+	}
+
+	/**
+	 * @return string
+	 */
+	protected function getDependencyActions()
+	{
+		$actions = '';
+		foreach( $this->errors as $plugin => $errors ) {
+			if( in_array( 'not_found', $errors ) && current_user_can( 'install_plugins' )) {
+				$actions .= $this->notice->installButton( $this->getPluginRequirements( $plugin ));
+			}
+			else if( in_array( 'wrong_version', $errors ) && current_user_can( 'update_plugins' )) {
+				$actions .= $this->notice->updateButton( $this->getPluginInformation( $plugin ));
+			}
+			else if( in_array( 'inactive', $errors ) && current_user_can( 'activate_plugins' )) {
+				$actions .= $this->notice->activateButton( $this->getPluginInformation( $plugin ));
+			}
+		}
+		return $actions;
+	}
+
+	/**
+	 * @return string
+	 */
+	protected function getDependencyLinks()
+	{
+		return array_reduce( array_keys( $this->errors ), function( $carry, $plugin ) {
+			return $carry . $this->getPluginLink( $plugin );
+		});
 	}
 
 	/**
@@ -359,8 +355,11 @@ class GateKeeper
 	/**
 	 * @return array|string
 	 */
-	protected function getPluginData( $plugin, array $data, $key = null )
+	protected function getPluginData( $plugin, $data, $key = null )
 	{
+		if( !is_array( $data )) {
+			throw new Exception( sprintf( 'Plugin information not found for: %s', $plugin ));
+		}
 		$data['plugin'] = $plugin;
 		$data['slug'] = $this->getPluginSlug( $plugin );
 		$data = array_change_key_case( $data );
@@ -378,11 +377,7 @@ class GateKeeper
 	 */
 	protected function getPluginInformation( $plugin, $key = null )
 	{
-		$data = $this->getPlugin( $plugin );
-		if( is_array( $data )) {
-			return $this->getPluginData( $plugin, $data, $key );
-		}
-		throw new Exception( sprintf( 'Plugin information not found for: %s', $plugin ));
+		return $this->getPluginData( $plugin, $this->getPlugin( $plugin ), $key );
 	}
 
 	/**
@@ -409,7 +404,6 @@ class GateKeeper
 	protected function getPluginRequirements( $plugin, $key = null )
 	{
 		$keys = ['Name', 'Version', 'PluginURI'];
-		$index = array_search( $key, $keys, true );
 		$requirements = $this->isPluginDependency( $plugin )
 			? array_pad( explode( '|', static::DEPENDENCIES[$plugin] ), 3, '' )
 			: array_fill( 0, 3, '' );

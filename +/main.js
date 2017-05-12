@@ -17,26 +17,19 @@ pollux.classListAction = function( bool )
 /**
  * @return void
  */
-pollux.dependency.activate = function( el )
-{
-	pollux.dependency.updateButtonText( el, pollux.vars.l10n.pluginActivatingLabel );
-	return pollux.dependency.ajax( 'pollux/dependency/activate', el );
-};
-
-/**
- * @return void
- */
-pollux.dependency.ajax = function( action, el )
+pollux.dependency.ajax = function( action, el, type )
 {
 	var args = pollux.dependency.getAjaxOptions( el );
-	var options = {
-		success: args.success,
+	wp.ajax.send({
 		error: args.error,
-	};
-	delete args.success;
-	delete args.error;
-	options.data = args;
-	wp.ajax.send( action, options );
+		success: args.success,
+		data: {
+			_ajax_nonce: wp.updates.ajaxNonce,
+			action: action,
+			plugin: args.plugin,
+			type: type,
+		}
+	});
 };
 
 /**
@@ -45,7 +38,6 @@ pollux.dependency.ajax = function( action, el )
 pollux.dependency.getAjaxOptions = function( el )
 {
 	return {
-		_ajax_nonce: wp.updates.ajaxNonce,
 		error: pollux.dependency.onError.bind( el ),
 		plugin: el.getAttribute( 'data-plugin' ),
 		slug: el.getAttribute( 'data-slug' ),
@@ -69,7 +61,8 @@ pollux.dependency.init = function()
  */
 pollux.dependency.install = function( el, args )
 {
-	pollux.dependency.updateButtonText( el, wp.updates.l10n.pluginInstallingLabel );
+	pollux.dependency.updateButtonText( el, 'pluginInstallingLabel' );
+	el.classList.add( 'updating-message' );
 	return wp.updates.ajax( 'install-plugin', args );
 };
 
@@ -91,7 +84,7 @@ pollux.dependency.onClick = function( ev )
 /**
  * @return void
  */
-pollux.dependency.onError = function( response )
+pollux.dependency.onError = function()
 {
 	window.location = this.href;
 };
@@ -102,36 +95,14 @@ pollux.dependency.onError = function( response )
 pollux.dependency.onSuccess = function( response )
 {
 	var el = this;
-	if( response.update ) {
-		return pollux.dependency.ajax( 'pollux/dependency/updated', el );
+	var type = response.install ? 'install' : 'update';
+	if( !response.activate_url ) {
+		return pollux.dependency.ajax( 'pollux/dependency/activate_url', el, type );
 	}
-	pollux.dependency.setUpdatedMessage( el );
-	if( response.install ) {
-		el.innerHTML = wp.updates.l10n.pluginInstalledLabel.replace( '%s', response.pluginName );
-	}
-	if( response.updated ) {
-		el.innerHTML = wp.updates.l10n.updatedLabel.replace( '%s', response.pluginName );
-	}
-	if( response.activateUrl ) {
+	pollux.dependency.setUpdatedMessage( el, type );
+	if( response.activate_url ) {
 		setTimeout( function() {
 			pollux.dependency.setActivateButton( el, response );
-		}, 1000 );
-	}
-	if( response.activate ) {
-		el.innerHTML = pollux.vars.l10n.pluginActivatedLabel.replace( '%s', response.pluginName );
-		setTimeout( function() {
-			var notice = el.closest( '.pollux-notice' );
-			if( pollux.dependency.buttons.length < 2 ) {
-				pollux.editors.all.forEach( function( editor, index ) {
-					pollux.editors.enable( index );
-				});
-				notice.parentNode.removeChild( notice );
-			}
-			else {
-				var plugin = notice.querySelector( '.plugin-' + response.slug );
-				plugin.parentNode.removeChild( plugin );
-				el.parentNode.removeChild( el );
-			}
 		}, 1000 );
 	}
 };
@@ -144,29 +115,32 @@ pollux.dependency.setActivateButton = function( el, response )
 	el.classList.remove( 'updated-message' );
 	el.classList.remove( 'button-disabled' );
 	el.classList.add( 'button-primary' );
-	el.href = response.activateUrl;
-	el.innerHTML = wp.updates.l10n.activatePluginLabel.replace( '%s', response.pluginName );
+	el.href = response.activate_url;
+	pollux.dependency.updateButtonText( el, 'activatePluginLabel' );
 };
 
 /**
  * @return void
  */
-pollux.dependency.setUpdatedMessage = function( el )
+pollux.dependency.setUpdatedMessage = function( el, type )
 {
 	el.classList.remove( 'updating-message' );
 	el.classList.add( 'updated-message' );
 	el.classList.add( 'button-disabled' );
+	pollux.dependency.updateButtonText( el, (
+		type === 'install' ? 'pluginInstalledLabel' : 'updatedLabel'
+	));
 };
 
 /**
  * @return void
  */
-pollux.dependency.updateButtonText = function( el, text )
+pollux.dependency.updateButtonText = function( el, l10nkey )
 {
-	var label = text.replace( '%s', el.getAttribute( 'data-name' ));
+	if( !wp.updates.l10n[l10nkey] )return;
+	var label = wp.updates.l10n[l10nkey].replace( '%s', el.getAttribute( 'data-name' ));
 	if( el.innerHTML !== label ) {
 		el.innerHTML = label;
-		el.classList.add( 'updating-message' );
 	}
 };
 
@@ -175,7 +149,8 @@ pollux.dependency.updateButtonText = function( el, text )
  */
 pollux.dependency.upgrade = function( el, args )
 {
-	pollux.dependency.updateButtonText( el, wp.updates.l10n.updatingLabel );
+	pollux.dependency.updateButtonText( el, 'updatingLabel' );
+	el.classList.add( 'updating-message' );
 	return wp.updates.ajax( 'update-plugin', args );
 };
 
@@ -186,8 +161,6 @@ pollux.editors.disable = function( index )
 {
 	pollux.editors.all[index].setOption( 'theme', 'disabled' );
 	pollux.editors.all[index].setOption( 'readOnly', 'nocursor' );
-	pollux.editors.all[index].getTextArea().readOnly = true;
-	pollux.editors.all[index].refresh();
 };
 
 /**
@@ -197,8 +170,6 @@ pollux.editors.enable = function( index )
 {
 	pollux.editors.all[index].setOption( 'theme', 'pollux' );
 	pollux.editors.all[index].setOption( 'readOnly', false );
-	pollux.editors.all[index].getTextArea().readOnly = false;
-	pollux.editors.all[index].refresh();
 };
 
 /**
@@ -343,6 +314,9 @@ pollux.tabs.onClick = function( ev )
 	this.blur();
 	pollux.tabs.setTab( this );
 	location.hash = '!' + this.getAttribute( 'href' ).slice(1);
+	// pollux.editors.all.forEach( function( editor ) {
+	// 	editor.refresh();
+	// });
 };
 
 /**
@@ -383,7 +357,7 @@ pollux.tabs.setView = function( idx )
 
 jQuery(function() {
 	for( var key in pollux ) {
-		if( !pollux[key].hasOwnProperty( 'init' ))continue;
+		if( !pollux.hasOwnProperty( key ) || !pollux[key].init )continue;
 		pollux[key].init();
 	}
 });
