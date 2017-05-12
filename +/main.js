@@ -1,13 +1,10 @@
-/** global: wp, CodeMirror */
+/** global: wp, pollux, CodeMirror */
 
-var pollux = {
-	editors: {},
-	media: {
-		featured: {},
-	},
-	metabox: {},
-	tabs: {},
-};
+pollux.dependency = {};
+pollux.editors = {};
+pollux.featured = {};
+pollux.metabox = {};
+pollux.tabs = {};
 
 /**
  * @return bool
@@ -20,35 +17,255 @@ pollux.classListAction = function( bool )
 /**
  * @return void
  */
-pollux.media.featured.init = function()
+pollux.dependency.activate = function( el )
 {
-	jQuery( '#postimagediv' )
-	.on( 'click', '#pollux-set-featured', function( ev ) {
-		ev.preventDefault();
-		wp.media.view.settings.post.featuredImageId = Math.round( jQuery( '#featured' ).val() );
-		pollux.media.featured.frame = wp.media.featuredImage.frame;
-		pollux.media.featured.frame().open();
-	})
-	.on( 'click', '#pollux-remove-featured', function( ev ) {
-		ev.preventDefault();
-		pollux.media.featured.set(-1);
+	pollux.dependency.updateButtonText( el, pollux.vars.l10n.pluginActivatingLabel );
+	return pollux.dependency.ajax( 'pollux/dependency/activate', el );
+};
+
+/**
+ * @return void
+ */
+pollux.dependency.ajax = function( action, el )
+{
+	var args = pollux.dependency.getAjaxOptions( el );
+	var options = {
+		success: args.success,
+		error: args.error,
+	};
+	delete args.success;
+	delete args.error;
+	options.data = args;
+	wp.ajax.send( action, options );
+};
+
+/**
+ * @return object
+ */
+pollux.dependency.getAjaxOptions = function( el )
+{
+	return {
+		_ajax_nonce: wp.updates.ajaxNonce,
+		error: pollux.dependency.onError.bind( el ),
+		plugin: el.getAttribute( 'data-plugin' ),
+		slug: el.getAttribute( 'data-slug' ),
+		success: pollux.dependency.onSuccess.bind( el ),
+	};
+};
+
+/**
+ * @return void
+ */
+pollux.dependency.init = function()
+{
+	pollux.dependency.buttons = document.querySelectorAll( '.pollux-notice a.button' );
+	[].forEach.call( pollux.dependency.buttons, function( button ) {
+		button.addEventListener( 'click', pollux.dependency.onClick );
 	});
 };
 
 /**
  * @return void
  */
-pollux.media.featured.select = function()
+pollux.dependency.install = function( el, args )
 {
-	if( !wp.media.view.settings.post.featuredImageId )return;
-	var selection = this.get( 'selection' ).single();
-	pollux.media.featured.set( selection ? selection.id : -1 );
+	pollux.dependency.updateButtonText( el, wp.updates.l10n.pluginInstallingLabel );
+	return wp.updates.ajax( 'install-plugin', args );
 };
 
 /**
  * @return void
  */
-pollux.media.featured.set = function( id )
+pollux.dependency.onClick = function( ev )
+{
+	var action = this.href.match(/action=([^&]+)/);
+	if( action === null )return;
+	action = action[1].split('-')[0];
+	if( !pollux.dependency[action] )return;
+	this.blur();
+	ev.preventDefault();
+	if( this.classList.contains( 'updating-message' ))return;
+	pollux.dependency[action]( this, pollux.dependency.getAjaxOptions( this ));
+};
+
+/**
+ * @return void
+ */
+pollux.dependency.onError = function( response )
+{
+	window.location = this.href;
+};
+
+/**
+ * @return void
+ */
+pollux.dependency.onSuccess = function( response )
+{
+	var el = this;
+	if( response.update ) {
+		return pollux.dependency.ajax( 'pollux/dependency/updated', el );
+	}
+	pollux.dependency.setUpdatedMessage( el );
+	if( response.install ) {
+		el.innerHTML = wp.updates.l10n.pluginInstalledLabel.replace( '%s', response.pluginName );
+	}
+	if( response.updated ) {
+		el.innerHTML = wp.updates.l10n.updatedLabel.replace( '%s', response.pluginName );
+	}
+	if( response.activateUrl ) {
+		setTimeout( function() {
+			pollux.dependency.setActivateButton( el, response );
+		}, 1000 );
+	}
+	if( response.activate ) {
+		el.innerHTML = pollux.vars.l10n.pluginActivatedLabel.replace( '%s', response.pluginName );
+		setTimeout( function() {
+			var notice = el.closest( '.pollux-notice' );
+			if( pollux.dependency.buttons.length < 2 ) {
+				pollux.editors.all.forEach( function( editor, index ) {
+					pollux.editors.enable( index );
+				});
+				notice.parentNode.removeChild( notice );
+			}
+			else {
+				var plugin = notice.querySelector( '.plugin-' + response.slug );
+				plugin.parentNode.removeChild( plugin );
+				el.parentNode.removeChild( el );
+			}
+		}, 1000 );
+	}
+};
+
+/**
+ * @return void
+ */
+pollux.dependency.setActivateButton = function( el, response )
+{
+	el.classList.remove( 'updated-message' );
+	el.classList.remove( 'button-disabled' );
+	el.classList.add( 'button-primary' );
+	el.href = response.activateUrl;
+	el.innerHTML = wp.updates.l10n.activatePluginLabel.replace( '%s', response.pluginName );
+};
+
+/**
+ * @return void
+ */
+pollux.dependency.setUpdatedMessage = function( el )
+{
+	el.classList.remove( 'updating-message' );
+	el.classList.add( 'updated-message' );
+	el.classList.add( 'button-disabled' );
+};
+
+/**
+ * @return void
+ */
+pollux.dependency.updateButtonText = function( el, text )
+{
+	var label = text.replace( '%s', el.getAttribute( 'data-name' ));
+	if( el.innerHTML !== label ) {
+		el.innerHTML = label;
+		el.classList.add( 'updating-message' );
+	}
+};
+
+/**
+ * @return void
+ */
+pollux.dependency.upgrade = function( el, args )
+{
+	pollux.dependency.updateButtonText( el, wp.updates.l10n.updatingLabel );
+	return wp.updates.ajax( 'update-plugin', args );
+};
+
+/**
+ * @return void
+ */
+pollux.editors.disable = function( index )
+{
+	pollux.editors.all[index].setOption( 'theme', 'disabled' );
+	pollux.editors.all[index].setOption( 'readOnly', 'nocursor' );
+	pollux.editors.all[index].getTextArea().readOnly = true;
+	pollux.editors.all[index].refresh();
+};
+
+/**
+ * @return void
+ */
+pollux.editors.enable = function( index )
+{
+	pollux.editors.all[index].setOption( 'theme', 'pollux' );
+	pollux.editors.all[index].setOption( 'readOnly', false );
+	pollux.editors.all[index].getTextArea().readOnly = false;
+	pollux.editors.all[index].refresh();
+};
+
+/**
+ * @return void
+ */
+pollux.editors.init = function()
+{
+	pollux.editors.all = [];
+	[].forEach.call( document.querySelectorAll( '.pollux-code' ), function( editor, index ) {
+		pollux.editors.all[index] = CodeMirror.fromTextArea( editor, {
+			gutters: ['CodeMirror-lint-markers'],
+			highlightSelectionMatches: { wordsOnly: true },
+			lineNumbers: true,
+			lint: true,
+			mode: 'text/yaml',
+			showInvisibles: true,
+			showTrailingSpace: true,
+			styleActiveLine: true,
+			tabSize: 2,
+			theme: 'pollux',
+			viewportMargin: Infinity,
+		});
+		pollux.editors.all[index].setOption( 'extraKeys', {
+			Tab: function( cm ) {
+				var spaces = Array( cm.getOption( 'indentUnit' ) + 1 ).join( ' ' );
+				cm.replaceSelection( spaces );
+			},
+		});
+		pollux.editors.all[index].display.wrapper.setAttribute( 'data-disabled', editor.getAttribute( 'data-disabled' ));
+		if( editor.readOnly ) {
+			pollux.editors.disable( index );
+		}
+	});
+};
+
+/**
+ * @return void
+ */
+pollux.featured.init = function()
+{
+	jQuery( '#postimagediv' )
+	.on( 'click', '#pollux-set-featured', function( ev ) {
+		ev.preventDefault();
+		wp.media.view.settings.post.featuredImageId = Math.round( jQuery( '#featured' ).val() );
+		pollux.featured.frame = wp.media.featuredImage.frame;
+		pollux.featured.frame().open();
+	})
+	.on( 'click', '#pollux-remove-featured', function( ev ) {
+		ev.preventDefault();
+		pollux.featured.set(-1);
+	});
+};
+
+/**
+ * @return void
+ */
+pollux.featured.select = function()
+{
+	if( !wp.media.view.settings.post.featuredImageId )return;
+	var selection = this.get( 'selection' ).single();
+	pollux.featured.set( selection ? selection.id : -1 );
+};
+
+/**
+ * @return void
+ */
+pollux.featured.set = function( id )
 {
 	wp.media.view.settings.post.featuredImageId = Math.round( id );
 	wp.media.post( 'pollux/archives/featured/html', {
@@ -164,43 +381,9 @@ pollux.tabs.setView = function( idx )
 	});
 };
 
-/**
- * @return void
- */
-pollux.editors.init = function()
-{
-	pollux.editors.all = [];
-	[].forEach.call( document.querySelectorAll( '.pollux-code' ), function( editor, index ) {
-		pollux.editors.all[index] = CodeMirror.fromTextArea( editor, {
-			gutters: ['CodeMirror-lint-markers'],
-			highlightSelectionMatches: { wordsOnly: true },
-			lineNumbers: true,
-			lint: true,
-			mode: 'text/yaml',
-			showInvisibles: true,
-			showTrailingSpace: true,
-			styleActiveLine: true,
-			tabSize: 2,
-			theme: 'pollux',
-			viewportMargin: Infinity,
-		});
-		pollux.editors.all[index].setOption( 'extraKeys', {
-			Tab: function( cm ) {
-				var spaces = Array( cm.getOption( 'indentUnit' ) + 1 ).join( ' ' );
-				cm.replaceSelection( spaces );
-			},
-		});
-		pollux.editors.all[index].display.wrapper.setAttribute( 'data-disabled', editor.getAttribute( 'data-disabled' ));
-		if( editor.readOnly ) {
-			pollux.editors.all[index].setOption( 'theme', 'disabled' );
-			pollux.editors.all[index].setOption( 'readOnly', 'nocursor' );
-		}
-	});
-};
-
 jQuery(function() {
-	pollux.editors.init();
-	pollux.media.featured.init();
-	pollux.metabox.init();
-	pollux.tabs.init();
+	for( var key in pollux ) {
+		if( !pollux[key].hasOwnProperty( 'init' ))continue;
+		pollux[key].init();
+	}
 });

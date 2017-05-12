@@ -54,6 +54,7 @@ class Controller
 
 		$this->registerArchiveAssets( $screen );
 		$this->registerCodemirrorAssets( $screen );
+		$this->registerGateKeeperAssets( $screen );
 		$this->registerSettingsAssets( $screen );
 
 		wp_enqueue_style( 'pollux/main.css',
@@ -68,7 +69,7 @@ class Controller
 		);
 		wp_localize_script( 'pollux/main.js',
 			apply_filters( 'pollux/enqueue/js/localize/name', $this->app->id ),
-			apply_filters( 'pollux/enqueue/js/localize/variables', [] )
+			['vars' => apply_filters( 'pollux/enqueue/js/localize/variables', [] )]
 		);
 	}
 
@@ -131,6 +132,25 @@ class Controller
 				['pollux/main.js'],
 				$this->app->version
 			);
+		}
+	}
+
+	/**
+	 * @return void
+	 */
+	protected function registerGateKeeperAssets( WP_Screen $screen )
+	{
+		if( $screen->id == 'settings_page_pollux'
+			&& $screen->pagenow == 'options-general.php'
+			&& $this->app->gatekeeper->hasPendingDependencies() ) {
+			wp_enqueue_script( 'updates' );
+			add_filter( 'pollux/enqueue/js/localize/variables', function( $vars ) {
+				$vars['l10n'] = [
+					'pluginActivatingLabel' => __( 'Activating %s...', 'pollux' ),
+					'pluginActivatedLabel' => __( '%s activated!', 'pollux' ),
+				];
+				return $vars;
+			});
 		}
 	}
 
