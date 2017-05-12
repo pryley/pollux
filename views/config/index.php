@@ -26,9 +26,9 @@
 								<?= __( 'Disable Posts', 'pollux' ); ?>
 							</label>
 							<br>
-							<label for="enable_archive_meta">
-								<input type="checkbox" id="enable_archive_meta" name="pollux_config[enable_archive_meta]" value="1" <?php checked( $config->enable_archive_meta ); ?>>
-								<?= __( 'Enable Archive Page Meta', 'pollux' ); ?>
+							<label for="enable_archive_page">
+								<input type="checkbox" id="enable_archive_page" name="pollux_config[enable_archive_page]" value="1" <?php checked( $config->enable_archive_page ); ?>>
+								<?= __( 'Enable Archive Page', 'pollux' ); ?>
 							</label>
 							<br>
 							<label for="remove_dashboard_widgets">
@@ -58,7 +58,7 @@
 						<label for="pollux_archives"><?= __( 'Archive Meta Boxes', 'pollux' ); ?></label>
 					</th>
 					<td>
-						<textarea id="pollux_archives" name="pollux_config[archives]" rows="10" cols="50" class="large-text code pollux-code" placeholder="" data-disabled="<?= __( 'Archive Page Meta is not enabled.', 'pollux' ); ?>" <?= !$config->enable_archive_meta ? 'readonly' : ''; ?>><?= $config->yaml->archives; ?></textarea>
+						<textarea id="pollux_archives" name="pollux_config[archives]" rows="10" cols="50" class="large-text code pollux-code" placeholder="" data-disabled="<?= __( 'Archive Page is not enabled.', 'pollux' ); ?>" <?= !$config->enable_archive_page ? 'readonly' : ''; ?>><?= $config->yaml->archives; ?></textarea>
 						<p class="description"></p>
 					</td>
 				</tr>

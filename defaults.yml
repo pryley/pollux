@@ -1,6 +1,6 @@
 disable_config: false
 disable_posts: false
-enable_archive_meta: false
+enable_archive_page: false
 remove_dashboard_widgets: false
 remove_wordpress_footer: false
 remove_wordpress_menu: false
