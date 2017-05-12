@@ -6,11 +6,6 @@ use GeminiLabs\Pollux\Helper;
 
 trait Condition
 {
-	public static $conditions = [
-		'class_exists', 'defined', 'function_exists', 'hook', 'is_front_page', 'is_home',
-		'is_page_template', 'is_plugin_active', 'is_plugin_inactive',
-	];
-
 	/**
 	 * @var Application
 	 */
@@ -21,7 +16,13 @@ trait Condition
 	 */
 	public static function conditions()
 	{
-		return apply_filters( 'pollux/conditions', static::$conditions, strtolower(( new Helper )->getClassname( static::class )));
+		$defaults = [
+			'class_exists', 'defined', 'function_exists', 'hook', 'is_front_page', 'is_home',
+			'is_page_template', 'is_plugin_active', 'is_plugin_inactive',
+		];
+		return defined( 'static::CONDITIONS' )
+			? static::CONDITIONS
+			: $defaults;
 	}
 
 	/**
@@ -53,10 +54,9 @@ trait Condition
 				return !is_numeric( $key );
 			}, ARRAY_FILTER_USE_KEY );
 		}
-		$hook = sprintf( 'pollux/%s/conditions', strtolower(( new Helper )->getClassname( $this )));
 		return array_intersect_key(
 			$conditions,
-			array_flip( apply_filters( $hook, static::conditions() ))
+			array_flip( $this->filter( 'conditions', static::conditions() ))
 		);
 	}
 
@@ -150,6 +150,13 @@ trait Condition
 	{
 		return apply_filters( 'pollux/metabox/condition', true, $key, $value );
 	}
+
+	/**
+	 * @param string $name
+	 * @param mixed ...$args
+	 * @return mixed
+	 */
+	abstract public function filter( $name, ...$args );
 
 	/**
 	 * @return int

@@ -15,10 +15,7 @@ class Settings extends MetaBox
 	 */
 	const ID = 'settings';
 
-	/**
-	 * @var array
-	 */
-	public static $conditions = [
+	const CONDITIONS = [
 		'class_exists', 'defined', 'function_exists', 'hook', 'is_plugin_active',
 		'is_plugin_inactive',
 	];
