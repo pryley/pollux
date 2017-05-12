@@ -205,7 +205,7 @@ class ConfigManager extends SiteMetaManager
 	protected function parseYaml( $value )
 	{
 		try {
-			return Yaml::parse( $value );
+			return (array) Yaml::parse( $value );
 		}
 		catch( ParseException $e ) {
 			// http://api.symfony.com/3.2/Symfony/Component/Yaml/Exception/ParseException.html
