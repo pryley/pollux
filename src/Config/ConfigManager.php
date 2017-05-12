@@ -15,7 +15,7 @@ use Symfony\Component\Yaml\Yaml;
 class ConfigManager extends SiteMetaManager
 {
 	const RAW_STRINGS = [
-		'__', '_n', '_x', 'sprintf',
+		'__', '_n', '_x', 'esc_attr__', 'esc_html__', 'sprintf',
 	];
 
 	/**
