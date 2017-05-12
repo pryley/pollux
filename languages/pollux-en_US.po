@@ -34,37 +34,37 @@ msgstr "Activating %s..."
 msgid "%s activated!"
 msgstr "%s activated!"
 
-#: src/GateKeeper.php:257
-msgid "Pollux requires the latest version of the following plugins:"
-msgstr "Pollux requires the latest version of the following plugins:"
+#: src/GateKeeper.php:241
+msgid "Pollux requires the latest version of the following plugins"
+msgstr "Pollux requires the latest version of the following plugins"
 
-#: src/GateKeeper.php:268, src/GateKeeper.php:280
-msgid "The Pollux plugin was deactivated."
-msgstr "The Pollux plugin was deactivated."
+#: src/GateKeeper.php:252
+msgid ""
+"Pollux requires PHP %s or greater in order to work properly (your server is "
+"running PHP %s)."
+msgstr ""
+"Pollux requires PHP %s or greater in order to work properly (your server is "
+"running PHP %s)."
+
+#: src/GateKeeper.php:253
+msgid ""
+"Please contact your webhosting provider or server administrator to upgrade "
+"the version of PHP running on your server, or use a different plugin."
+msgstr ""
+"Please contact your webhosting provider or server administrator to upgrade "
+"the version of PHP running on your server, or use a different plugin."
+
+#: src/GateKeeper.php:265
+msgid "Pollux requires WordPress %s or greater in order to work properly."
+msgstr "Pollux requires WordPress %s or greater in order to work properly."
 
 #: src/GateKeeper.php:269
-msgid ""
-"Sorry, Pollux requires PHP %s or greater in order to work properly (your "
-"server is running PHP %s)."
-msgstr ""
-"Sorry, Pollux requires PHP %s or greater in order to work properly (your "
-"server is running PHP %s)."
-
-#: src/GateKeeper.php:270
-msgid ""
-"Please contact your hosting provider or server administrator to upgrade the "
-"version of PHP running on your server, or find an alternate plugin."
-msgstr ""
-"Please contact your hosting provider or server administrator to upgrade the "
-"version of PHP running on your server, or find an alternate plugin."
-
-#: src/GateKeeper.php:281
-msgid "Sorry, Pollux requires WordPress %s or greater in order to work properly."
-msgstr "Sorry, Pollux requires WordPress %s or greater in order to work properly."
-
-#: src/GateKeeper.php:282
 msgid "Update WordPress"
 msgstr "Update WordPress"
+
+#: src/GateKeeper.php:431
+msgid "The Pollux plugin was deactivated."
+msgstr "The Pollux plugin was deactivated."
 
 #: src/Notice.php:52
 msgid "Activate"
@@ -86,11 +86,11 @@ msgstr "Pollux"
 msgid "Pollux Settings"
 msgstr "Pollux Settings"
 
-#: src/Config/Config.php:112, src/Settings/Settings.php:222
+#: src/Config/Config.php:113, src/Settings/Settings.php:222
 msgid "Reset successful."
 msgstr "Reset successful."
 
-#: src/Config/Config.php:115, src/Settings/Settings.php:225
+#: src/Config/Config.php:116, src/Settings/Settings.php:225
 msgid "Failed to reset. Please try again."
 msgstr "Failed to reset. Please try again."
 
@@ -190,11 +190,11 @@ msgstr "General"
 msgid "Meta Boxes"
 msgstr "Meta Boxes"
 
-#: views/config/index.php:9, views/config/index.php:90
+#: views/config/index.php:9, views/config/index.php:99
 msgid "Post Types"
 msgstr "Post Types"
 
-#: views/config/index.php:10, views/config/index.php:113
+#: views/config/index.php:10, views/config/index.php:122
 msgid "Taxonomies"
 msgstr "Taxonomies"
 
@@ -222,23 +222,27 @@ msgstr "Remove the WordPress Menu From the Admin Bar"
 msgid "Archive Meta Boxes"
 msgstr "Archive Meta Boxes"
 
-#: views/config/index.php:61
+#: views/config/index.php:67, views/config/index.php:79, views/config/index.php:88
+msgid "This field requires the Meta Box plugin."
+msgstr "This field requires the Meta Box plugin."
+
+#: views/config/index.php:68
 msgid "Archive Page is not enabled."
 msgstr "Archive Page is not enabled."
 
-#: views/config/index.php:67
+#: views/config/index.php:76
 msgid "Post Type Meta Boxes"
 msgstr "Post Type Meta Boxes"
 
-#: views/config/index.php:76
+#: views/config/index.php:85
 msgid "Site Settings Meta Boxes"
 msgstr "Site Settings Meta Boxes"
 
-#: views/config/index.php:99
+#: views/config/index.php:108
 msgid "Post Type Columns"
 msgstr "Post Type Columns"
 
-#: views/config/index.php:125
+#: views/config/index.php:134
 msgid "Reset to Defaults"
 msgstr "Reset to Defaults"
 

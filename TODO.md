@@ -12,7 +12,7 @@
 - [x] Miscellaneous
 - [x] Disable Posts
 - [x] Settings page to change plugin config
-- [=] GateKeeper (plugin depends)
+- [x] GateKeeper (plugin depends)
 - [ ] Auto-generate language file for config file
 - [ ] HELP tabs for pollux
 - [ ] Write test suite
