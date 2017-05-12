@@ -15,6 +15,7 @@ styles:
   codemirror.css:
     - node_modules/codemirror/lib/codemirror.css
     - node_modules/codemirror/addon/lint/lint.css
+    - +/codemirror.css
 dest:
   css: assets/
   js: assets/
@@ -25,6 +26,7 @@ language:
   translator: Paul Ryley <paul@geminilabs.io>
 primary_file: pollux.php
 watch:
+  css: +/codemirror.css
   js: +/main.js
   php:
     - src/**/*.php

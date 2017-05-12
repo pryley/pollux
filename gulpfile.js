@@ -160,6 +160,7 @@ gulp.task('bump', function() {
 /* Watch Task
  -------------------------------------------------- */
 gulp.task('watch', function() {
+  gulp.watch(config.watch.css, ['css']);
   gulp.watch(config.watch.js, ['jshint', 'js']);
   gulp.watch(config.watch.scss, ['scss']);
 });
