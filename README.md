@@ -5,6 +5,8 @@
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/geminilabs/pollux/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/geminilabs/pollux/?branch=master)
 [![Build Status](https://scrutinizer-ci.com/g/geminilabs/pollux/badges/build.png?b=master)](https://scrutinizer-ci.com/g/geminilabs/pollux/build-status/master)
 
+![Pollux banner](+/assets/banner-1544x500.png)
+
 Pollux is a theme-agnostic scaffolding plugin for the advanced WordPress user. It allows you to easily add custom Post Types, Taxonomies, Meta Boxes, Global Settings, and more.
 
 Pollux uses the [Meta Box](https://wordpress.org/plugins/meta-box/) plugin to add custom meta-boxes. If the Meta Box plugin is not installed, Pollux will prompt you to do so on the Pollux settings page.
