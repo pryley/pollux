@@ -55,20 +55,20 @@ trait Columns
 	 * @param int $postId
 	 * @return string
 	 */
-	protected function getColumnImage( $postId )
+	protected function getColumnThumbnail( $postId )
 	{
 		if( has_post_thumbnail( $postId ) ) {
 			list( $src, $width, $height ) = wp_get_attachment_image_src( get_post_thumbnail_id( $postId ), [96, 48] );
-			$image = sprintf( '<img src="%s" alt="%s" width="%s" height="%s">',
+			$thumbnail = sprintf( '<img src="%s" alt="%s" width="%s" height="%s">',
 				esc_url( set_url_scheme( $src )),
 				esc_attr( get_the_title( $postId )),
 				$width,
 				$height
 			);
 		}
-		return empty( $image )
+		return empty( $thumbnail )
 			? '&mdash;'
-			: $image;
+			: $thumbnail;
 	}
 
 	/**
@@ -111,9 +111,9 @@ trait Columns
 			'categories' => __( 'Categories', 'pollux' ),
 			'comments' => sprintf( '<span class="vers comment-grey-bubble" title="%1$s"><span class="screen-reader-text">%1$s</span></span>', __( 'Comments', 'pollux' )),
 			'date' => __( 'Date', 'pollux' ),
-			'image' => __( 'Image', 'pollux' ),
 			'media' => __( 'Media', 'pollux' ),
 			'slug' => __( 'Slug', 'pollux' ),
+			'thumbnail' => __( 'Featured Image', 'pollux' ),
 			'title' => __( 'Title', 'pollux' ),
 		];
 		$this->columns = apply_filters( 'pollux/post_type/columns',
