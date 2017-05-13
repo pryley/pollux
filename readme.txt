@@ -4,7 +4,7 @@ Donate link: https://www.paypal.me/pryley
 Tags: pollux, castor, taxonomies, custom taxonomies, post types, custom post types, settings, settings page, meta-box, yaml, scaffolding
 Requires at least: 4.7.0
 Tested up to: 4.7.4
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
