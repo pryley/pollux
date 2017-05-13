@@ -22,7 +22,7 @@ class PostType extends Component
 		'map_meta_cap' => true,
 		'menu_icon' => null,
 		'menu_name' => '',
-		'menu_position' => 5,
+		'menu_position' => 20,
 		'plural' => '',
 		'public' => true,
 		'query_var' => true,
