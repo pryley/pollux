@@ -4,9 +4,9 @@ Donate link: https://www.paypal.me/pryley
 Tags: pollux, castor, taxonomies, custom taxonomies, post types, custom post types, settings, settings page, meta-box, yaml, scaffolding
 Requires at least: 4.7.0
 Tested up to: 4.7.4
-Stable tag: 1.0.1
+Stable tag: 1.0.2
 License: GPLv3
-License URI: https://www.gnu.org/licenses/gpl-2.0.html
+License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
 Pollux is a theme-agnostic scaffolding plugin for the advanced WordPress user. It allows you to easily add custom Post Types, Taxonomies, Meta Boxes, Global Settings, and more.
 
@@ -43,23 +43,27 @@ Download the Pollux plugin and uploading it to your server via your favorite FTP
 
 Pollux uses the Meta Box plugin to add custom meta-boxes. Adding meta-boxes and meta-box fields is [the same as you would](https://github.com/rilwis/meta-box/blob/master/demo/demo.php) with Meta Box, except instead of registering meta-box arrays with the 'rwmb_meta_boxes' filter hook, you instead enter the arrays as YAML markup in the Pollux Settings.
 
-Please see the [meta_boxes_demo.yml](https://github.com/geminilabs/pollux/blob/master/demo/meta_boxes_demo.yaml) example provided in the pollux plugin "demo" directory for more information.
+Please see the [meta_boxes_demo.yml](https://github.com/geminilabs/pollux/blob/master/demo/meta_boxes_demo.yml) example provided in the pollux plugin "demo" directory for more information.
+
+= How do I make conditional Meta Boxes? =
+
+Please see the [meta_box_conditions.yml](https://github.com/geminilabs/pollux/blob/master/demo/post_types_demo.yml) example provided in the pollux plugin "demo" directory.
 
 = How do I add Custom Post Types? =
 
-Please see the [post_types_demo.yml](https://github.com/geminilabs/pollux/blob/master/demo/post_types_demo.yaml) example provided in the pollux plugin "demo" directory.
+Please see the [post_types_demo.yml](https://github.com/geminilabs/pollux/blob/master/demo/post_types_demo.yml) example provided in the pollux plugin "demo" directory.
 
 = How do I add Custom Post Type Columns? =
 
-Please see the [post_type_columns_demo.yml](https://github.com/geminilabs/pollux/blob/master/demo/post_type_columns_demo.yaml) example provided in the pollux plugin "demo" directory.
+Please see the [post_type_columns_demo.yml](https://github.com/geminilabs/pollux/blob/master/demo/post_type_columns_demo.yml) example provided in the pollux plugin "demo" directory.
 
 = How do I add Custom Taxonomies? =
 
-Please see the [taxonomies_demo.yml](https://github.com/geminilabs/pollux/blob/master/demo/taxonomies_demo.yaml) example provided in the pollux plugin "demo" directory.
+Please see the [taxonomies_demo.yml](https://github.com/geminilabs/pollux/blob/master/demo/taxonomies_demo.yml) example provided in the pollux plugin "demo" directory.
 
 = How do set my own defaults? =
 
-Please see the [pollux.yml](https://github.com/geminilabs/pollux/blob/master/demo/pollux.yaml) example provided in the pollux plugin "demo" directory.
+Please see the [pollux.yml](https://github.com/geminilabs/pollux/blob/master/demo/pollux.yml) example provided in the pollux plugin "demo" directory.
 
 == Screenshots ==
 
@@ -77,13 +81,19 @@ Please see the [pollux.yml](https://github.com/geminilabs/pollux/blob/master/dem
 
 == Changelog ==
 
+= 1.0.2 (2017-05-13) =
+
+- "is_plugin_active" condition also checks mu-plugins
+- Fix "depends" JS for Select fields
+- Updated examples in the demo folder
+- Updated readme
+
 = 1.0.1 (2017-05-13) =
 
-* Updated examples in the demo folder
-* Updated readme
-* [fixed]: Archive page featured image
-* [fixed]: License URI
+- Fix archive page featured image
+- Updated examples in the demo folder
+- Updated readme
 
 = 1.0.0 (2017-05-13) =
 
-* Initial plugin release
+- Initial plugin release

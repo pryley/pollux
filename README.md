@@ -26,20 +26,24 @@ Pollux is intended to complement themes built on the [Castor framework](https://
 
 Pollux uses the Meta Box plugin to add custom meta-boxes. Adding meta-boxes and meta-box fields is [the same as you would](https://github.com/rilwis/meta-box/blob/master/demo/demo.php) with Meta Box, except instead of registering meta-box arrays with the 'rwmb_meta_boxes' filter hook, you instead enter the arrays as YAML markup in the Pollux Settings.
 
-Please see the [meta_boxes_demo.yml](demo/meta_boxes_demo.yaml) example provided in the pollux plugin "demo" directory for more information.
+Please see the [meta_boxes_demo.yml](demo/meta_boxes_demo.yml) example provided in the pollux plugin "demo" directory for more information.
+
+### How do I make conditional Meta Boxes?
+
+Please see the [meta_box_conditions.yml](demo/post_types_demo.yml) example provided in the pollux plugin "demo" directory.
 
 #### How do I add Custom Post Types?
 
-Please see the [post_types_demo.yml](demo/post_types_demo.yaml) example provided in the pollux plugin "demo" directory.
+Please see the [post_types_demo.yml](demo/post_types_demo.yml) example provided in the pollux plugin "demo" directory.
 
 #### How do I add Custom Post Type Columns?
 
-Please see the [post_type_columns_demo.yml](demo/post_type_columns_demo.yaml) example provided in the pollux plugin "demo" directory.
+Please see the [post_type_columns_demo.yml](demo/post_type_columns_demo.yml) example provided in the pollux plugin "demo" directory.
 
 #### How do I add Custom Taxonomies?
 
-Please see the [taxonomies_demo.yml](demo/taxonomies_demo.yaml) example provided in the pollux plugin "demo" directory.
+Please see the [taxonomies_demo.yml](demo/taxonomies_demo.yml) example provided in the pollux plugin "demo" directory.
 
 #### How do set my own defaults?
 
-Please see the [pollux.yml](demo/pollux.yaml) example provided in the pollux plugin "demo" directory.
+Please see the [pollux.yml](demo/pollux.yml) example provided in the pollux plugin "demo" directory.
