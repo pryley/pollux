@@ -94,7 +94,7 @@ msgstr "Reset successful."
 msgid "Failed to reset. Please try again."
 msgstr "Failed to reset. Please try again."
 
-#: src/MetaBox/Instruction.php:66
+#: src/MetaBox/Instruction.php:64
 msgid "How to use in your theme"
 msgstr "How to use in your theme"
 
@@ -102,7 +102,7 @@ msgstr "How to use in your theme"
 msgid "Save Archive"
 msgstr "Save Archive"
 
-#: src/PostType/Archive.php:120, src/PostType/Columns.php:116
+#: src/PostType/Archive.php:120, src/PostType/Columns.php:110
 msgid "Featured Image"
 msgstr "Featured Image"
 
@@ -118,31 +118,31 @@ msgstr "Click the image to edit or update"
 msgid "Remove featured image"
 msgstr "Remove featured image"
 
-#: src/PostType/Columns.php:110
+#: src/PostType/Columns.php:104
 msgid "Author"
 msgstr "Author"
 
-#: src/PostType/Columns.php:111
+#: src/PostType/Columns.php:105
 msgid "Categories"
 msgstr "Categories"
 
-#: src/PostType/Columns.php:112
+#: src/PostType/Columns.php:106
 msgid "Comments"
 msgstr "Comments"
 
-#: src/PostType/Columns.php:113
+#: src/PostType/Columns.php:107
 msgid "Date"
 msgstr "Date"
 
-#: src/PostType/Columns.php:114
+#: src/PostType/Columns.php:108
 msgid "Media"
 msgstr "Media"
 
-#: src/PostType/Columns.php:115
+#: src/PostType/Columns.php:109
 msgid "Slug"
 msgstr "Slug"
 
-#: src/PostType/Columns.php:117
+#: src/PostType/Columns.php:111
 msgid "Title"
 msgstr "Title"
 

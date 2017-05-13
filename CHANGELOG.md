@@ -18,25 +18,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ### Security
 
-## [1.0.2] - 2017-05-13
-
-### Changed
-- "is_plugin_active" condition also checks mu-plugins
-- Updated examples in the demo folder
-- Updated readme
-
-### Fixed
-- Fix "depends" JS for Select fields
-
-## [1.0.1] - 2017-05-13
-
-### Changed
-- Updated examples in the demo folder
-- Updated readme
-
-### Fixed
-- Fix archive page featured image
-
 ## [1.0.0] - 2017-05-13
 
 - Initial plugin release

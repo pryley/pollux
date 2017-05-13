@@ -21,14 +21,14 @@ front_page:
   post_types: page
   # This key is the Meta Box title
   title: __('Front Page Options', 'pollux')
-  # This key defined one or more Meta Box conditions (see "meta_box_conditions.yml" for more information)
+  # This key defines one or more Meta Box conditions (see "meta_box_conditions.yml" for more information)
   condition:
     is_front_page: true
-  # This key defined the meta-box fields
+  # This key defines the meta-box fields
   fields:
     # This key is the meta-box field ID
     media:
-      # This key is the meta-box field type
+      # This key is the meta-box field type (see: https://metabox.io/docs/define-fields/#section-list-of-supported-field-type)
       type: image_advanced
 #
 # Please see "meta_box_plugin_getting_started_demo.yml" for more information about available options

@@ -4,7 +4,7 @@ Donate link: https://www.paypal.me/pryley
 Tags: pollux, castor, taxonomies, custom taxonomies, post types, custom post types, settings, settings page, meta-box, yaml, scaffolding
 Requires at least: 4.7.0
 Tested up to: 4.7.4
-Stable tag: 1.0.2
+Stable tag: 1.0.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -80,19 +80,6 @@ Please see the [pollux.yml](https://github.com/geminilabs/pollux/blob/master/dem
 6. A view of the "Site Settings" page
 
 == Changelog ==
-
-= 1.0.2 (2017-05-13) =
-
-- "is_plugin_active" condition also checks mu-plugins
-- Fix "depends" JS for Select fields
-- Updated examples in the demo folder
-- Updated readme
-
-= 1.0.1 (2017-05-13) =
-
-- Fix archive page featured image
-- Updated examples in the demo folder
-- Updated readme
 
 = 1.0.0 (2017-05-13) =
 
