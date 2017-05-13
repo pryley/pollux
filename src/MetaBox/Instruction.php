@@ -10,13 +10,11 @@ use GeminiLabs\Pollux\MetaBox\Validator;
 use RecursiveArrayIterator;
 use RecursiveIteratorIterator;
 
+/**
+ * @property array $metaboxes
+ */
 trait Instruction
 {
-	/**
-	 * @var array
-	 */
-	public $metaboxes;
-
 	/**
 	 * @return string
 	 */

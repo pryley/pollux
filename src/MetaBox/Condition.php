@@ -4,13 +4,11 @@ namespace GeminiLabs\Pollux\MetaBox;
 
 use GeminiLabs\Pollux\Helper;
 
+/**
+ * @property Application $app
+ */
 trait Condition
 {
-	/**
-	 * @var Application
-	 */
-	protected $app;
-
 	/**
 	 * @return string
 	 */

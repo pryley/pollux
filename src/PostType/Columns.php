@@ -5,22 +5,16 @@ namespace GeminiLabs\Pollux\PostType;
 use GeminiLabs\Pollux\Helper;
 use GeminiLabs\Pollux\Facades\PostMeta;
 
+/**
+ * @property Application $app
+ * @property array $types
+ */
 trait Columns
 {
 	/**
 	 * @var array
 	 */
 	public $columns = [];
-
-	/**
-	 * @var array
-	 */
-	public $types = [];
-
-	/**
-	 * @var Application
-	 */
-	protected $app;
 
 	/**
 	 * @var void
