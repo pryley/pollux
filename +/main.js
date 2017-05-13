@@ -266,8 +266,9 @@ pollux.metabox.init = function()
 {
 	var depends = document.querySelectorAll( '.rwmb-input [data-depends]' );
 	[].forEach.call( depends, function( el ) {
+		var changeTypes = ['checkbox','radio','select-one','select-multiple'];
 		var dependency = pollux.metabox.setVisibility( el );
-		var event = dependency.type === 'checkbox' ? 'change' : 'keyup';
+		var event = changeTypes.indexOf( dependency.type ) !== -1 ? 'change' : 'keyup';
 		dependency.addEventListener( event, function() {
 			pollux.metabox.setVisibility( el );
 		});
