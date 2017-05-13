@@ -19,8 +19,8 @@ ROOT_PATH=$(pwd)"/"
 PLUGIN_VERSION=`grep "Version:" $ROOT_PATH$PLUGIN_SLUG.php | awk -F' ' '{print $NF}' | tr -d '\r'`
 STABLE_VERSION=`grep "^Stable tag:" ${ROOT_PATH}readme.txt | awk -F' ' '{print $NF}' | tr -d '\r'`
 SVN_REPO="https://plugins.svn.wordpress.org/"${PLUGIN_SLUG}"/"
+SVN_REPO_DIR=".svn"
 TEMP_GITHUB_REPO=${PLUGIN_SLUG}"-git"
-TEMP_SVN_REPO=${PLUGIN_SLUG}"-svn"
 
 # ASK INFO
 echo "--------------------------------------------"
@@ -54,9 +54,10 @@ clear
 rm -Rf $ROOT_PATH$TEMP_GITHUB_REPO
 
 # CHECKOUT SVN DIR IF NOT EXISTS
-if [[ ! -d $TEMP_SVN_REPO ]]; then
+if [[ ! -d $SVN_REPO_DIR ]]; then
 	echo "Checking out WordPress.org plugin repository"
-	svn checkout $SVN_REPO $TEMP_SVN_REPO || { echo "Unable to checkout repo."; exit 1; }
+	mkdir -p $ROOT_PATH$SVN_REPO_DIR
+	svn checkout $SVN_REPO $SVN_REPO_DIR || { echo "Unable to checkout repo."; exit 1; }
 fi
 
 # LIST BRANCHES
@@ -77,7 +78,7 @@ echo ""
 read -p "PRESS [ENTER] TO DEPLOY BRANCH "${BRANCH:-$DEFAULT_GIT_BRANCH}
 
 # MOVE INTO SVN DIR
-cd $ROOT_PATH$TEMP_SVN_REPO
+cd $ROOT_PATH$SVN_REPO_DIR
 
 # COPY ASSETS to SVN DIR
 cp $ROOT_PATH/+/assets/* ./assets/
@@ -123,10 +124,9 @@ echo ""
 echo "Committing to WordPress.org...this may take a while."
 svn commit -m "Release "${PLUGIN_VERSION}", see readme.txt for the changelog." || { echo "Unable to commit."; exit 1; }
 
-# REMOVE THE TEMP DIRS
+# REMOVE THE TEMP DIR
 echo "CLEANING UP"
 rm -Rf $ROOT_PATH$TEMP_GITHUB_REPO
-rm -Rf $ROOT_PATH$TEMP_SVN_REPO
 
 # DONE, BYE
 echo "All DONE"
