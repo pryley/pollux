@@ -11,7 +11,7 @@
  * Author:      Paul Ryley
  * Author URI:  http://geminilabs.io
  * License:     GPL3
- * License URI: https://www.gnu.org/licenses/gpl-2.0.html
+ * License URI: https://www.gnu.org/licenses/gpl-3.0.html
  * Text Domain: pollux
  * Domain Path: languages
  */
