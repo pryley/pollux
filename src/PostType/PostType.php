@@ -10,7 +10,7 @@ class PostType extends Component
 	use Columns;
 
 	const CUSTOM_KEYS = [
-		'columns', 'menu_name', 'plural', 'single', 'slug',
+		'columns', 'menu_name', 'plural', 'single',
 	];
 
 	const POST_TYPE_DEFAULTS = [
@@ -30,7 +30,6 @@ class PostType extends Component
 		'show_in_menu' => true,
 		'show_ui' => true,
 		'single' => '',
-		'slug' => '',
 		'supports' => ['title', 'editor', 'thumbnail'],
 		'taxonomies' => [],
 	];
@@ -100,21 +99,6 @@ class PostType extends Component
 		return empty( $menuname )
 			? $args['plural']
 			: $menuname;
-	}
-
-	/**
-	 * @param mixed $rewrite
-	 * @return mixed
-	 */
-	protected function normalizeRewrite( $rewrite, array $args )
-	{
-		if( $rewrite === true ) {
-			$slug = empty( $args['slug'] )
-				? sanitize_title( $args['plural'] )
-				: $args['slug'];
-			$rewrite = ['slug' => $slug, 'with_front' => false];
-		}
-		return $rewrite;
 	}
 
 	/**
