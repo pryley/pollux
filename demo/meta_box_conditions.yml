@@ -1,0 +1,55 @@
+# Both meta-boxes, and specific meta-box fields can be set to show only if a specific condition is met.
+# The "condition" key can be added to both a meta-box and a meta-box field
+condition:
+  # This condition checks if a PHP Class has been defined.
+  # Value to check must be the name of the PHP Class, including the namespace if any.
+  class_exists: GeminiLabs/Pollux/Application
+  # This condition checks if a PHP constant exists.
+  # Value to check must be the name of the PHP constant.
+  defined: WP_ENV
+  # This condition checks if a PHP function has been defined.
+  # Value to check must be the name of the PHP function you are checking for.
+  function_exists: get_current_screen
+  # This condition checks if a WordPress plugin is active. This is similar to "is_plugin_active()" except it also checks for mu-plugins.
+  # Value to check must be the name of the plugin sub-directory/file.
+  is_plugin_active: site-reviews/site-reviews.php
+  # This condition checks if a WordPress plugin is inactive or not installed.
+  # Value to check must be the name of the plugin sub-directory/file.
+  is_plugin_inactive: site-reviews/site-reviews.php
+  #
+  # The following conditions only apply in meta-boxes assigned to the "page" post_type:
+  #
+  # This condition checks if the current page has been assigned to the Front page in the WordPress Reading Settings.
+  # Value to check must be either true or false .
+  is_front_page: true
+  # This condition checks if the current page has been assigned to the Posts page in the WordPress Reading Settings.
+  # Value to check must be either true or false.
+  is_home: true
+  # This condition checks if the current page has been assigned a page template.
+  # Value to check must be the name of the theme template PHP file.
+  is_page_template: template-contact.php
+#
+# You can also make meta-box field visibility dependant on whether or not another field has a value.
+# The "depends" key can only be added to a meta-box field
+# Value to check must be the name of another meta-box field
+depends: field_key_to_check_value_of
+#
+# Here is an example meta-box entry that demonstrates the use of the "depends" option:
+seo_settings:
+  title: __('SEO Settings', 'pollux')
+  fields:
+    seo_enabled:
+      type: checkbox
+      name: __('Enable SEO?', 'pollux')
+    seo_title:
+      depends: seo_enabled
+      type: text
+      name: __('SEO Title', 'pollux')
+    seo_keywords:
+      depends: seo_enabled
+      type: text
+      name: __('SEO Keywords', 'pollux')
+    seo_description:
+      depends: seo_enabled
+      type: textarea
+      name: __('SEO Description', 'pollux')

@@ -1,5 +1,6 @@
-# This file contains all of the meta box fields found in the Meta Box plugin demo file.
 # Copy and paste into the "Post Type Meta Boxes" field
+# This file contains all of the meta box fields found in the Meta Box plugin demo file (https://metabox.io/docs/getting-started/).
+# Please see "meta_boxes_demo.yml" for detailed information on adding meta-boxes.
 standard:
   title: 'Standard Fields'
   post_types:
@@ -62,7 +63,7 @@ advanced:
     - post
     - page
   fields:
-    '':
+    heading1:
       type: heading
       name: Heading
       desc: 'Optional description for this heading'
@@ -181,7 +182,7 @@ advanced:
         textarea_rows: 4
         teeny: true
         media_buttons: false
-    '':
+    divider1:
       type: divider
     file:
       name: 'File Upload'

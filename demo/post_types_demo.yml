@@ -42,6 +42,6 @@ gallery:
     - title
     - editor
     - thumbnail
-
+  #
   # For all other fields and their defaults, please see the available parameters at:
   # https://codex.wordpress.org/Function_Reference/register_post_type

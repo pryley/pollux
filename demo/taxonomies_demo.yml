@@ -16,6 +16,6 @@ project_type:
   # [optional] Default value is true
   # https://codex.wordpress.org/Function_Reference/register_taxonomy#show_admin_column
   show_admin_column: true
-
+  #
   # For all other fields and their defaults, please see the available parameters at:
   # https://codex.wordpress.org/Function_Reference/register_taxonomy
