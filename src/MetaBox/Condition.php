@@ -129,7 +129,7 @@ trait Condition
 	 */
 	protected function validateIsPluginActive( $value )
 	{
-		return is_plugin_active( $value );
+		return $this->app->gatekeeper->isPluginActive( $value );
 	}
 
 	/**
@@ -138,7 +138,7 @@ trait Condition
 	 */
 	protected function validateIsPluginInactive( $value )
 	{
-		return is_plugin_inactive( $value );
+		return !$this->validateIsPluginActive( $value );
 	}
 
 	/**
