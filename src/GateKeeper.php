@@ -280,7 +280,7 @@ class GateKeeper
 	 */
 	protected function catchError( $plugin, $error, $isValid )
 	{
-		if( !$isValid ) {
+		if( !$isValid && $this->isPluginDependency( $plugin )) {
 			if( !isset( $this->errors[$plugin] )) {
 				$this->errors[$plugin] = [];
 			}
