@@ -102,7 +102,7 @@ msgstr "How to use in your theme"
 msgid "Save Archive"
 msgstr "Save Archive"
 
-#: src/PostType/Archive.php:120
+#: src/PostType/Archive.php:120, src/PostType/Columns.php:116
 msgid "Featured Image"
 msgstr "Featured Image"
 
@@ -135,14 +135,10 @@ msgid "Date"
 msgstr "Date"
 
 #: src/PostType/Columns.php:114
-msgid "Image"
-msgstr "Image"
-
-#: src/PostType/Columns.php:115
 msgid "Media"
 msgstr "Media"
 
-#: src/PostType/Columns.php:116
+#: src/PostType/Columns.php:115
 msgid "Slug"
 msgstr "Slug"
 
@@ -150,7 +146,7 @@ msgstr "Slug"
 msgid "Title"
 msgstr "Title"
 
-#: src/PostType/PostType.php:126
+#: src/PostType/PostType.php:110
 msgid "Add New"
 msgstr "Add New"
 
@@ -251,42 +247,42 @@ msgctxt "post archive"
 msgid "%s Archive"
 msgstr "%s Archive"
 
-#: src/PostType/PostType.php:127
+#: src/PostType/PostType.php:111
 msgctxt "Add new post"
 msgid "Add New %s"
 msgstr "Add New %s"
 
-#: src/PostType/PostType.php:128
+#: src/PostType/PostType.php:112
 msgctxt "All posts"
 msgid "All %s"
 msgstr "All %s"
 
-#: src/PostType/PostType.php:129
+#: src/PostType/PostType.php:113
 msgctxt "Edit post"
 msgid "Edit %s"
 msgstr "Edit %s"
 
-#: src/PostType/PostType.php:132
+#: src/PostType/PostType.php:116
 msgctxt "New post"
 msgid "New %s"
 msgstr "New %s"
 
-#: src/PostType/PostType.php:133
+#: src/PostType/PostType.php:117
 msgctxt "No posts found"
 msgid "No %s found"
 msgstr "No %s found"
 
-#: src/PostType/PostType.php:134
+#: src/PostType/PostType.php:118
 msgctxt "No posts found in trash"
 msgid "No %s found in Trash"
 msgstr "No %s found in Trash"
 
-#: src/PostType/PostType.php:135
+#: src/PostType/PostType.php:119
 msgctxt "Search posts"
 msgid "Search %s"
 msgstr "Search %s"
 
-#: src/PostType/PostType.php:137
+#: src/PostType/PostType.php:121
 msgctxt "View post"
 msgid "View %s"
 msgstr "View %s"

@@ -16,7 +16,7 @@ This plugin is geared towards the more advanced WordPress user. Instead of drag-
 
 Pollux uses the [Meta Box](https://wordpress.org/plugins/meta-box/) plugin to add custom meta-boxes. If the Meta Box plugin is not installed, Pollux will prompt you to do so on the Pollux settings page.
 
-Please see the `demo` directory in the pollux plugin for some example YAML configuration. Detailed documentation will be provided in the next update.
+Please see the [demo directory](https://github.com/geminilabs/pollux/tree/master/demo) in the pollux plugin for some example YAML configuration. Detailed documentation will be provided in the next update.
 
 Pollux is intended to complement themes built on the [Castor framework](https://github.com/geminilabs/castor-framework) (i.e. [Castor](https://github.com/geminilabs/castor)), but it is not a requirement.
 
@@ -41,15 +41,25 @@ Download the Pollux plugin and uploading it to your server via your favorite FTP
 
 = How do I add Meta Boxes? =
 
-Pollux uses the Meta Box plugin to add custom meta-boxes. Adding meta-boxes and meta-box fields is [the same as you would](https://github.com/rilwis/meta-box/blob/master/demo/demo.php) with Meta Box, except instead of registering meta-box arrays with the 'rwmb_meta_boxes' filter hook, you instead enter the arrays as YAML markup in the Pollux Settings. Examples have been provided in the pollux plugin "demo" directory.
+Pollux uses the Meta Box plugin to add custom meta-boxes. Adding meta-boxes and meta-box fields is [the same as you would](https://github.com/rilwis/meta-box/blob/master/demo/demo.php) with Meta Box, except instead of registering meta-box arrays with the 'rwmb_meta_boxes' filter hook, you instead enter the arrays as YAML markup in the Pollux Settings.
+
+Please see the [meta_boxes_demo.yml](https://github.com/geminilabs/pollux/blob/master/demo/meta_boxes_demo.yaml) example provided in the pollux plugin "demo" directory for more information.
 
 = How do I add Custom Post Types? =
 
-Please see the "pollux.yml" example provided in the pollux plugin "demo" directory.
+Please see the [post_types_demo.yml](https://github.com/geminilabs/pollux/blob/master/demo/post_types_demo.yaml) example provided in the pollux plugin "demo" directory.
+
+= How do I add Custom Post Type Columns? =
+
+Please see the [post_type_columns_demo.yml](https://github.com/geminilabs/pollux/blob/master/demo/post_type_columns_demo.yaml) example provided in the pollux plugin "demo" directory.
 
 = How do I add Custom Taxonomies? =
 
-Please see the "pollux.yml" example provided in the pollux plugin "demo" directory.
+Please see the [taxonomies_demo.yml](https://github.com/geminilabs/pollux/blob/master/demo/taxonomies_demo.yaml) example provided in the pollux plugin "demo" directory.
+
+= How do set my own defaults? =
+
+Please see the [pollux.yml](https://github.com/geminilabs/pollux/blob/master/demo/pollux.yaml) example provided in the pollux plugin "demo" directory.
 
 == Screenshots ==
 
@@ -66,6 +76,13 @@ Please see the "pollux.yml" example provided in the pollux plugin "demo" directo
 6. A view of the "Site Settings" page
 
 == Changelog ==
+
+= 1.0.1 (2017-05-13) =
+
+* Updated examples in the demo folder
+* Updated readme
+* [fixed]: Archive page featured image
+* [fixed]: License URI
 
 = 1.0.0 (2017-05-13) =
 
