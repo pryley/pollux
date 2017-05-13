@@ -1,5 +1,16 @@
+bump:
+  stable tag: readme.txt
+  version: pollux.php
+dest:
+  css: assets/
+  js: assets/
+  lang: languages/
+language:
+  domain: pollux
+  team: Gemini Labs <support@geminilabs.io>
+  translator: Paul Ryley <paul@geminilabs.io>
+primary_file: pollux.php
 scripts:
-  main.js: +/main.js
   codemirror.js:
     - node_modules/js-yaml/dist/js-yaml.js
     - node_modules/codemirror/lib/codemirror.js
@@ -11,20 +22,12 @@ scripts:
     - node_modules/codemirror/addon/selection/active-line.js
     - node_modules/codemirror/mode/yaml/yaml.js
     - node_modules/cm-show-invisibles/lib/show-invisibles.js
+  main.js: +/main.js
 styles:
   codemirror.css:
     - node_modules/codemirror/lib/codemirror.css
     - node_modules/codemirror/addon/lint/lint.css
     - +/codemirror.css
-dest:
-  css: assets/
-  js: assets/
-  lang: languages/
-language:
-  domain: pollux
-  team: Gemini Labs <support@geminilabs.io>
-  translator: Paul Ryley <paul@geminilabs.io>
-primary_file: pollux.php
 watch:
   css: +/codemirror.css
   js: +/main.js

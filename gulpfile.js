@@ -144,17 +144,16 @@ gulp.task('mo', function() {
 /* Version Task
  -------------------------------------------------- */
 gulp.task('bump', function() {
-  return gulp.src(config.primary_file)
-  .pipe(gulpif(args.patch || Object.keys(args).length < 3, bump({
-    type: 'patch'
-  })))
-  .pipe(gulpif(args.minor, bump({
-    type: 'minor'
-  })))
-  .pipe(gulpif(args.major, bump({
-    type: 'major'
-  })))
-  .pipe(gulp.dest('.'))
+  ['patch', 'minor', 'major'].some(function(arg) {
+    if(!args[arg])return;
+    for(key in config.bump) {
+      gulp.src(config.bump[key]).pipe(bump({
+        type: arg,
+        key: key,
+      })).pipe(gulp.dest('.'));
+    }
+    return true;
+  });
 });
 
 /* Watch Task
