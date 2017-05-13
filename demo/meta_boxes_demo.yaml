@@ -62,7 +62,7 @@ advanced:
     - post
     - page
   fields:
-    heading:
+    '':
       type: heading
       name: Heading
       desc: 'Optional description for this heading'
@@ -181,7 +181,7 @@ advanced:
         textarea_rows: 4
         teeny: true
         media_buttons: false
-    divider:
+    '':
       type: divider
     file:
       name: 'File Upload'

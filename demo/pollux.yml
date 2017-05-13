@@ -1,30 +1,18 @@
-# Place this file in either the same location as your wp-config.php, or one dir above it.
+# This optional file contains all configuration settings in a single file. You may edit it and place
+# in either the same location as your wp-config.php, or one dir above it (recommended). This file
+# If this file exists, it will act as the new plugin defaults. You may also add a "disable_config"
+# option to completely disable the Pollux Settings admin page UI.
 
-post_types:
-  gallery:
-    single: __('Gallery', 'pollux')
-    plural: __('Galleries', 'pollux')
-    menu_icon: dashicons-images-alt2
-    menu_position: 20
-    supports:
-      - title
-    columns:
-      - title
-      - slug
-      - media
-      - date
-    public: false
-    show_ui: true
-    has_archive: false
+disable_config: false
+disable_posts: false
+enable_archive_page: false
+remove_dashboard_widgets: false
+remove_wordpress_footer: false
+remove_wordpress_menu: false
 
-taxonomies:
-  project_type:
-    single: __('Project Type', 'pollux')
-    plural: __('Project Types', 'pollux')
-    post_types:
-      - page
-      - gallery
-    rewrite: false
+archives: []
+
+columns: []
 
 metaboxes:
   contact_options:
@@ -37,11 +25,11 @@ metaboxes:
         name: __('Address', 'pollux')
         type: text
         class: full-width
-        std: Palladium House, 1-4 Argyll St, Soho, London W1F 7TA, UK
+        std: Hill of Tara, Meath, Ireland
       location:
         name: __('Location', 'pollux')
         type: map
-        std: 51.514156, -0.140278, 16
+        std: 53.5788114, -6.613843, 15
         address_field: address
         api_key: ''
       shortcode:
@@ -79,10 +67,26 @@ metaboxes:
       media:
         type: image_advanced
         size: thumbnail
-    validation:
-      rules:
-        media:
-          required: true
+
+post_types:
+  gallery:
+    single: __('Gallery', 'pollux')
+    plural: __('Galleries', 'pollux')
+    menu_icon: dashicons-images-alt2
+    supports:
+      - title
+    columns:
+      - title
+      - slug
+      - media
+      - date
+    public: false
+
+taxonomies:
+  project_type:
+    post_types: gallery
+    single: __('Project', 'pollux')
+    plural: __('Projects', 'pollux')
 
 settings:
   global:
@@ -134,8 +138,6 @@ settings:
         desc: sprintf('<a href="https://www.google.com/analytics/" target="_blank">%s</a>', __('What is this?', 'pollux'))
         placeholder: UA-XXXXXXXX-Y
       google_maps:
-        condition:
-          is_plugin_active: meta-box/meta-box.php
         type: text
         name: __('Google Maps API key', 'pollux')
         desc: sprintf('<a href="https://developers.google.com/maps/documentation/javascript/get-api-key" target="_blank">%s</a>', __('What is this?', 'pollux'))
@@ -146,4 +148,4 @@ settings:
           minlength: 5
       messages:
         google_analytics:
-          required: This is required
+          required: __('A Google Analytics ID is required', 'pollux')

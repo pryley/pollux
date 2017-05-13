@@ -1,0 +1,35 @@
+# This field contains the column labels that are shown in the Post Type admin page table.
+
+# Built-in columns include:
+# - author
+# - categories
+# - comments
+# - date
+# - media
+# - slug
+# - thumbnail
+# - title
+
+# The "slug" column displays the slug of the post_type
+# The "media" column displays a count of images uploaded in a meta-box with an ID of "media"
+# The "thumbnail" column display a thumbnail of the featured image if set.
+# All other built-in columns should be self-explanatory.
+
+# To add your own custom column:
+
+# 1. First you must add the column to the post_type "columns" key (see post_types_demo.yml). For example:
+
+# columns:
+#  - title
+#  - my_awesome_column
+#  - date
+
+# 2. Next you must add the custom column label in the "Post Type Columns" field:
+
+my_awesome_column: __('Awesome!', 'pollux')
+
+# 3. Finally, you must add a custom filter in your Theme's functions.php file to populate the custom column with a value:
+
+# add_filter( 'pollux/post_type/column/my_custom_column", function() {
+#     return 'Awesome!';
+# });

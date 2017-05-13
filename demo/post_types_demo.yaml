@@ -1,0 +1,47 @@
+# Copy and paste into the "Post Types" field
+gallery:
+  # [required] This is the Singular name of the Post Type, used to generate correct labels
+  single: __('Gallery', 'pollux')
+  # [required] This is the Plural name of the Post Type, used to generate correct labels
+  plural: __('Galleries', 'pollux')
+  # [optional] By default, the menu name label is the same as the "plural" value.
+  menu_name: __('My Galleries', 'pollux')
+  # [optional] These are the columns you want to show in the Post Type admin page table,
+  # you must also add their corresponding labels in the "Post Type Columns".
+  # See "post_type_columns_demo.yml" for more information
+  columns:
+    - title
+    - slug
+    - media
+    - thumbnail
+    - date
+  # [optional] Default value is false
+  # https://codex.wordpress.org/Function_Reference/register_post_type#has_archive
+  has_archive: false
+  # [optional] Default value is true
+  # https://codex.wordpress.org/Function_Reference/register_post_type#map_meta_cap
+  map_meta_cap: true
+  # [optional] Defaults to the posts icon. See all available Built-in icons here: https://developer.wordpress.org/resource/dashicons/
+  # https://codex.wordpress.org/Function_Reference/register_post_type#menu_icon
+  menu_icon: dashicons-images-alt2
+  # [optional] Default value is 20 (below Pages)
+  # https://codex.wordpress.org/Function_Reference/register_post_type#menu_position
+  menu_position: 20
+  # [optional] Default value is true
+  # https://codex.wordpress.org/Function_Reference/register_post_type#public
+  public: false
+  # [optional] Default value is true
+  # https://codex.wordpress.org/Function_Reference/register_post_type#show_in_menu
+  show_in_menu: true
+  # [optional] Default value is true
+  # https://codex.wordpress.org/Function_Reference/register_post_type#show_ui
+  show_ui: true
+  # [optional] Default: values are title and editor
+  # https://codex.wordpress.org/Function_Reference/register_post_type#supports
+  supports:
+    - title
+    - editor
+    - thumbnail
+
+  # For all other fields and their defaults, please see the available parameters at:
+  # https://codex.wordpress.org/Function_Reference/register_post_type
