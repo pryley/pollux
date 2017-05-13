@@ -16,7 +16,7 @@ This plugin is geared towards the more advanced WordPress user. Instead of drag-
 
 Pollux uses the [Meta Box](https://wordpress.org/plugins/meta-box/) plugin to add custom meta-boxes. If the Meta Box plugin is not installed, Pollux will prompt you to do so on the Pollux settings page.
 
-Please see the `demo` directory in the pollux plugin for some example YAML configuration. Detailed documentation will be provided in future updates.
+Please see the `demo` directory in the pollux plugin for some example YAML configuration. Detailed documentation will be provided in the next update.
 
 Pollux is intended to complement themes built on the [Castor framework](https://github.com/geminilabs/castor-framework) (i.e. [Castor](https://github.com/geminilabs/castor)), but it is not a requirement.
 
@@ -36,6 +36,34 @@ In the search field type "Pollux" and click Search Plugins. Once you have found 
 = Manual installation =
 
 Download the Pollux plugin and uploading it to your server via your favorite FTP application. The WordPress codex contains [instructions on how to do this here](https://codex.wordpress.org/Managing_Plugins#Manual_Plugin_Installation).
+
+== Frequently Asked Questions ==
+
+= How do I add Meta Boxes? =
+
+Pollux uses the Meta Box plugin to add custom meta-boxes. Adding meta-boxes and meta-box fields is [the same as you would](https://github.com/rilwis/meta-box/blob/master/demo/demo.php) with Meta Box, except instead of registering meta-box arrays with the 'rwmb_meta_boxes' filter hook, you instead enter the arrays as YAML markup in the Pollux Settings. Examples have been provided in the pollux plugin "demo" directory.
+
+= How do I add Custom Post Types? =
+
+Please see the "pollux.yml" example provided in the pollux plugin "demo" directory.
+
+= How do I add Custom Taxonomies? =
+
+Please see the "pollux.yml" example provided in the pollux plugin "demo" directory.
+
+== Screenshots ==
+
+1. A view of the Pollux settings "General" tab
+
+2. A view of the Pollux settings "Meta Boxes" tab
+
+3. A view of the Pollux settings "Post Types" tab
+
+4. A view of the Pollux settings "Taxonomies" tab
+
+5. A view of the "Post Archive" page
+
+6. A view of the "Site Settings" page
 
 == Changelog ==
 

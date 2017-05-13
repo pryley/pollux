@@ -80,7 +80,7 @@ read -p "PRESS [ENTER] TO DEPLOY BRANCH "${BRANCH:-$DEFAULT_GIT_BRANCH}
 cd $ROOT_PATH$TEMP_SVN_REPO
 
 # COPY ASSETS to SVN DIR
-cp $ROOT_PATH/src/assets/* ./assets/
+cp $ROOT_PATH/+/assets/* ./assets/
 
 # UPDATE SVN
 echo "Updating SVN"
