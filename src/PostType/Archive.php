@@ -94,7 +94,7 @@ class Archive extends Settings
 	 */
 	public function getMetaValue( $key, $fallback = '', $group = '' )
 	{
-		return ArchiveMeta::get( $key, $fallback, $group );
+		return ArchiveMeta::get( $group, $key, $fallback );
 	}
 
 	/**
@@ -166,7 +166,7 @@ class Archive extends Settings
 	public function renderFeaturedImageMetaBox( $imageId = null )
 	{
 		if( !is_numeric( $imageId )) {
-			$imageId = ArchiveMeta::get( 'featured', -1, $this->getPostType() );
+			$imageId = ArchiveMeta::get( $this->getPostType(), 'featured', -1 );
 		}
 		$imageSize = isset( wp_get_additional_image_sizes()['post-thumbnail'] )
 			? 'post-thumbnail'
@@ -196,11 +196,11 @@ class Archive extends Settings
 		$labels = get_post_type_labels( get_post_type_object( $type ));
 		$this->app->render( 'archive/index', [
 			'columns' => get_current_screen()->get_columns(),
-			'content' => ArchiveMeta::get( 'content', '', $type ),
+			'content' => ArchiveMeta::get( $type, 'content', '' ),
 			'heading' => sprintf( _x( '%s Archive', 'post archive', 'pollux' ), $labels->singular_name ),
 			'id' => static::id(),
 			'post_type' => $type,
-			'title' => ArchiveMeta::get( 'title', '', $type ),
+			'title' => ArchiveMeta::get( $type, 'title', '' ),
 		]);
 	}
 
