@@ -26,14 +26,6 @@ msgstr "Settings Disabled"
 msgid "Settings"
 msgstr "Settings"
 
-#: src/Controller.php:149
-msgid "Activating %s..."
-msgstr "Activating %s..."
-
-#: src/Controller.php:150
-msgid "%s activated!"
-msgstr "%s activated!"
-
 #: src/GateKeeper.php:241
 msgid "Pollux requires the latest version of the following plugins"
 msgstr "Pollux requires the latest version of the following plugins"

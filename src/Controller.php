@@ -145,13 +145,6 @@ class Controller
 			&& $screen->pagenow == 'options-general.php'
 			&& $this->app->gatekeeper->hasPendingDependencies() ) {
 			wp_enqueue_script( 'updates' );
-			add_filter( 'pollux/enqueue/js/localize/variables', function( $vars ) {
-				$vars['l10n'] = [
-					'pluginActivatingLabel' => __( 'Activating %s...', 'pollux' ),
-					'pluginActivatedLabel' => __( '%s activated!', 'pollux' ),
-				];
-				return $vars;
-			});
 		}
 	}
 
