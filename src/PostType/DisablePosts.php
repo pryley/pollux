@@ -25,8 +25,11 @@ class DisablePosts
 	{
 		if( !$this->app->config->disable_posts )return;
 
+		remove_action( 'welcome_panel', 'wp_welcome_panel' );
+
 		add_action( 'init',               [$this, 'disable'] );
 		add_action( 'wp_dashboard_setup', [$this, 'modifyDashboardWidgets'] );
+		add_action( 'welcome_panel',      [$this, 'modifyWelcomePanel'] );
 		add_action( 'admin_bar_menu',     [$this, 'removeFromAdminBar'], 999 );
 		add_action( 'admin_menu',         [$this, 'removeFromAdminMenu'] );
 		add_action( 'admin_init',         [$this, 'unregisterDashboardWidgets'] );
@@ -105,6 +108,17 @@ class DisablePosts
 			wp_dashboard_right_now();
 			echo preg_replace( '/<li class="post-count">(.*?)<\/li>/', '', ob_get_clean() );
 		};
+	}
+
+	/**
+	 * @return void
+	 * @action welcome_panel
+	 */
+	public function modifyWelcomePanel()
+	{
+		ob_start();
+		wp_welcome_panel();
+		echo preg_replace( '/(<li><a href="(.*?)" class="welcome-icon welcome-write-blog">(.*?)<\/li>)/', '', ob_get_clean() );
 	}
 
 	/**
