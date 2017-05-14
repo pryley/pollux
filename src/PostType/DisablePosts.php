@@ -29,7 +29,7 @@ class DisablePosts
 		add_action( 'wp_dashboard_setup', [$this, 'modifyDashboardWidgets'] );
 		add_action( 'admin_bar_menu',     [$this, 'removeFromAdminBar'], 999 );
 		add_action( 'admin_menu',         [$this, 'removeFromAdminMenu'] );
-		add_action( 'wp_dashboard_setup', [$this, 'unregisterDashboardWidgets'] );
+		add_action( 'admin_init',         [$this, 'unregisterDashboardWidgets'] );
 		add_action( 'widgets_init',       [$this, 'unregisterWidgets'], 1 );
 		add_filter( 'posts_results',      [$this, 'filterPostQuery'] );
 		add_filter( 'pre_get_posts',      [$this, 'filterSearchQuery'] );
