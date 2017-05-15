@@ -20,12 +20,11 @@ trait Instruction
 	 */
 	protected function generateInstructions()
 	{
-		$instructions = array_reduce( $this->getInstructions(), function( $html, $metabox ) {
-			$fields = array_reduce( $metabox['fields'], function( $html, $field ) use( $metabox ) {
-				return $this->validate( $field['condition'] )
-					? $html . $this->filter( 'instruction', "PostMeta::get('{$field['slug']}');", $field, $metabox ) . PHP_EOL
-					: $html;
-			});
+		$instructions = array_reduce( $this->getInstructionGroups(), function( $html, $metabox ) {
+			$fields = $this->getInstructionFields( $metabox );
+			if( empty( $fields )) {
+				return $html;
+			}
 			return $html . sprintf( '<p><strong>%s</strong></p><pre class="my-sites nav-tab-active misc-pub-section">%s</pre>',
 				$metabox['title'],
 				$fields
@@ -37,7 +36,19 @@ trait Instruction
 	/**
 	 * @return array
 	 */
-	protected function getInstructions()
+	protected function getInstructionFields( $metabox )
+	{
+		return array_reduce( $metabox['fields'], function( $html, $field ) use( $metabox ) {
+			return $this->validate( $field['condition'] ) && !in_array( $field['type'], ['divider', 'heading'] )
+				? $html . $this->filter( 'instruction', "PostMeta::get('{$field['slug']}');", $field, $metabox ) . PHP_EOL
+				: $html;
+		});
+	}
+
+	/**
+	 * @return array
+	 */
+	protected function getInstructionGroups()
 	{
 		return array_filter( $this->metaboxes, function( $metabox ) {
 			return $this->validate( $metabox['condition'] )
