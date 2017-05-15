@@ -15,8 +15,12 @@ use Symfony\Component\Yaml\Yaml;
 class ConfigManager extends SiteMetaManager
 {
 	const RAW_STRINGS = [
-		'__', '_n', '_x', 'esc_attr__', 'esc_html__', 'sprintf',
+		// '__', '_n', '_x', 'esc_attr__', 'esc_html__', 'sprintf',
 	];
+
+	public $compiled;
+
+	public $parseError = false;
 
 	/**
 	 * @var Application
@@ -27,18 +31,7 @@ class ConfigManager extends SiteMetaManager
 	{
 		$this->app = $app;
 		$this->options = $this->buildConfig();
-	}
-
-	/**
-	 * @param string $group
-	 * @return object|array|null
-	 */
-	public function __get( $group )
-	{
-		if( $group == 'yaml' ) {
-			return $this->yaml();
-		}
-		return parent::__get( $group );
+		$this->compiled = $this->compile();
 	}
 
 	/**
@@ -47,17 +40,15 @@ class ConfigManager extends SiteMetaManager
 	public function buildConfig()
 	{
 		$yamlFile = $this->getYamlFile();
-		$yaml = $this->normalize(
-			$this->parseYaml( file_get_contents( $yamlFile ))
-		);
+		$yaml = $this->normalizeYamlValues( $this->normalize(
+			$this->parseYaml( file_get_contents( $yamlFile ), $yamlFile )
+		));
 		if( !$yaml['disable_config'] ) {
-			$config = $this->normalizeArray(
-				array_filter( (array) get_option( Config::id(), [] ))
-			);
+			$config = array_filter( (array) get_option( Config::id(), [] ));
 		}
 		return empty( $config )
 			? $this->setTimestamp( $yaml, filemtime( $yamlFile ))
-			: $this->normalize( $config );
+			: $this->normalizeYamlValues( $this->normalize( $config ));
 	}
 
 	/**
@@ -67,9 +58,13 @@ class ConfigManager extends SiteMetaManager
 	{
 		$configFile = $this->getCompileDestination();
 		if( $this->shouldCompile( $configFile )) {
+			$config = $this->normalizeArray( $this->options );
+			if( $this->parseError ) {
+				return (object) $config;
+			}
 			file_put_contents( $configFile, sprintf( '<?php // DO NOT MODIFY THIS FILE DIRECTLY!%sreturn (object) %s;',
 				PHP_EOL,
-				$this->parseRawStrings( var_export( $this->setTimestamp( $this->options ), true ))
+				$this->parseRawStrings( var_export( $this->setTimestamp( $config ), true ))
 			));
 		}
 		return include $configFile;
@@ -123,11 +118,15 @@ class ConfigManager extends SiteMetaManager
 	 */
 	public function normalizeArray( array $array )
 	{
-		return array_map( function( $value ) {
-			return !is_numeric( $value ) && is_string( $value )
-				? $this->parseYaml( $value )
-				: $value;
-		}, $array );
+		array_walk( $array, function( &$value, $key ) {
+			if( !is_numeric( $value ) && is_string( $value )) {
+				$value = $this->parseYaml( $value, $key );
+				if( $this->parseError == $key ) {
+					$value = [];
+				}
+			}
+		});
+		return $array;
 	}
 
 	/**
@@ -153,14 +152,6 @@ class ConfigManager extends SiteMetaManager
 	}
 
 	/**
-	 * @return object
-	 */
-	public function yaml()
-	{
-		return (object) $this->normalizeYamlValues( $this->options );
-	}
-
-	/**
 	 * @return string|null
 	 */
 	protected function dumpYaml( array $array )
@@ -169,7 +160,7 @@ class ConfigManager extends SiteMetaManager
 			return Yaml::dump( $array, 13, 2 );
 		}
 		catch( DumpException $e ) {
-			error_log( print_r( $e->getMessage(), 1 ));
+			$this->app->make( 'Notice' )->addError( $e->getMessage() );
 		}
 	}
 
@@ -180,19 +171,24 @@ class ConfigManager extends SiteMetaManager
 	{
 		return wp_parse_args(
 			$config,
-			$this->parseYaml( file_get_contents( $this->app->path( 'defaults.yml' )))
+			$this->parseYaml(
+				file_get_contents( $this->app->path( 'defaults.yml' )),
+				$this->app->path( 'defaults.yml' )
+			)
 		);
 	}
 
 	/**
 	 * @param string $configString
 	 * @return string
+	 * @todo only allow raw strings when we can parse them properly without using eval()
 	 */
 	protected function parseRawStrings( $configString )
 	{
-		// @todo only allow raw strings when we can parse them properly without using eval()
-		return $configString;
 		$strings = apply_filters( 'pollux/config/raw_strings', static::RAW_STRINGS );
+		if( empty( $strings )) {
+			return $configString;
+		}
 		$pattern = '/(\')((' . implode( '|', $strings ) . ')\(?.+\))(\')/';
 		return stripslashes(
 			preg_replace_callback( $pattern, function( $matches ) {
@@ -202,19 +198,27 @@ class ConfigManager extends SiteMetaManager
 	}
 
 	/**
+	 * @link http://api.symfony.com/3.2/Symfony/Component/Yaml/Exception/ParseException.html
 	 * @return array
 	 */
-	protected function parseYaml( $value )
+	protected function parseYaml( $value, $file = null )
 	{
 		try {
 			return (array) Yaml::parse( $value );
 		}
 		catch( ParseException $e ) {
-			// http://api.symfony.com/3.2/Symfony/Component/Yaml/Exception/ParseException.html
-			error_log( print_r( sprintf( 'Unable to parse the YAML string: %s', $e->getMessage() ), 1 ));
-			error_log( print_r( $e->getParsedFile(), 1 ));
-			error_log( print_r( $e->getParsedLine(), 1 ));
-			error_log( print_r( $e->getSnippet(), 1 ));
+			$this->parseError = $file;
+			if( $file ) {
+				$file = sprintf( '<code>%s</code>', $file );
+			}
+			$this->app->make( 'Notice' )->addError([
+				sprintf( '<strong>Pollux Error:</strong> Unable to parse config at line %s (near "%s").',
+					$e->getParsedLine(),
+					$e->getSnippet()
+				),
+				$file
+			]);
+			return $value;
 		}
 	}
 

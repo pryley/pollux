@@ -2,8 +2,8 @@
 - [x] don't show headings and divider fields in the info meta-box
 - [x] fix negative conditions
 - [x] fix map field, must normalize the address_field key by adding the pollux prefix to it
+- [x] show notices for YAML parse errors
 - [ ] protect pollux.yml from direct access if inside webroot
-- [ ]
 
 ## Core Features
 - [x] Config
@@ -23,6 +23,8 @@
 - [x] GateKeeper (plugin depends)
 - [ ] HELP tabs for pollux
 - [ ] Write test suite
+
+## Other Features
 - [ ] Color Schemes
 
 ## Translatable Strings
