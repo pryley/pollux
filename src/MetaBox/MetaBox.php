@@ -5,6 +5,7 @@ namespace GeminiLabs\Pollux\MetaBox;
 use GeminiLabs\Pollux\Application;
 use GeminiLabs\Pollux\Component;
 use GeminiLabs\Pollux\Facades\PostMeta;
+use GeminiLabs\Pollux\Facades\SiteMeta;
 use GeminiLabs\Pollux\Helper;
 use GeminiLabs\Pollux\MetaBox\Condition;
 use GeminiLabs\Pollux\MetaBox\Instruction;
@@ -37,9 +38,11 @@ class MetaBox extends Component
 			'post_types' => [],
 		]);
 
-		add_filter( 'rwmb_show',       [$this, 'show'], 10, 2 );
-		add_filter( 'rwmb_meta_boxes', [$this, 'register'] );
-		add_filter( 'rwmb_outer_html', [$this, 'renderField'], 10, 2 );
+		add_filter( 'rwmb_normalize_map_field', [$this, 'normalizeMapField'] );
+		add_filter( 'rwmb_show',                [$this, 'show'], 10, 2 );
+		add_filter( 'rwmb_meta_boxes',          [$this, 'register'] );
+		add_filter( 'rwmb_outer_html',          [$this, 'renderField'], 10, 2 );
+
 	}
 
 	/**
@@ -73,6 +76,25 @@ class MetaBox extends Component
 		return PostMeta::get( $key, [
 			'id' => $this->getPostId(),
 		]);
+	}
+
+	/**
+	 * @param array $field
+	 * @return array
+	 */
+	public function normalizeMapField( $field )
+	{
+		if( empty( $field['address_field'] )) {
+			return $field;
+		}
+		if( !$this->app->make( Helper::class )->startsWith( Application::PREFIX, $field['address_field'] )) {
+			$field['address_field'] = Application::PREFIX . $field['address_field'];
+		}
+		$apiKey = SiteMeta::services( $field['api_key'] );
+		if( !empty( $apiKey ) && is_string( $apiKey )) {
+			$field['api_key'] = $apiKey;
+		}
+		return $field;
 	}
 
 	/**
