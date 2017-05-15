@@ -190,6 +190,8 @@ class ConfigManager extends SiteMetaManager
 	 */
 	protected function parseRawStrings( $configString )
 	{
+		// @todo only allow raw strings when we can parse them properly without using eval()
+		return $configString;
 		$strings = apply_filters( 'pollux/config/raw_strings', static::RAW_STRINGS );
 		$pattern = '/(\')((' . implode( '|', $strings ) . ')\(?.+\))(\')/';
 		return stripslashes(

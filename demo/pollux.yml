@@ -17,52 +17,52 @@ columns: []
 metaboxes:
   contact_options:
     post_types: page
-    title: __('Contact Options', 'pollux')
+    title: Contact Options
     condition:
       is_page_template: template-contact.php
     fields:
       address:
-        name: __('Address', 'pollux')
+        name: Address
         type: text
         class: full-width
         std: Hill of Tara, Meath, Ireland
       location:
-        name: __('Location', 'pollux')
+        name: Location
         type: map
         std: 53.5788114, -6.613843, 15
         address_field: address
         api_key: ''
       shortcode:
-        name: __('Custom Form', 'pollux')
-        placeholder: __('Enter a custom Contact Form shortcode here', 'pollux')
+        name: Custom Form
+        placeholder: Enter a custom Contact Form shortcode here
         type: text
         class: full-width
-        desc: __('Replace the default contact form by entering a custom contact form shortcode here.', 'pollux')
+        desc: Replace the default contact form by entering a custom contact form shortcode here.
   gallery_options:
     post_types: page
-    title: __('Gallery Options', 'pollux')
+    title: Gallery Options
     condition:
-      is_page_template: template-galley.php
+      is_page_template: template-gallery.php
     fields:
       gallery:
         type: post
-        name: __('Gallery', 'pollux')
-        placeholder: __('Select a gallery', 'pollux')
+        name: Gallery
+        placeholder: Select a gallery
         field_type: select
         post_type: gallery
       images_per_page:
         type: number
-        name: __('Images Per Page', 'pollux')
+        name: Images Per Page
         size: 4
       lazyload:
         type: checkbox
-        name: __('Lazyload Images?', 'pollux')
+        name: Lazyload Images?
       pagination:
         type: checkbox
-        name: __('Use Pagination?', 'pollux')
+        name: Use Pagination?
   gallery_media:
     post_types: gallery
-    title: __('Gallery Media', 'pollux')
+    title: Gallery Media
     fields:
       media:
         type: image_advanced
@@ -70,8 +70,8 @@ metaboxes:
 
 post_types:
   gallery:
-    single: __('Gallery', 'pollux')
-    plural: __('Galleries', 'pollux')
+    single: Gallery
+    plural: Galleries
     menu_icon: dashicons-images-alt2
     supports:
       - title
@@ -85,37 +85,37 @@ post_types:
 taxonomies:
   project_type:
     post_types: gallery
-    single: __('Project', 'pollux')
-    plural: __('Projects', 'pollux')
+    single: Project
+    plural: Projects
 
 settings:
   global:
-    title: __('SEO Settings', 'pollux')
+    title: SEO Settings
     fields:
       seo_enabled:
         type: checkbox
-        name: __('Enable SEO?', 'pollux')
+        name: Enable SEO?
       seo_title:
         type: text
-        name: __('SEO Title (prefix)', 'pollux')
+        name: SEO Title (prefix)
         depends: seo_enabled
         attributes:
           class: large-text
       seo_description:
         type: textarea
-        name: __('SEO Description', 'pollux')
+        name: SEO Description
         depends: seo_enabled
         attributes:
           class: large-text
       seo_keywords:
         type: text
-        name: __('SEO Keywords', 'pollux')
+        name: SEO Keywords
         depends: seo_enabled
         attributes:
           class: large-text
       robots:
         name: Robots
-        desc: sprintf('<a href="http://www.robotstxt.org/meta.html" target="_blank">%s</a>', __('What is this?', 'pollux'))
+        desc: <a href="http://www.robotstxt.org/meta.html" target="_blank">What is this?</a>
         type: select
         default: index, follow
         options:
@@ -124,23 +124,23 @@ settings:
           - noindex, follow
           - noindex, nofollow
   contact:
-    title: __('Contact Details', 'pollux')
+    title: Contact Details
     fields:
       email:
         type: text
-        name: __('Email', 'pollux')
+        name: Email
   services:
-    title: __('3rd Party Services', 'pollux')
+    title: 3rd Party Services
     fields:
       google_analytics:
         type: text
-        name: __('Google Analytics ID', 'pollux')
-        desc: sprintf('<a href="https://www.google.com/analytics/" target="_blank">%s</a>', __('What is this?', 'pollux'))
+        name: Google Analytics ID
+        desc: <a href="https://www.google.com/analytics/" target="_blank">What is this?</a>
         placeholder: UA-XXXXXXXX-Y
       google_maps:
         type: text
-        name: __('Google Maps API key', 'pollux')
-        desc: sprintf('<a href="https://developers.google.com/maps/documentation/javascript/get-api-key" target="_blank">%s</a>', __('What is this?', 'pollux'))
+        name: Google Maps API key
+        desc: <a href="https://developers.google.com/maps/documentation/javascript/get-api-key" target="_blank">What is this?</a>
     validation:
       rules:
         google_analytics:
@@ -148,4 +148,4 @@ settings:
           minlength: 5
       messages:
         google_analytics:
-          required: __('A Google Analytics ID is required', 'pollux')
+          required: A Google Analytics ID is required

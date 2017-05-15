@@ -26,7 +26,7 @@
 #
 # 2. Next you must add the custom column label in the "Post Type Columns" field:
 #
-my_awesome_column: __('Awesome!', 'pollux')
+my_awesome_column: Awesome!
 #
 # 3. Finally, you must add a custom filter in your Theme's functions.php file to populate the custom column with a value:
 #

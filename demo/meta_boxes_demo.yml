@@ -20,7 +20,7 @@ front_page:
   # Value can either be a single post type, or a list of post types.
   post_types: page
   # This key is the Meta Box title
-  title: __('Front Page Options', 'pollux')
+  title: Front Page Options
   # This key defines one or more Meta Box conditions (see "meta_box_conditions.yml" for more information)
   condition:
     is_front_page: true
@@ -36,34 +36,34 @@ front_page:
 #
 gallery_options:
   post_types: page
-  title: __('Gallery Options', 'pollux')
+  title: Gallery Options
   condition:
-    is_page_template: template-galley.php
+    is_page_template: template-gallery.php
   fields:
     gallery:
       type: post
-      name: __('Gallery', 'pollux')
-      placeholder: __('Select a gallery', 'pollux')
+      name: Gallery
+      placeholder: Select a gallery
       field_type: select
       post_type: gallery
     images_per_page:
       # This key sets the visibility depending on whether or not another field has a value
       depends: gallery
       type: number
-      name: __('Images Per Page', 'pollux')
+      name: Images Per Page
       size: 4
     lazyload:
       depends: gallery
       type: checkbox
-      name: __('Lazyload Images?', 'pollux')
+      name: Lazyload Images?
     pagination:
       depends: gallery
       type: checkbox
-      name: __('Use Pagination?', 'pollux')
+      name: Use Pagination?
 gallery_media:
   post_types:
     - gallery
-  title: __('Gallery Media', 'pollux')
+  title: Gallery Media
   fields:
     media:
       type: image_advanced

@@ -36,20 +36,20 @@ depends: field_key_to_check_value_of
 #
 # Here is an example meta-box entry that demonstrates the use of the "depends" option:
 seo_settings:
-  title: __('SEO Settings', 'pollux')
+  title: SEO Settings
   fields:
     seo_enabled:
       type: checkbox
-      name: __('Enable SEO?', 'pollux')
+      name: Enable SEO?
     seo_title:
       depends: seo_enabled
       type: text
-      name: __('SEO Title', 'pollux')
+      name: SEO Title
     seo_keywords:
       depends: seo_enabled
       type: text
-      name: __('SEO Keywords', 'pollux')
+      name: SEO Keywords
     seo_description:
       depends: seo_enabled
       type: textarea
-      name: __('SEO Description', 'pollux')
+      name: SEO Description

@@ -1,11 +1,11 @@
 # Copy and paste into the "Post Types" field
 gallery:
   # [required] This is the Singular name of the Post Type, used to generate correct labels
-  single: __('Gallery', 'pollux')
+  single: Gallery
   # [required] This is the Plural name of the Post Type, used to generate correct labels
-  plural: __('Galleries', 'pollux')
+  plural: Galleries
   # [optional] By default, the menu name label is the same as the "plural" value.
-  menu_name: __('My Galleries', 'pollux')
+  menu_name: My Galleries
   # [optional] These are the columns you want to show in the Post Type admin page table,
   # you must also add their corresponding labels in the "Post Type Columns".
   # See "post_type_columns_demo.yml" for more information

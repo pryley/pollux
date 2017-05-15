@@ -5,11 +5,11 @@ project_type:
     - gallery
     - post
   # [required] This is the Singular name of the Post Type, used to generate correct labels
-  single: __('Project', 'pollux')
+  single: Project
   # [required] This is the Plural name of the Post Type, used to generate correct labels
-  plural: __('Projects', 'pollux')
+  plural: Projects
   # [optional] By default, the menu name label is the same as the "plural" value.
-  menu_name: __('My Projects', 'pollux')
+  menu_name: My Projects
   # [optional] Default value is true
   # https://codex.wordpress.org/Function_Reference/register_taxonomy#hierarchical
   hierarchical: true
