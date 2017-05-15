@@ -17,3 +17,8 @@
 - [ ] HELP tabs for pollux
 - [ ] Write test suite
 - [ ] Color Schemes
+
+- [ ] try/catch when including generated config array
+- [x] don't show headings and divider fields in the info meta-box
+- [x] fix negative conditions
+- [ ] fix map field, must normalize the address_field key by adding the pollux prefix to it

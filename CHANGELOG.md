@@ -18,6 +18,15 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ### Security
 
+## [1.0.1] - 2017-05-15
+
+### Removed
+- Disabled raw strings until they can be parsed properly without using eval()
+
+### Fixed
+- Fix headings and divider fields from incorrectly showing in the instructions meta-box
+- Fix negative conditions
+
 ## [1.0.0] - 2017-05-13
 
 - Initial plugin release
