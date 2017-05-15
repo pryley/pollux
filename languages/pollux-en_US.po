@@ -86,7 +86,7 @@ msgstr "Reset successful."
 msgid "Failed to reset. Please try again."
 msgstr "Failed to reset. Please try again."
 
-#: src/MetaBox/Instruction.php:64
+#: src/MetaBox/Instruction.php:75
 msgid "How to use in your theme"
 msgstr "How to use in your theme"
 
