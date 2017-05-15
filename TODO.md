@@ -1,3 +1,11 @@
+## Fix
+- [x] don't show headings and divider fields in the info meta-box
+- [x] fix negative conditions
+- [x] fix map field, must normalize the address_field key by adding the pollux prefix to it
+- [ ] protect pollux.yml from direct access if inside webroot
+- [ ]
+
+## Core Features
 - [x] Config
 - [x] PostType
 - [x] PostType Archive
@@ -13,12 +21,11 @@
 - [x] Disable Posts
 - [x] Settings page to change plugin config
 - [x] GateKeeper (plugin depends)
-- [ ] Auto-generate language file for config file
 - [ ] HELP tabs for pollux
 - [ ] Write test suite
 - [ ] Color Schemes
 
+## Translatable Strings
 - [ ] try/catch when including generated config array
-- [x] don't show headings and divider fields in the info meta-box
-- [x] fix negative conditions
-- [ ] fix map field, must normalize the address_field key by adding the pollux prefix to it
+- [ ] Parse raw strings without having to use eval()
+- [ ] Auto-generate language file for config file

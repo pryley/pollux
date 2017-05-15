@@ -38,8 +38,9 @@ trait Instruction
 	 */
 	protected function getInstructionFields( $metabox )
 	{
+		$skipFields = ['custom_html', 'divider', 'heading'];
 		return array_reduce( $metabox['fields'], function( $html, $field ) use( $metabox ) {
-			return $this->validate( $field['condition'] ) && !in_array( $field['type'], ['divider', 'heading'] )
+			return $this->validate( $field['condition'] ) && !in_array( $field['type'], $skipFields )
 				? $html . $this->filter( 'instruction', "PostMeta::get('{$field['slug']}');", $field, $metabox ) . PHP_EOL
 				: $html;
 		});
