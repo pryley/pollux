@@ -43,7 +43,9 @@ trait Condition
 	 */
 	protected function normalizeCondition( $conditions )
 	{
-		$conditions = ( new Helper )->toArray( $conditions );
+		if( !is_array( $conditions )) {
+			$conditions = [];
+		}
 		if( count( array_filter( array_keys( $conditions ), 'is_string' )) == 0 ) {
 			foreach( $conditions as $key ) {
 				$conditions[str_replace( '!', '', $key )] = substr( $key, 0, 1 ) == '!' ? 0 : 1;
@@ -118,7 +120,10 @@ trait Condition
 	 */
 	protected function validateIsPageTemplate( $value )
 	{
-		return basename( get_page_template_slug( $this->getPostId() )) == $value;
+		return ( new Helper )->endsWith(
+			$value,
+			basename( get_page_template_slug( $this->getPostId() ))
+		);
 	}
 
 	/**
