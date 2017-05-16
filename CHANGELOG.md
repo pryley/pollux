@@ -18,6 +18,17 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ### Security
 
+## [1.0.2] - 2017-05-16
+
+### Added
+- Show admin notices for YAML parse errors
+
+### Removed
+- Replaced demo *.yml files in favour of github wiki pages
+
+### Fixed
+- Fix getCurrentScreen()
+
 ## [1.0.1] - 2017-05-15
 
 ### Removed

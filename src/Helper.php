@@ -57,18 +57,19 @@ class Helper
 	}
 
 	/**
-	 * get_current_screen() is unreliable because it is defined on most admin pages, but not all.
-	 * @return WP_Screen
+	 * get_current_screen() is unreliable because it is not defined on all admin pages.
+	 * @return WP_Screen|stdClass
 	 */
 	public function getCurrentScreen()
 	{
 		global $hook_suffix, $pagenow;
-		$screen = function_exists( 'get_current_screen' )
-			? get_current_screen()
-			: (object) [
-				'base' => $hook_suffix,
-				'id' => $hook_suffix,
-			];
+		if( function_exists( 'get_current_screen' )) {
+			$screen = get_current_screen();
+		}
+		if( empty( $screen )) {
+			$screen = new \stdClass();
+			$screen->base = $screen->id = $hook_suffix;
+		}
 		$screen->pagenow = $pagenow;
 		return $screen;
 	}
