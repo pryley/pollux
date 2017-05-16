@@ -20,10 +20,15 @@
   },
   "archive": {
     "exclude": [
-      "/src",
+      "/+",
+      "/tests",
       "/.*",
-      "/package.json",
-      "/gulpfile.js"
+      "/*.md",
+      "/*.js",
+      "/*.json",
+      "/*.lock",
+      "/*.sh",
+      "/*.xml"
     ]
   },
   "prefer-stable": true,

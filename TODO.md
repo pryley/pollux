@@ -22,7 +22,7 @@
 - [x] Settings page to change plugin config
 - [x] GateKeeper (plugin depends)
 - [ ] HELP tabs for pollux
-- [ ] Write test suite
+- [=] Write test suite
 
 ## Other Features
 - [ ] Color Schemes

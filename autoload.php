@@ -9,6 +9,7 @@ spl_autoload_register( function( $class )
 {
 	$namespaces = [
 		'GeminiLabs\\Pollux\\' => __DIR__ . '/src/',
+		'GeminiLabs\\Pollux\\Tests\\' => __DIR__ . '/tests/',
 		'Symfony\\Component\\Yaml\\' => __DIR__ . '/vendor/symfony/yaml/',
 	];
 	foreach( $namespaces as $prefix => $base_dir ) {
