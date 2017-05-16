@@ -52,12 +52,13 @@ class ConfigManager extends SiteMetaManager
 	}
 
 	/**
+	 * @param bool $force
 	 * @return object
 	 */
-	public function compile()
+	public function compile( $force = false )
 	{
 		$configFile = $this->getCompileDestination();
-		if( $this->shouldCompile( $configFile )) {
+		if( $force || $this->shouldCompile( $configFile )) {
 			$config = $this->normalizeArray( $this->options );
 			if( $this->parseError ) {
 				return (object) $config;

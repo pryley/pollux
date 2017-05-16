@@ -110,6 +110,7 @@ class Config
 		)return;
 		if( wp_verify_nonce( filter_input( INPUT_GET, '_wpnonce' ), static::id() )) {
 			delete_option( static::id() );
+			$this->app->make( ConfigManager::class )->compile( true );
 			add_settings_error( static::id(), 'reset', __( 'Reset successful.', 'pollux' ), 'updated' );
 		}
 		else {
