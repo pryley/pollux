@@ -7,13 +7,15 @@
 
 ![Pollux banner](+/assets/banner-1544x500.png)
 
-Pollux is a theme-agnostic scaffolding plugin for the advanced WordPress user. It allows you to easily add custom Post Types, Taxonomies, Meta Boxes, Global Settings, and more.
+Pollux allows you to easily add custom Post Types, Taxonomies, Meta Boxes, Global Settings, Archive Page meta, and more...all within mere minutes.
+
+Instead of drag-and-drop, all configuration is added using simple [YAML](https://learn-the-web.algonquindesign.ca/topics/markdown-yaml-cheat-sheet/#yaml) markup on the Pollux settings page.
 
 Pollux uses the [Meta Box](https://wordpress.org/plugins/meta-box/) plugin to add custom meta-boxes. If the Meta Box plugin is not installed, Pollux will prompt you to do so on the Pollux settings page.
 
-Please see the [plugin wiki](https://github.com/geminilabs/pollux/wiki) for some example YAML configuration.
+Please see the [plugin wiki](https://github.com/geminilabs/pollux/wiki) for complete examples on how to use YAML markup in the plugin. Once you've used it, you'll wonder how you ever managed without it!
 
-Pollux is intended to complement themes built on the [Castor framework](https://github.com/geminilabs/castor-framework) (i.e. [Castor](https://github.com/geminilabs/castor)), but it is not a requirement.
+Pollux was made to complement themes built on the [Castor framework](https://github.com/geminilabs/castor-framework) (i.e. [Castor](https://github.com/geminilabs/castor)), but it can be used with any theme.
 
 ## Minimum plugin requirements:
 
