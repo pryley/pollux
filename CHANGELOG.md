@@ -18,6 +18,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ### Security
 
+## [1.0.3] - 2017-05-19
+
+### Fixed
+- Fix post_type detection on post-new.php
+- Recompile config on reset
+
 ## [1.0.2] - 2017-05-16
 
 ### Added

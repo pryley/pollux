@@ -172,7 +172,10 @@ class MetaBox extends Component
 		if( !isset( $metabox['post_types'] )) {
 			return true;
 		}
-		return in_array( get_post_type( $this->getPostId() ), $metabox['post_types'] );
+		if( !( $type = filter_input( INPUT_GET, 'post_type' ))) {
+			$type = get_post_type( $this->getPostId() );
+		}
+		return in_array( $type, $metabox['post_types'] );
 	}
 
 	/**

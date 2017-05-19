@@ -78,11 +78,11 @@ msgstr "Pollux"
 msgid "Pollux Settings"
 msgstr "Pollux Settings"
 
-#: src/Config/Config.php:113, src/Settings/Settings.php:222
+#: src/Config/Config.php:114, src/Settings/Settings.php:222
 msgid "Reset successful."
 msgstr "Reset successful."
 
-#: src/Config/Config.php:116, src/Settings/Settings.php:225
+#: src/Config/Config.php:117, src/Settings/Settings.php:225
 msgid "Failed to reset. Please try again."
 msgstr "Failed to reset. Please try again."
 
