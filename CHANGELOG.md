@@ -7,6 +7,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ## [Unreleased]
 
 ### Added
+- Added loading of pollux-hooks.php if it exists
 - Added permalink in archive pages
 
 ### Changed

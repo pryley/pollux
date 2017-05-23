@@ -83,6 +83,29 @@ final class Application extends Container
 	}
 
 	/**
+	 * @param string $filename
+	 * @return string|null
+	 */
+	public function getFile( $filename )
+	{
+		$theme = wp_get_theme();
+		$filename = apply_filters( 'pollux/file', $filename );
+		$locations = apply_filters( 'pollux/file/locations', [
+			trailingslashit( trailingslashit( $theme->theme_root ) . $theme->stylesheet ),
+			trailingslashit( trailingslashit( $theme->theme_root ) . $theme->template ),
+			trailingslashit( WP_CONTENT_DIR ),
+			trailingslashit( ABSPATH ),
+			trailingslashit( dirname( ABSPATH )),
+			trailingslashit( dirname( dirname( ABSPATH ))),
+		]);
+		foreach( (array) $locations as $location ) {
+			if( !file_exists( $location . $filename ))continue;
+			return $location . $filename;
+		}
+		return null;
+	}
+
+	/**
 	 * @return void
 	 */
 	public function onActivation()
@@ -140,6 +163,7 @@ final class Application extends Container
 		Facade::clearResolvedInstances();
 		Facade::setFacadeApplication( $this );
 		$this->registerAliases();
+		$this->loadHooks();
 		$this->config = $this->make( ConfigManager::class )->compile();
 		$classNames = array(
 			'Config\Config',
@@ -153,6 +177,16 @@ final class Application extends Container
 		foreach( $classNames as $className ) {
 			$this->make( $className )->init();
  		}
+	}
+
+	/**
+	 * @return void
+	 */
+	protected function loadHooks()
+	{
+		if( $file = $this->getFile( 'pollux-hooks.php' )) {
+			include_once $file;
+		}
 	}
 
 	/**

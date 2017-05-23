@@ -97,19 +97,8 @@ class ConfigManager extends SiteMetaManager
 	 */
 	public function getYamlFile()
 	{
-		$theme = wp_get_theme();
-		$configYaml = apply_filters( 'pollux/config/src/file', 'pollux.yml' );
-		$configLocations = apply_filters( 'pollux/config/src/location', [
-			trailingslashit( trailingslashit( $theme->theme_root ) . $theme->stylesheet ),
-			trailingslashit( trailingslashit( $theme->theme_root ) . $theme->template ),
-			trailingslashit( WP_CONTENT_DIR ),
-			trailingslashit( ABSPATH ),
-			trailingslashit( dirname( ABSPATH )),
-			trailingslashit( dirname( dirname( ABSPATH ))),
-		]);
-		foreach( (array) $configLocations as $location ) {
-			if( !file_exists( $location . $configYaml ))continue;
-			return $location . $configYaml;
+		if( $file = $this->app->getFile( 'pollux.yml' )) {
+			return $file;
 		}
 		return $this->app->path( 'defaults.yml' );
 	}
