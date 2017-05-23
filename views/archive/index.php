@@ -13,6 +13,10 @@
 				<div id="post-body-content">
 					<div id="titlediv">
 						<input type="text" id="title" name="<?= $id; ?>[<?= $post_type; ?>][title]" value="<?= $title; ?>" placeholder="<?= __( 'Enter title here', 'pollux' ); ?>" size="30" spellcheck="true" autocomplete="off">
+						<div id="edit-slug-box">
+							<strong>Permalink:</strong>
+							<span id="sample-permalink"><a href="<?= get_post_type_archive_link( $post_type ); ?>"><?= get_post_type_archive_link( $post_type ); ?></a></span>
+						</div>
 					</div>
 					<div id="postdivrich" class="postarea wp-editor-expand">
 						<?php do_action( 'pollux/archives/editor', $content, $post_type ); ?>
