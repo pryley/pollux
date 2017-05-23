@@ -16,6 +16,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ### Removed
 
 ### Fixed
+- Fix taxonomy meta-box fields from incorrectly showing in the instructions meta-box
 
 ### Security
 
