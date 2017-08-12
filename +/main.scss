@@ -29,3 +29,8 @@
 	outline: 0;
 	margin: 0 0 3px;
 }
+
+td.column-thumbnail img {
+	max-width: 64px;
+	max-height: 64px;
+}
