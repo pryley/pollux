@@ -42,7 +42,7 @@ trait Columns
 		$method = ( new Helper )->buildMethodName( $name, 'getColumn' );
 		echo method_exists( $this, $method )
 			? $this->$method( $postId )
-			: apply_filters( "pollux/post_type/column/{$name}", '' );
+			: apply_filters( "pollux/post_type/column/{$name}", '&mdash;', $postId );
 	}
 
 	/**
@@ -52,7 +52,7 @@ trait Columns
 	protected function getColumnThumbnail( $postId )
 	{
 		if( has_post_thumbnail( $postId ) ) {
-			list( $src, $width, $height ) = wp_get_attachment_image_src( get_post_thumbnail_id( $postId ), [96, 48] );
+			list( $src, $width, $height ) = wp_get_attachment_image_src( get_post_thumbnail_id( $postId ), 'thumbnail' );
 			$thumbnail = sprintf( '<img src="%s" alt="%s" width="%s" height="%s">',
 				esc_url( set_url_scheme( $src )),
 				esc_attr( get_the_title( $postId )),

@@ -7,8 +7,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ## [Unreleased]
 
 ### Added
-- Added loading of pollux-hooks.php if it exists
-- Added permalink in archive pages
 
 ### Changed
 
@@ -17,9 +15,25 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ### Removed
 
 ### Fixed
-- Fix taxonomy meta-box fields from incorrectly showing in the instructions meta-box
 
 ### Security
+
+## [1.1.0] - 2017-08-12
+
+### Added
+- Load pollux-hooks.php if it exists
+- Show permalink in archive pages
+
+### Changed
+- An unknown column value is now '&mdash;'
+- Column thumbnail image is now the builtin 'thumbnail' size
+- Restrict column thumbnail max height/width to 64px
+
+### Fixed
+- Fix a "SiteMeta" helper bug
+- Fix PostMeta::get() to allow `(array) get_query_var('post_type')` as the group.
+- Fix Settings meta-box fields that have multiple values (i.e. checkboxes)
+- Fix taxonomy meta-box fields from incorrectly showing in the instructions meta-box
 
 ## [1.0.3] - 2017-05-19
 
