@@ -78,11 +78,11 @@ msgstr "Pollux"
 msgid "Pollux Settings"
 msgstr "Pollux Settings"
 
-#: src/Config/Config.php:114, src/Settings/Settings.php:222
+#: src/Config/Config.php:114, src/Settings/Settings.php:225
 msgid "Reset successful."
 msgstr "Reset successful."
 
-#: src/Config/Config.php:117, src/Settings/Settings.php:225
+#: src/Config/Config.php:117, src/Settings/Settings.php:228
 msgid "Failed to reset. Please try again."
 msgstr "Failed to reset. Please try again."
 
@@ -146,19 +146,19 @@ msgstr "Add New"
 msgid "Save Settings"
 msgstr "Save Settings"
 
-#: src/Settings/Settings.php:146, src/Settings/Settings.php:147, src/Settings/Settings.php:187
+#: src/Settings/Settings.php:149, src/Settings/Settings.php:150, src/Settings/Settings.php:190
 msgid "Site Settings"
 msgstr "Site Settings"
 
-#: src/Settings/Settings.php:173, views/config/script.php:7
+#: src/Settings/Settings.php:176, views/config/script.php:7
 msgid "Are you sure want to do this?"
 msgstr "Are you sure want to do this?"
 
-#: src/Settings/Settings.php:205
+#: src/Settings/Settings.php:208
 msgid "Reset all"
 msgstr "Reset all"
 
-#: src/Settings/Settings.php:207
+#: src/Settings/Settings.php:210
 msgid "Save"
 msgstr "Save"
 
@@ -166,7 +166,7 @@ msgstr "Save"
 msgid "Enter title here"
 msgstr "Enter title here"
 
-#: views/archive/index.php:23
+#: views/archive/index.php:27
 msgid "Word count: %s"
 msgstr "Word count: %s"
 
