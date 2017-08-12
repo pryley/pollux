@@ -25,6 +25,7 @@ class RWMetaBox extends RW_Meta_Box
 		add_action( 'pollux/archives/init', [$this, 'add_meta_boxes'] );
 		add_action( 'pollux/settings/init', [$this, 'add_meta_boxes'] );
 		add_filter( 'rwmb_field_meta',      [$this, '_get_field_meta'], 10, 3 );
+		add_filter( 'rwmb_normalize_field', [$this, '_normalize_field'] );
 	}
 
 	/**
@@ -43,6 +44,21 @@ class RWMetaBox extends RW_Meta_Box
 			: $field['std']
 		));
 		return $this->_normalize_field_meta( $meta, $field );
+	}
+
+	/**
+	 * @return array
+	 */
+	public function _normalize_field( array $field )
+	{
+		if( !empty( $field['multiple'] ) && $field['id'] == substr( $field['field_name'], 0, -2 )) {
+			$parts = array_filter( explode( '-', $field['id'] ));
+			$first = array_shift( $parts );
+			$field['field_name'] = array_reduce( $parts, function( $carry, $part ) {
+				return sprintf( '%s[%s]', $carry, $part );
+			}, $first ) . '[]';
+		}
+		return $field;
 	}
 
 	/**

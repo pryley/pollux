@@ -103,7 +103,10 @@ class Settings extends MetaBox
 		if( is_null( $settings )) {
 			$settings = [];
 		}
-		return $this->filter( 'save', array_merge( $this->getSettings(), $settings ));
+		return $this->filter( 'save', array_merge(
+			array_intersect_key( $this->getSettings(), $settings ),
+			$settings
+		));
 	}
 
 	/**
