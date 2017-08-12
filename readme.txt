@@ -3,8 +3,8 @@ Contributors: geminilabs, pryley
 Donate link: https://www.paypal.me/pryley
 Tags: pollux, castor, taxonomies, custom taxonomies, post types, custom post types, settings, settings page, meta-box, yaml, scaffolding
 Requires at least: 4.7.0
-Tested up to: 4.7.4
-Stable tag: 1.0.3
+Tested up to: 4.8.1
+Stable tag: 1.1.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -82,6 +82,18 @@ Please see the [How to create your own defaults](https://github.com/geminilabs/p
 6. A view of the "Site Settings" page
 
 == Changelog ==
+
+= 1.1.0 (2017-08-12) =
+
+- [feature] Load pollux-hooks.php if it exists
+- An unknown column value is now '&mdash;'
+- Column thumbnail image is now the builtin 'thumbnail' size
+- Restrict column thumbnail max height/width to 64px
+- Show permalink in archive pages
+- Fix a "SiteMeta" helper bug
+- Fix PostMeta::get() to allow `(array) get_query_var('post_type')` as the group.
+- Fix Settings meta-box fields that have multiple values (i.e. checkboxes)
+- Fix taxonomy meta-box fields from incorrectly showing in the instructions meta-box
 
 = 1.0.3 (2017-05-19) =
 
