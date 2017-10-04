@@ -85,6 +85,7 @@ Please see the [How to create your own defaults](https://github.com/geminilabs/p
 
 = 1.1.1 (2017-10-04) =
 
+- Add compatibility with Give WP plugin
 - Fix plugin localization
 
 = 1.1.0 (2017-08-12) =

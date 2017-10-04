@@ -20,6 +20,7 @@ defined( 'WPINC' ) || die;
 
 require_once __DIR__ . '/autoload.php';
 require_once __DIR__ . '/helpers.php';
+require_once __DIR__ . '/thirdparty.php';
 
 use GeminiLabs\Pollux\Application;
 use GeminiLabs\Pollux\Provider;

@@ -20,6 +20,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## [1.1.1] - 2017-10-04
 
+### Added
+- Add compatibility with Give WP plugin
+
 ### Fixed
 - Fix plugin localization
 
