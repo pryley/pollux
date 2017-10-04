@@ -52,11 +52,12 @@ final class Application extends Container
 	 */
 	public function init()
 	{
-		$this->bootstrap();
-
 		$basename = plugin_basename( $this->file );
 		$controller = $this->make( 'Controller' );
 
+		add_action( 'plugins_loaded', function() {
+			$this->bootstrap();
+		});
 		add_action( 'admin_enqueue_scripts',           array( $controller, 'registerAssets' ));
 		add_action( 'admin_init',                      array( $controller, 'removeDashboardWidgets' ));
 		add_action( 'wp_before_admin_bar_render',      array( $controller, 'removeWordPressMenu' ));
@@ -130,7 +131,7 @@ final class Application extends Container
 
 	/**
 	 * @param string $view
-	 * @return bool
+	 * @return void|null
 	 */
 	public function render( $view, array $data = [] )
 	{
@@ -139,11 +140,9 @@ final class Application extends Container
 			$view,
 			$data
 		);
-		if( file_exists( $file )) {
-			extract( $data );
-			return include $file;
-		}
-		return false;
+		if( !file_exists( $file ))return;
+		extract( $data );
+		include $file;
 	}
 
 	/**
@@ -163,6 +162,7 @@ final class Application extends Container
 		Facade::clearResolvedInstances();
 		Facade::setFacadeApplication( $this );
 		$this->registerAliases();
+		$this->loadTextdomain();
 		$this->loadHooks();
 		$this->config = $this->make( ConfigManager::class )->compile();
 		$classNames = array(
@@ -187,6 +187,14 @@ final class Application extends Container
 		if( $file = $this->getFile( 'pollux-hooks.php' )) {
 			include_once $file;
 		}
+	}
+
+	/**
+	 * @return void
+	 */
+	protected function loadTextdomain()
+	{
+		load_plugin_textdomain( $this->id, false, plugin_basename( $this->path() ) . '/languages/' );
 	}
 
 	/**

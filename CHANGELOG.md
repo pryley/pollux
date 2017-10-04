@@ -18,6 +18,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ### Security
 
+## [1.1.1] - 2017-10-04
+
+### Fixed
+- Fix plugin localization
+
 ## [1.1.0] - 2017-08-12
 
 ### Added
