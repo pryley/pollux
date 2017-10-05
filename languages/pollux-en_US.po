@@ -78,11 +78,11 @@ msgstr "Pollux"
 msgid "Pollux Settings"
 msgstr "Pollux Settings"
 
-#: src/Config/Config.php:114, src/Settings/Settings.php:225
+#: src/Config/Config.php:114, src/Settings/Settings.php:223
 msgid "Reset successful."
 msgstr "Reset successful."
 
-#: src/Config/Config.php:117, src/Settings/Settings.php:228
+#: src/Config/Config.php:117, src/Settings/Settings.php:226
 msgid "Failed to reset. Please try again."
 msgstr "Failed to reset. Please try again."
 
@@ -90,23 +90,23 @@ msgstr "Failed to reset. Please try again."
 msgid "How to use in your theme"
 msgstr "How to use in your theme"
 
-#: src/PostType/Archive.php:71
+#: src/PostType/Archive.php:84
 msgid "Save Archive"
 msgstr "Save Archive"
 
-#: src/PostType/Archive.php:120, src/PostType/Columns.php:110
+#: src/PostType/Archive.php:133, src/PostType/Columns.php:110
 msgid "Featured Image"
 msgstr "Featured Image"
 
-#: src/PostType/Archive.php:176
+#: src/PostType/Archive.php:189
 msgid "Set Featured Image"
 msgstr "Set Featured Image"
 
-#: src/PostType/Archive.php:179
+#: src/PostType/Archive.php:192
 msgid "Click the image to edit or update"
 msgstr "Click the image to edit or update"
 
-#: src/PostType/Archive.php:183
+#: src/PostType/Archive.php:196
 msgid "Remove featured image"
 msgstr "Remove featured image"
 
@@ -146,19 +146,19 @@ msgstr "Add New"
 msgid "Save Settings"
 msgstr "Save Settings"
 
-#: src/Settings/Settings.php:149, src/Settings/Settings.php:150, src/Settings/Settings.php:190
+#: src/Settings/Settings.php:147, src/Settings/Settings.php:148, src/Settings/Settings.php:188
 msgid "Site Settings"
 msgstr "Site Settings"
 
-#: src/Settings/Settings.php:176, views/config/script.php:7
+#: src/Settings/Settings.php:174, views/config/script.php:7
 msgid "Are you sure want to do this?"
 msgstr "Are you sure want to do this?"
 
-#: src/Settings/Settings.php:208
+#: src/Settings/Settings.php:206
 msgid "Reset all"
 msgstr "Reset all"
 
-#: src/Settings/Settings.php:210
+#: src/Settings/Settings.php:208
 msgid "Save"
 msgstr "Save"
 
@@ -234,7 +234,7 @@ msgstr "Post Type Columns"
 msgid "Reset to Defaults"
 msgstr "Reset to Defaults"
 
-#: src/PostType/Archive.php:133, src/PostType/Archive.php:134, src/PostType/Archive.php:200
+#: src/PostType/Archive.php:146, src/PostType/Archive.php:147, src/PostType/Archive.php:213
 msgctxt "post archive"
 msgid "%s Archive"
 msgstr "%s Archive"

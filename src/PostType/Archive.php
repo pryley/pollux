@@ -63,6 +63,19 @@ class Archive extends Settings
 	}
 
 	/**
+	 * @param null|array $settings
+	 * @return array
+	 * @callback register_setting
+	 */
+	public function filterSavedSettings( $settings )
+	{
+		return $this->filter( 'save', array_intersect_key(
+			array_merge( $this->getSettings(), ( new Helper )->toArray( $settings )),
+			$this->getPostTypesWithArchive()
+		));
+	}
+
+	/**
 	 * @return array
 	 * @action pollux/{static::ID}/metabox/submit
 	 */

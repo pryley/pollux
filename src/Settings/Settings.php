@@ -100,9 +100,7 @@ class Settings extends MetaBox
 	 */
 	public function filterSavedSettings( $settings )
 	{
-		if( is_null( $settings )) {
-			$settings = [];
-		}
+		$settings = ( new Helper )->toArray( $settings );
 		return $this->filter( 'save', array_merge(
 			array_intersect_key( $this->getSettings(), $settings ),
 			$settings

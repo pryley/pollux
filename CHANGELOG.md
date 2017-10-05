@@ -18,12 +18,15 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ### Security
 
-## [1.1.1] - 2017-10-04
-
-### Added
-- Add compatibility with Give WP plugin
+## [1.1.2] - 2017-10-04
 
 ### Fixed
+- Fix archive settings
+
+## [1.1.1] - 2017-10-04
+
+### Fixed
+- Add compatibility with Give WP plugin
 - Fix plugin localization
 
 ## [1.1.0] - 2017-08-12
