@@ -3,7 +3,6 @@
 namespace GeminiLabs\Pollux;
 
 use Exception;
-use GeminiLabs\Pollux\Config\Config;
 use ReflectionClass;
 
 class GateKeeper
@@ -14,15 +13,8 @@ class GateKeeper
 	const DEPENDENCIES = [
 		'meta-box/meta-box.php' => 'Meta Box|4.11|https://wordpress.org/plugins/meta-box/',
 	];
-	const MIN_PHP_VERSION = '5.6.0';
-	const MIN_WORDPRESS_VERSION = '4.7';
 
 	public $errors = [];
-
-	/**
-	 * @var Application
-	 */
-	protected $app;
 
 	/**
 	 * @var Notice
@@ -37,25 +29,17 @@ class GateKeeper
 	public function __construct( $plugin )
 	{
 		$this->plugin = $plugin;
-
-		if( $this->canActivate() ) {
-			add_action( 'admin_init', array( $this, 'init' ));
-		}
-		else {
-			add_action( 'activated_plugin', array( $this, 'deactivate' ));
-			add_action( 'admin_notices',    array( $this, 'deactivate' ));
-		}
+		add_action( 'admin_init', [$this, 'init'] );
 	}
 
 	public function init()
 	{
-		$this->app = pollux_app();
 		$this->notice = pollux_app()->make( 'Notice' );
 
-		add_action( 'current_screen',                         array( $this, 'activatePlugin' ));
-		add_action( 'wp_ajax_pollux/dependency/activate_url', array( $this, 'ajaxActivatePluginLink' ));
-		add_action( 'admin_notices',                          array( $this, 'printNotices' ));
-		add_action( 'current_screen',                         array( $this, 'setDependencyNotice' ));
+		add_action( 'current_screen',                         [$this, 'activatePlugin'] );
+		add_action( 'wp_ajax_pollux/dependency/activate_url', [$this, 'ajaxActivatePluginLink'] );
+		add_action( 'admin_notices',                          [$this, 'printNotices'] );
+		add_action( 'current_screen',                         [$this, 'setDependencyNotice'] );
 	}
 
 	/**
@@ -63,7 +47,7 @@ class GateKeeper
 	 */
 	public function activatePlugin()
 	{
-		if( get_current_screen()->id != sprintf( 'settings_page_%s', $this->app->id )
+		if( get_current_screen()->id != sprintf( 'settings_page_%s', pollux_app()->id )
 			|| filter_input( INPUT_GET, 'action' ) != 'activate'
 		)return;
 		$plugin = filter_input( INPUT_GET, 'plugin' );
@@ -89,38 +73,13 @@ class GateKeeper
 		$activateUrl = add_query_arg([
 			'_wpnonce' => wp_create_nonce( sprintf( 'activate-plugin_%s', $plugin )),
 			'action' => 'activate',
-			'page' => $this->app->id,
+			'page' => pollux_app()->id,
 			'plugin' => $plugin,
 		], self_admin_url( 'options-general.php' ));
 		wp_send_json_success([
 			'activate_url' => $activateUrl,
 			filter_input( INPUT_POST, 'type' ) => $plugin,
 		]);
-	}
-
-	/**
-	 * @return bool
-	 */
-	public function canActivate()
-	{
-		return $this->hasValidPHPVersion() && $this->hasValidWPVersion();
-	}
-
-	/**
-	 * @return void
-	 * @action activated_plugin
-	 * @action admin_notices
-	 */
-	public function deactivate( $plugin )
-	{
-		if( $plugin == $this->plugin ) {
-			$this->redirect();
-		}
-		deactivate_plugins( $this->plugin );
-		$addNotice = $this->hasValidPHPVersion()
-			? 'addInvalidWPVersionNotice'
-			: 'addInvalidPHPVersionNotice';
-		$this->$addNotice();
 	}
 
 	/**
@@ -145,23 +104,6 @@ class GateKeeper
 			$this->isPluginVersionValid( $plugin );
 		}
 		return !empty( $this->errors );
-	}
-
-	/**
-	 * @return bool
-	 */
-	public function hasValidPHPVersion()
-	{
-		return version_compare( PHP_VERSION, self::MIN_PHP_VERSION, '>=' );
-	}
-
-	/**
-	 * @return bool
-	 */
-	public function hasValidWPVersion()
-	{
-		global $wp_version;
-		return version_compare( $wp_version, self::MIN_WORDPRESS_VERSION, '>=' );
 	}
 
 	/**
@@ -234,7 +176,7 @@ class GateKeeper
 	public function setDependencyNotice()
 	{
 		if( get_current_screen()->id != 'settings_page_pollux'
-			|| $this->app->config->disable_config
+			|| pollux_app()->config->disable_config
 			|| !$this->hasPendingDependencies()
 		)return;
 		$message = sprintf( '<strong>%s:</strong> %s',
@@ -242,34 +184,6 @@ class GateKeeper
 			$this->getDependencyLinks()
 		);
 		$this->notice->addWarning( [$message, $this->getDependencyActions()] );
-	}
-
-	/**
-	 * @return void
-	 */
-	protected function addInvalidPHPVersionNotice()
-	{
-		$message1 = sprintf( __( 'Pollux requires PHP %s or greater in order to work properly (your server is running PHP %s).', 'pollux' ), self::MIN_PHP_VERSION, PHP_VERSION );
-		$message2 = __( 'Please contact your webhosting provider or server administrator to upgrade the version of PHP running on your server, or use a different plugin.', 'pollux' );
-		$this->printDeactivationNotice( sprintf( '%s %s',
-			$message1,
-			$message2
-		));
-	}
-
-	/**
-	 * @return void
-	 */
-	protected function addInvalidWPVersionNotice()
-	{
-		$message = sprintf( __( 'Pollux requires WordPress %s or greater in order to work properly.', 'pollux' ), self::MIN_WORDPRESS_VERSION );
-		if( current_user_can( 'update_core' )) {
-			$message .= PHP_EOL . PHP_EOL . sprintf( '<a href="%s" class="button button-small">%s</a>',
-				self_admin_url( 'update-core.php' ),
-				__( 'Update WordPress', 'pollux' )
-			);
-		}
-		$this->printDeactivationNotice( $message );
 	}
 
 	/**
@@ -420,29 +334,5 @@ class GateKeeper
 	protected function getPluginSlug( $plugin )
 	{
 		return substr( $plugin, 0, strrpos( $plugin, '/' ));
-	}
-
-	/**
-	 * @return void
-	 */
-	protected function printDeactivationNotice( $message )
-	{
-		printf( '<div class="notice notice-error is-dismissible"><p><strong>%s</strong></p>%s</div>',
-			__( 'The Pollux plugin was deactivated.', 'pollux' ),
-			wpautop( $message )
-		);
-	}
-
-	/**
-	 * @return void
-	 */
-	protected function redirect()
-	{
-		wp_safe_redirect( self_admin_url( sprintf( 'plugins.php?plugin_status=%s&paged=%s&s=%s',
-			filter_input( INPUT_GET, 'plugin_status' ),
-			filter_input( INPUT_GET, 'paged' ),
-			filter_input( INPUT_GET, 's' )
-		)));
-		exit;
 	}
 }

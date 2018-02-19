@@ -18,16 +18,21 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ### Security
 
+## [1.1.3] - 2018-02-19
+
+### Fixed
+- Fixed plugin deactivation on unsupported systems
+
 ## [1.1.2] - 2017-10-04
 
 ### Fixed
-- Fix archive settings
+- Fixed archive settings
 
 ## [1.1.1] - 2017-10-04
 
 ### Fixed
-- Add compatibility with Give WP plugin
-- Fix plugin localization
+- Added compatibility with Give WP plugin
+- Fixed plugin localization
 
 ## [1.1.0] - 2017-08-12
 
@@ -38,18 +43,18 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ### Changed
 - An unknown column value is now '&mdash;'
 - Column thumbnail image is now the builtin 'thumbnail' size
-- Restrict column thumbnail max height/width to 64px
+- Restricted column thumbnail max height/width to 64px
 
 ### Fixed
-- Fix a "SiteMeta" helper bug
-- Fix PostMeta::get() to allow `(array) get_query_var('post_type')` as the group.
-- Fix Settings meta-box fields that have multiple values (i.e. checkboxes)
-- Fix taxonomy meta-box fields from incorrectly showing in the instructions meta-box
+- Fixed a "SiteMeta" helper bug
+- Fixed PostMeta::get() to allow `(array) get_query_var('post_type')` as the group.
+- Fixed Settings meta-box fields that have multiple values (i.e. checkboxes)
+- Fixed taxonomy meta-box fields from incorrectly showing in the instructions meta-box
 
 ## [1.0.3] - 2017-05-19
 
 ### Fixed
-- Fix post_type detection on post-new.php
+- Fixed post_type detection on post-new.php
 - Recompile config on reset
 
 ## [1.0.2] - 2017-05-16
@@ -61,7 +66,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - Replaced demo *.yml files in favour of github wiki pages
 
 ### Fixed
-- Fix getCurrentScreen()
+- Fixed getCurrentScreen()
 
 ## [1.0.1] - 2017-05-15
 
@@ -69,8 +74,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - Disabled raw strings until they can be parsed properly without using eval()
 
 ### Fixed
-- Fix headings and divider fields from incorrectly showing in the instructions meta-box
-- Fix negative conditions
+- Fixed headings and divider fields from incorrectly showing in the instructions meta-box
+- Fixed negative conditions
 
 ## [1.0.0] - 2017-05-13
 

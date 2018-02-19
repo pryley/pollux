@@ -7,7 +7,7 @@
  * Plugin Name: Pollux
  * Plugin URI:  https://wordpress.org/plugins/pollux
  * Description: Pollux is a theme-agnostic scaffolding plugin for WordPress.
- * Version:     1.1.2
+ * Version:     1.1.3
  * Author:      Paul Ryley
  * Author URI:  http://geminilabs.io
  * License:     GPL3
@@ -18,19 +18,18 @@
 
 defined( 'WPINC' ) || die;
 
-require_once __DIR__ . '/autoload.php';
-require_once __DIR__ . '/helpers.php';
-require_once __DIR__ . '/thirdparty.php';
+require_once __DIR__.'/activate.php';
 
-use GeminiLabs\Pollux\Application;
-use GeminiLabs\Pollux\Provider;
+if( \Pollux_Activate::shouldDeactivate() )return;
 
-$app = Application::getInstance();
+require_once __DIR__.'/autoload.php';
+require_once __DIR__.'/helpers.php';
+require_once __DIR__.'/thirdparty.php';
+
+$app = \GeminiLabs\Pollux\Application::getInstance();
 
 register_activation_hook( __FILE__, array( $app, 'onActivation' ));
 register_deactivation_hook( __FILE__, array( $app, 'onDeactivation' ));
 
-if( $app->gatekeeper->canActivate() ) {
-	$app->register( new Provider );
-	$app->init();
-}
+$app->register( new \GeminiLabs\Pollux\Provider );
+$app->init();

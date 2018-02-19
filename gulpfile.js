@@ -86,7 +86,7 @@ gulp.task('languages', function() {
 });
 
 gulp.task('po', function() {
-  pump([
+  return pump([
     gulp.src(config.watch.php),
     checktextdomain({
       text_domain: config.language.domain,
@@ -122,7 +122,7 @@ gulp.task('po', function() {
 });
 
 gulp.task('mo', function() {
-  pump([
+  return pump([
     gulp.src(config.dest.lang + '*.po'),
     potomo(),
     gulp.dest(config.dest.lang),

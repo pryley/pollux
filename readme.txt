@@ -5,7 +5,7 @@ Tags: pollux, castor, taxonomies, custom taxonomies, post types, custom post typ
 Requires at least: 4.7.0
 Requires PHP: 5.6
 Tested up to: 4.8.2
-Stable tag: 1.1.2
+Stable tag: 1.1.3
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -84,30 +84,34 @@ Please see the [How to create your own defaults](https://github.com/geminilabs/p
 
 == Changelog ==
 
+= 1.1.3 (2018-02-19) =
+
+- Fixed plugin deactivation on unsupported systems
+
 = 1.1.2 (2017-10-04) =
 
-- Fix archive settings
+- Fixed archive settings
 
 = 1.1.1 (2017-10-04) =
 
-- Add compatibility with Give WP plugin
-- Fix plugin localization
+- Added compatibility with Give WP plugin
+- Fixed plugin localization
 
 = 1.1.0 (2017-08-12) =
 
 - [feature] Load pollux-hooks.php if it exists
 - An unknown column value is now '&mdash;'
 - Column thumbnail image is now the builtin 'thumbnail' size
-- Restrict column thumbnail max height/width to 64px
+- Restricted column thumbnail max height/width to 64px
 - Show permalink in archive pages
-- Fix a "SiteMeta" helper bug
-- Fix PostMeta::get() to allow `(array) get_query_var('post_type')` as the group.
-- Fix Settings meta-box fields that have multiple values (i.e. checkboxes)
-- Fix taxonomy meta-box fields from incorrectly showing in the instructions meta-box
+- Fixed a "SiteMeta" helper bug
+- Fixed PostMeta::get() to allow `(array) get_query_var('post_type')` as the group.
+- Fixed Settings meta-box fields that have multiple values (i.e. checkboxes)
+- Fixed taxonomy meta-box fields from incorrectly showing in the instructions meta-box
 
 = 1.0.3 (2017-05-19) =
 
-- Fix post_type detection on post-new.php
+- Fixed post_type detection on post-new.php
 - Recompile config on reset
 
 = 1.0.2 (2017-05-16) =
@@ -118,8 +122,8 @@ Please see the [How to create your own defaults](https://github.com/geminilabs/p
 = 1.0.1 (2017-05-15) =
 
 - [removed] Disabled raw strings until they can be parsed properly without using eval()
-- Fix headings and divider fields from incorrectly showing in the instructions meta-box
-- Fix negative conditions
+- Fixed headings and divider fields from incorrectly showing in the instructions meta-box
+- Fixed negative conditions
 
 = 1.0.0 (2017-05-13) =
 
