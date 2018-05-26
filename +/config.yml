@@ -1,6 +1,6 @@
 bump:
-  stable tag: readme.txt
-  version: pollux.php
+  - readme.txt
+  - pollux.php
 dest:
   css: assets/
   js: assets/
