@@ -122,18 +122,17 @@ class Controller
 	 */
 	protected function registerCodemirrorAssets( WP_Screen $screen )
 	{
-		if( $screen->id == 'settings_page_pollux' && $screen->pagenow == 'options-general.php' ) {
-			wp_enqueue_style( 'pollux/codemirror.css',
-				$this->app->url( 'assets/codemirror.css' ),
-				[],
-				$this->app->version
-			);
-			wp_enqueue_script( 'pollux/codemirror.js',
-				$this->app->url( 'assets/codemirror.js' ),
-				['pollux/main.js'],
-				$this->app->version
-			);
-		}
+		if( $screen->id != 'settings_page_pollux' || $screen->pagenow != 'options-general.php' )return;
+		wp_enqueue_style( 'pollux/codemirror.css',
+			$this->app->url( 'assets/codemirror.css' ),
+			[],
+			$this->app->version
+		);
+		wp_enqueue_script( 'pollux/codemirror.js',
+			$this->app->url( 'assets/codemirror.js' ),
+			['pollux/main.js'],
+			$this->app->version
+		);
 	}
 
 	/**
