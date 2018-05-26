@@ -1,0 +1,313 @@
+# Copyright (C) 2018 pollux
+# This file is distributed under the same license as the pollux package.
+msgid ""
+msgstr ""
+"Project-Id-Version: pollux\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language-Team: Gemini Labs <support@geminilabs.io>\n"
+"Last-Translator: Paul Ryley <paul@geminilabs.io>\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-KeywordsList: __;_e;_ex:1,2c;_n:1,2;_n_noop:1,2;_nx:1,2,4c;_nx_noop:1,2,3c;_x:1,2c;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.js\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: activate.php:132
+msgid "The %s plugin was deactivated."
+msgstr ""
+
+#: activate.php:133
+msgid "Sorry, this plugin requires %s or greater in order to work properly."
+msgstr ""
+
+#: activate.php:134
+msgid "Please contact your hosting provider or server administrator to upgrade the version of PHP on your server (your server is running PHP version %s), or try to find an alternative plugin."
+msgstr ""
+
+#: activate.php:135
+msgid "PHP version"
+msgstr ""
+
+#: activate.php:136
+msgid "WordPress version"
+msgstr ""
+
+#: activate.php:137
+msgid "Update WordPress"
+msgstr ""
+
+#: src/Controller.php:32
+msgid "Settings Disabled"
+msgstr ""
+
+#: src/Controller.php:33
+msgid "Settings"
+msgstr ""
+
+#: src/GateKeeper.php:183
+msgid "Pollux requires the latest version of the following plugins"
+msgstr ""
+
+#: src/Notice.php:52
+msgid "Activate"
+msgstr ""
+
+#: src/Notice.php:97
+msgid "Install"
+msgstr ""
+
+#: src/Notice.php:111
+msgid "Update"
+msgstr ""
+
+#: src/Config/Config.php:64, src/Config/Config.php:65
+msgid "Pollux"
+msgstr ""
+
+#: src/Config/Config.php:95
+msgid "Pollux Settings"
+msgstr ""
+
+#: src/Config/Config.php:114, src/Settings/Settings.php:223
+msgid "Reset successful."
+msgstr ""
+
+#: src/Config/Config.php:117, src/Settings/Settings.php:226
+msgid "Failed to reset. Please try again."
+msgstr ""
+
+#: src/MetaBox/Instruction.php:76
+msgid "How to use in your theme"
+msgstr ""
+
+#: src/PostType/Archive.php:84
+msgid "Save Archive"
+msgstr ""
+
+#: src/PostType/Archive.php:133, src/PostType/Columns.php:110
+msgid "Featured Image"
+msgstr ""
+
+#: src/PostType/Archive.php:146, src/PostType/Archive.php:147, src/PostType/Archive.php:213
+msgctxt "post archive"
+msgid "%s Archive"
+msgstr ""
+
+#: src/PostType/Archive.php:189
+msgid "Set Featured Image"
+msgstr ""
+
+#: src/PostType/Archive.php:192
+msgid "Click the image to edit or update"
+msgstr ""
+
+#: src/PostType/Archive.php:196
+msgid "Remove featured image"
+msgstr ""
+
+#: src/PostType/Columns.php:104
+msgid "Author"
+msgstr ""
+
+#: src/PostType/Columns.php:105
+msgid "Categories"
+msgstr ""
+
+#: src/PostType/Columns.php:106
+msgid "Comments"
+msgstr ""
+
+#: src/PostType/Columns.php:107
+msgid "Date"
+msgstr ""
+
+#: src/PostType/Columns.php:108
+msgid "Media"
+msgstr ""
+
+#: src/PostType/Columns.php:109
+msgid "Slug"
+msgstr ""
+
+#: src/PostType/Columns.php:111
+msgid "Title"
+msgstr ""
+
+#: src/PostType/PostType.php:110
+msgid "Add New"
+msgstr ""
+
+#: src/PostType/PostType.php:111
+msgctxt "Add new post"
+msgid "Add New %s"
+msgstr ""
+
+#: src/PostType/PostType.php:112
+msgctxt "All posts"
+msgid "All %s"
+msgstr ""
+
+#: src/PostType/PostType.php:113
+msgctxt "Edit post"
+msgid "Edit %s"
+msgstr ""
+
+#: src/PostType/PostType.php:116
+msgctxt "New post"
+msgid "New %s"
+msgstr ""
+
+#: src/PostType/PostType.php:117
+msgctxt "No posts found"
+msgid "No %s found"
+msgstr ""
+
+#: src/PostType/PostType.php:118
+msgctxt "No posts found in trash"
+msgid "No %s found in Trash"
+msgstr ""
+
+#: src/PostType/PostType.php:119
+msgctxt "Search posts"
+msgid "Search %s"
+msgstr ""
+
+#: src/PostType/PostType.php:121
+msgctxt "View post"
+msgid "View %s"
+msgstr ""
+
+#: src/Settings/Settings.php:69
+msgid "Save Settings"
+msgstr ""
+
+#: src/Settings/Settings.php:147, src/Settings/Settings.php:148, src/Settings/Settings.php:188
+msgid "Site Settings"
+msgstr ""
+
+#: src/Settings/Settings.php:174, views/config/script.php:7
+msgid "Are you sure want to do this?"
+msgstr ""
+
+#: src/Settings/Settings.php:206
+msgid "Reset all"
+msgstr ""
+
+#: src/Settings/Settings.php:208
+msgid "Save"
+msgstr ""
+
+#: src/Taxonomy/Taxonomy.php:152
+msgctxt "Add new taxonomy"
+msgid "Add New %s"
+msgstr ""
+
+#: src/Taxonomy/Taxonomy.php:153
+msgctxt "All taxonomies"
+msgid "All %s"
+msgstr ""
+
+#: src/Taxonomy/Taxonomy.php:154
+msgctxt "Edit taxonomy"
+msgid "Edit %s"
+msgstr ""
+
+#: src/Taxonomy/Taxonomy.php:157
+msgctxt "New taxonomy name"
+msgid "New %s Name"
+msgstr ""
+
+#: src/Taxonomy/Taxonomy.php:158
+msgctxt "No taxonomies found"
+msgid "No %s found"
+msgstr ""
+
+#: src/Taxonomy/Taxonomy.php:159
+msgctxt "Search taxonomies"
+msgid "Search %s"
+msgstr ""
+
+#: src/Taxonomy/Taxonomy.php:161
+msgctxt "Update taxonomy"
+msgid "Update %s"
+msgstr ""
+
+#: src/Taxonomy/Taxonomy.php:162
+msgctxt "View taxonomy"
+msgid "View %s"
+msgstr ""
+
+#: views/archive/index.php:15
+msgid "Enter title here"
+msgstr ""
+
+#: views/archive/index.php:27
+msgid "Word count: %s"
+msgstr ""
+
+#: views/config/index.php:7
+msgid "General"
+msgstr ""
+
+#: views/config/index.php:8
+msgid "Meta Boxes"
+msgstr ""
+
+#: views/config/index.php:9, views/config/index.php:99
+msgid "Post Types"
+msgstr ""
+
+#: views/config/index.php:10, views/config/index.php:122
+msgid "Taxonomies"
+msgstr ""
+
+#: views/config/index.php:26
+msgid "Disable Posts"
+msgstr ""
+
+#: views/config/index.php:31
+msgid "Enable Archive Page"
+msgstr ""
+
+#: views/config/index.php:36
+msgid "Remove Dashboard Widgets"
+msgstr ""
+
+#: views/config/index.php:41
+msgid "Remove the WordPress Admin Footer"
+msgstr ""
+
+#: views/config/index.php:46
+msgid "Remove the WordPress Menu From the Admin Bar"
+msgstr ""
+
+#: views/config/index.php:58
+msgid "Archive Meta Boxes"
+msgstr ""
+
+#: views/config/index.php:67, views/config/index.php:79, views/config/index.php:88
+msgid "This field requires the Meta Box plugin."
+msgstr ""
+
+#: views/config/index.php:68
+msgid "Archive Page is not enabled."
+msgstr ""
+
+#: views/config/index.php:76
+msgid "Post Type Meta Boxes"
+msgstr ""
+
+#: views/config/index.php:85
+msgid "Site Settings Meta Boxes"
+msgstr ""
+
+#: views/config/index.php:108
+msgid "Post Type Columns"
+msgstr ""
+
+#: views/config/index.php:134
+msgid "Reset to Defaults"
+msgstr ""

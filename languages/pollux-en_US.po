@@ -16,17 +16,17 @@ msgstr ""
 "X-Poedit-Searchpathexcluded-0: *.js\n"
 "X-Poedit-Sourcecharset: UTF-8\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"Language: qps-ploc\n"
+"Language: en_US\n"
 
-#: activate.php:91
-msgid "The Pollux plugin was deactivated."
-msgstr "The Pollux plugin was deactivated."
+#: activate.php:132
+msgid "The %s plugin was deactivated."
+msgstr "The %s plugin was deactivated."
 
-#: activate.php:92
+#: activate.php:133
 msgid "Sorry, this plugin requires %s or greater in order to work properly."
 msgstr "Sorry, this plugin requires %s or greater in order to work properly."
 
-#: activate.php:93
+#: activate.php:134
 msgid ""
 "Please contact your hosting provider or server administrator to upgrade the "
 "version of PHP on your server (your server is running PHP version %s), or "
@@ -36,15 +36,15 @@ msgstr ""
 "version of PHP on your server (your server is running PHP version %s), or "
 "try to find an alternative plugin."
 
-#: activate.php:94
+#: activate.php:135
 msgid "PHP version"
 msgstr "PHP version"
 
-#: activate.php:95
+#: activate.php:136
 msgid "WordPress version"
 msgstr "WordPress version"
 
-#: activate.php:96
+#: activate.php:137
 msgid "Update WordPress"
 msgstr "Update WordPress"
 

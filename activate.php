@@ -2,11 +2,19 @@
 
 defined( 'WPINC' ) || die;
 
-class Pollux_Activate
+/**
+ * Checks for minimum system requirments on plugin activation
+ * @version 1.0.1
+ */
+class GL_Plugin_Check_v1
 {
-	const BASENAME = 'pollux.php';
 	const MIN_PHP_VERSION = '5.6.0';
 	const MIN_WORDPRESS_VERSION = '4.7.0';
+
+	/**
+	 * @var string
+	 */
+	protected static $file;
 
 	/**
 	 * @var static
@@ -14,37 +22,56 @@ class Pollux_Activate
 	protected static $instance;
 
 	/**
+	 * @var object
+	 */
+	protected static $versions;
+
+	/**
+	 * @param string $version
 	 * @return bool
 	 */
-	public static function isValid()
+	public static function isPhpValid( $version = '' )
 	{
+		if( !empty( $version )) {
+			static::normalize( array( 'php' => $version ));
+		}
+		return !version_compare( PHP_VERSION, static::$versions->php, '<' );
+	}
+
+	/**
+	 * @return bool
+	 */
+	public static function isValid( array $args = array() )
+	{
+		if( !empty( $args )) {
+			static::normalize( $args );
+		}
 		return static::isPhpValid() && static::isWpValid();
 	}
 
 	/**
+	 * @param string $version
 	 * @return bool
 	 */
-	public static function isPhpValid()
-	{
-		return !version_compare( PHP_VERSION, static::MIN_PHP_VERSION, '<' );
-	}
-
-	/**
-	 * @return bool
-	 */
-	public static function isWpValid()
+	public static function isWpValid( $version = '' )
 	{
 		global $wp_version;
-		return !version_compare( $wp_version, static::MIN_WORDPRESS_VERSION, '<' );
+		if( !empty( $version )) {
+			static::normalize( array( 'wordpress' => $version ));
+		}
+		return !version_compare( $wp_version, static::$versions->wordpress, '<' );
 	}
 
 	/**
+	 * @param string $file
 	 * @return bool
 	 */
-	public static function shouldDeactivate()
+	public static function shouldDeactivate( $file, array $args = array() )
 	{
 		if( empty( static::$instance )) {
+			static::$file = realpath( $file );
 			static::$instance = new static;
+			static::$versions = static::normalize( $args );
 		}
 		if( !static::isValid() ) {
 			add_action( 'activated_plugin', array( static::$instance, 'deactivate' ));
@@ -55,17 +82,30 @@ class Pollux_Activate
 	}
 
 	/**
+	 * @param string $plugin
 	 * @return void
 	 */
 	public function deactivate( $plugin )
 	{
 		if( static::isValid() )return;
-		$pluginName = plugin_basename( dirname( realpath( __FILE__ )).'/'.static::BASENAME );
-		if( $plugin == $pluginName ) {
+		$pluginSlug = plugin_basename( static::$file );
+		if( $plugin == $pluginSlug ) {
 			$this->redirect(); //exit
 		}
-		deactivate_plugins( $pluginName );
-		$this->printNotice();
+		$pluginData = get_file_data( static::$file, array( 'name' => 'Plugin Name' ), 'plugin' );
+		deactivate_plugins( $pluginSlug );
+		$this->printNotice( $pluginData['name'] );
+	}
+
+	/**
+	 * @return object
+	 */
+	protected static function normalize( array $args = array() )
+	{
+		return (object)wp_parse_args( $args, array(
+			'php' => static::MIN_PHP_VERSION,
+			'wordpress' => static::MIN_WORDPRESS_VERSION,
+		));
 	}
 
 	/**
@@ -82,30 +122,31 @@ class Pollux_Activate
 	}
 
 	/**
+	 * @param string $pluginName
 	 * @return void
 	 */
-	protected function printNotice()
+	protected function printNotice( $pluginName )
 	{
 		$noticeTemplate = '<div id="message" class="notice notice-error error is-dismissible"><p><strong>%s</strong></p><p>%s</p><p>%s</p></div>';
 		$messages = array(
-			__( 'The Pollux plugin was deactivated.', 'pollux' ),
+			__( 'The %s plugin was deactivated.', 'pollux' ),
 			__( 'Sorry, this plugin requires %s or greater in order to work properly.', 'pollux' ),
 			__( 'Please contact your hosting provider or server administrator to upgrade the version of PHP on your server (your server is running PHP version %s), or try to find an alternative plugin.', 'pollux' ),
-			__( 'PHP version', 'pollux' ).' '.static::MIN_PHP_VERSION,
-			__( 'WordPress version', 'pollux' ).' '.static::MIN_WORDPRESS_VERSION,
+			__( 'PHP version', 'pollux' ),
+			__( 'WordPress version', 'pollux' ),
 			__( 'Update WordPress', 'pollux' ),
 		);
 		if( !static::isPhpValid() ) {
 			printf( $noticeTemplate,
-				$messages[0],
-				sprintf( $messages[1], $messages[3] ),
+				sprintf( $messages[0], $pluginName ),
+				sprintf( $messages[1], $messages[3].' '.static::$versions->php ),
 				sprintf( $messages[2], PHP_VERSION )
 			);
 		}
 		else if( !static::isWpValid() ) {
 			printf( $noticeTemplate,
-				$messages[0],
-				sprintf( $messages[1], $messages[4] ),
+				sprintf( $messages[0], $pluginName ),
+				sprintf( $messages[1], $messages[4].' '.static::$versions->wordpress ),
 				sprintf( '<a href="%s">%s</a>', admin_url( 'update-core.php' ), $messages[5] )
 			);
 		}
