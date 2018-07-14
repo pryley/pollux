@@ -18,6 +18,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ### Security
 
+## [1.1.4] - 2018-07-04
+
+### Fixed
+- Fixed possible activation check conflict
+
 ## [1.1.3] - 2018-02-19
 
 ### Fixed

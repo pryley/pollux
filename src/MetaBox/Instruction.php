@@ -6,7 +6,6 @@ use GeminiLabs\Pollux\Application;
 use GeminiLabs\Pollux\Component;
 use GeminiLabs\Pollux\Helper;
 use GeminiLabs\Pollux\MetaBox\Instruction;
-use GeminiLabs\Pollux\MetaBox\Validator;
 use RecursiveArrayIterator;
 use RecursiveIteratorIterator;
 

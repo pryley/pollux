@@ -18,15 +18,15 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Language: en_US\n"
 
-#: activate.php:132
+#: activate.php:96
 msgid "The %s plugin was deactivated."
 msgstr "The %s plugin was deactivated."
 
-#: activate.php:133
-msgid "Sorry, this plugin requires %s or greater in order to work properly."
-msgstr "Sorry, this plugin requires %s or greater in order to work properly."
+#: activate.php:97
+msgid "This plugin requires %s or greater in order to work properly."
+msgstr "This plugin requires %s or greater in order to work properly."
 
-#: activate.php:134
+#: activate.php:98
 msgid ""
 "Please contact your hosting provider or server administrator to upgrade the "
 "version of PHP on your server (your server is running PHP version %s), or "
@@ -36,17 +36,21 @@ msgstr ""
 "version of PHP on your server (your server is running PHP version %s), or "
 "try to find an alternative plugin."
 
-#: activate.php:135
+#: activate.php:99
 msgid "PHP version"
 msgstr "PHP version"
 
-#: activate.php:136
+#: activate.php:100
 msgid "WordPress version"
 msgstr "WordPress version"
 
-#: activate.php:137
+#: activate.php:101
 msgid "Update WordPress"
 msgstr "Update WordPress"
+
+#: activate.php:102
+msgid "You can use the %s plugin to restore %s to the previous version."
+msgstr "You can use the %s plugin to restore %s to the previous version."
 
 #: src/Controller.php:32
 msgid "Settings Disabled"
@@ -88,7 +92,7 @@ msgstr "Reset successful."
 msgid "Failed to reset. Please try again."
 msgstr "Failed to reset. Please try again."
 
-#: src/MetaBox/Instruction.php:76
+#: src/MetaBox/Instruction.php:75
 msgid "How to use in your theme"
 msgstr "How to use in your theme"
 
