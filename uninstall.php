@@ -2,14 +2,9 @@
 
 defined( 'WP_UNINSTALL_PLUGIN' ) || die;
 
-require_once __DIR__ . '/autoload.php';
+require_once __DIR__.'/pollux.php';
+if( !(new GL_Plugin_Check_v3( __FILE__ ))->isValid() )return;
 
-$options = [
-	\GeminiLabs\Pollux\Config\Config::id(),
-	\GeminiLabs\Pollux\PostType\Archive::id(),
-	\GeminiLabs\Pollux\Settings\Settings::id(),
-];
-
-foreach( $options as $option ) {
-	delete_option( $option );
-}
+delete_option( GeminiLabs\Pollux\Config\Config::id() );
+delete_option( GeminiLabs\Pollux\PostType\Archive::id() );
+delete_option( GeminiLabs\Pollux\Settings\Settings::id() );
