@@ -50,7 +50,7 @@ class Controller
 	 */
 	public function registerAssets()
 	{
-		$screen = ( new Helper )->getCurrentScreen();
+		$screen = Helper::getCurrentScreen();
 
 		$this->registerArchiveAssets( $screen );
 		$this->registerCodemirrorAssets( $screen );
@@ -105,7 +105,7 @@ class Controller
 	 */
 	protected function registerArchiveAssets( WP_Screen $screen )
 	{
-		if(( new Helper )->endsWith( '_archive', $screen->id ) && $screen->pagenow == 'edit.php' ) {
+		if( Helper::endsWith( '_archive', $screen->id ) && $screen->pagenow == 'edit.php' ) {
 			wp_enqueue_script( 'common' );
 			wp_enqueue_script( 'editor-expand' );
 			wp_enqueue_script( 'post' );

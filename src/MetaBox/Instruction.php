@@ -4,7 +4,6 @@ namespace GeminiLabs\Pollux\MetaBox;
 
 use GeminiLabs\Pollux\Application;
 use GeminiLabs\Pollux\Component;
-use GeminiLabs\Pollux\Helper;
 use GeminiLabs\Pollux\MetaBox\Instruction;
 use RecursiveArrayIterator;
 use RecursiveIteratorIterator;

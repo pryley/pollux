@@ -70,7 +70,7 @@ class Archive extends Settings
 	public function filterSavedSettings( $settings )
 	{
 		return $this->filter( 'save', array_intersect_key(
-			array_merge( $this->getSettings(), ( new Helper )->toArray( $settings )),
+			array_merge( $this->getSettings(), Helper::toArray( $settings )),
 			$this->getPostTypesWithArchive()
 		));
 	}
@@ -116,7 +116,7 @@ class Archive extends Settings
 	 */
 	public function register()
 	{
-		$screenId = ( new Helper )->getCurrentScreen()->id;
+		$screenId = Helper::getCurrentScreen()->id;
 		if( in_array( $screenId, $this->hooks )) {
 			$this->hook = $screenId;
 		}

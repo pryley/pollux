@@ -3,6 +3,7 @@
 namespace GeminiLabs\Pollux\MetaBox;
 
 use GeminiLabs\Pollux\Helper;
+use WP_Post;
 
 /**
  * @property Application $app
@@ -10,7 +11,21 @@ use GeminiLabs\Pollux\Helper;
 trait Condition
 {
 	/**
-	 * @return string
+	 * @return array
+	 */
+	public static function absolutes()
+	{
+		$defaults = [
+			'class_exists', 'defined', 'function_exists', 'hook', 'is_front_page', 'is_home',
+			'is_plugin_active', 'is_plugin_inactive',
+		];
+		return defined( 'static::ABSOLUTE_CONDITIONS' )
+			? Helper::toArray( static::ABSOLUTE_CONDITIONS )
+			: $defaults;
+	}
+
+	/**
+	 * @return array
 	 */
 	public static function conditions()
 	{
@@ -19,9 +34,16 @@ trait Condition
 			'is_page_template', 'is_plugin_active', 'is_plugin_inactive',
 		];
 		return defined( 'static::CONDITIONS' )
-			? static::CONDITIONS
+			? Helper::toArray( static::CONDITIONS )
 			: $defaults;
 	}
+
+	/**
+	 * @param string $name
+	 * @param mixed ...$args
+	 * @return mixed
+	 */
+	abstract public function filter( $name, ...$args );
 
 	/**
 	 * @return bool
@@ -29,12 +51,57 @@ trait Condition
 	public function validate( array $conditions )
 	{
 		array_walk( $conditions, function( &$value, $key ) {
-			$method = ( new Helper )->buildMethodName( $key, 'validate' );
-			$value = method_exists( $this, $method )
-				? $this->$method( $value )
-				: $this->validateUnknown( $key, $value );
+			$value = $this->isConditionValid( $key, $value );
 		});
 		return !in_array( false, $conditions );
+	}
+
+	/**
+	 * @return int
+	 */
+	abstract protected function getPostId();
+
+	/**
+	 * @param string $method
+	 * @return bool
+	 */
+	protected function isAbsoluteConditionValid( $method, array $values )
+	{
+		foreach( $values as $value ) {
+			if( $this->$method( $value ))continue;
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * @param string $key
+	 * @param string|array $values
+	 * @return bool
+	 */
+	protected function isConditionValid( $key, $values )
+	{
+		$method = Helper::buildMethodName( $key, 'validate' );
+		if( !method_exists( $this, $method )) {
+			return $this->validateUnknown( $key, $values );
+		}
+		$values = Helper::toArray( $values );
+		return in_array( $key, $this->absolutes() )
+			? $this->isAbsoluteConditionValid( $method, $values )
+			: $this->isLooseConditionValid( $method, $values );
+	}
+
+	/**
+	 * @param string $method
+	 * @return bool
+	 */
+	protected function isLooseConditionValid( $method, array $values )
+	{
+		foreach( $values as $value ) {
+			if( !$this->$method( $value ))continue;
+			return true;
+		}
+		return false;
 	}
 
 	/**
@@ -120,10 +187,7 @@ trait Condition
 	 */
 	protected function validateIsPageTemplate( $value )
 	{
-		return ( new Helper )->endsWith(
-			$value,
-			basename( get_page_template_slug( $this->getPostId() ))
-		);
+		return Helper::endsWith( $value, basename( get_page_template_slug( $this->getPostId() )));
 	}
 
 	/**
@@ -153,16 +217,4 @@ trait Condition
 	{
 		return apply_filters( 'pollux/metabox/condition', true, $key, $value );
 	}
-
-	/**
-	 * @param string $name
-	 * @param mixed ...$args
-	 * @return mixed
-	 */
-	abstract public function filter( $name, ...$args );
-
-	/**
-	 * @return int
-	 */
-	abstract protected function getPostId();
 }

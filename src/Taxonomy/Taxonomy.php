@@ -50,7 +50,7 @@ class Taxonomy extends Component
 	 */
 	public function filterByTaxonomy( WP_Query $query )
 	{
-		if( !is_admin() || ( new Helper )->getCurrentScreen()->base != 'edit' )return;
+		if( !is_admin() || Helper::getCurrentScreen()->base != 'edit' )return;
 		$vars = &$query->query_vars;
 		foreach( array_keys( $this->taxonomies ) as $taxonomy ) {
 			if( !isset( $vars[$taxonomy] ))return;
@@ -140,7 +140,7 @@ class Taxonomy extends Component
 	 */
 	protected function normalizePostTypes( $types )
 	{
-		return ( new Helper )->toArray( $types );
+		return Helper::toArray( $types );
 	}
 
 	/**

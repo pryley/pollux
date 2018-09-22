@@ -33,16 +33,13 @@ class MetaBox extends Component
 	public function init()
 	{
 		if( empty( $this->app->config->{static::ID} ))return;
-
 		$this->normalize( $this->app->config->{static::ID}, [
 			'post_types' => [],
 		]);
-
 		add_filter( 'rwmb_normalize_map_field', [$this, 'normalizeMapField'] );
 		add_filter( 'rwmb_show',                [$this, 'show'], 10, 2 );
 		add_filter( 'rwmb_meta_boxes',          [$this, 'register'] );
 		add_filter( 'rwmb_outer_html',          [$this, 'renderField'], 10, 2 );
-
 	}
 
 	/**
@@ -87,7 +84,7 @@ class MetaBox extends Component
 		if( empty( $field['address_field'] )) {
 			return $field;
 		}
-		if( !$this->app->make( Helper::class )->startsWith( Application::PREFIX, $field['address_field'] )) {
+		if( !Helper::startsWith( Application::PREFIX, $field['address_field'] )) {
 			$field['address_field'] = Application::PREFIX . $field['address_field'];
 		}
 		$apiKey = SiteMeta::services( $field['api_key'] );
@@ -110,7 +107,7 @@ class MetaBox extends Component
 			}
 		}
 		$metaboxes = func_num_args()
-			? ( new Helper )->toArray( func_get_arg(0) )
+			? Helper::toArray( func_get_arg(0) )
 			: [];
 		return array_merge( $metaboxes, $this->metaboxes );
 	}
@@ -254,7 +251,7 @@ class MetaBox extends Component
 	 */
 	protected function normalizePostTypes( $types )
 	{
-		return ( new Helper )->toArray( $types );
+		return Helper::toArray( $types );
 	}
 
 	/**

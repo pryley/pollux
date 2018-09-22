@@ -44,7 +44,7 @@ class DisablePosts
 	 */
 	public function disable()
 	{
-		if( !in_array(( new Helper )->getCurrentScreen()->pagenow, [
+		if( !in_array( Helper::getCurrentScreen()->pagenow, [
 			'edit.php', 'edit-tags.php', 'post-new.php',
 		]))return;
 
@@ -166,6 +166,6 @@ class DisablePosts
 	 */
 	protected function isAdmin()
 	{
-		return is_admin() || ( new Helper )->getCurrentScreen()->pagenow == 'wp-login.php';
+		return is_admin() || Helper::getCurrentScreen()->pagenow == 'wp-login.php';
 	}
 }

@@ -2,8 +2,6 @@
 
 namespace GeminiLabs\Pollux;
 
-use GeminiLabs\Pollux\Application;
-
 class Helper
 {
 	/**
@@ -11,7 +9,7 @@ class Helper
 	 * @param string $path
 	 * @return string
 	 */
-	public function buildClassName( $name, $path = '' )
+	public static function buildClassName( $name, $path = '' )
 	{
 		$className = array_map( 'ucfirst', array_map( 'strtolower', preg_split( '/[-_]/', $name )));
 		$className = implode( '', $className );
@@ -25,9 +23,9 @@ class Helper
 	 * @param string $prefix
 	 * @return string
 	 */
-	public function buildMethodName( $name, $prefix = 'get' )
+	public static function buildMethodName( $name, $prefix = 'get' )
 	{
-		return lcfirst( $this->buildClassName( $prefix . '-' . $name ));
+		return lcfirst( static::buildClassName( $prefix . '-' . $name ));
 	}
 
 	/**
@@ -35,7 +33,7 @@ class Helper
 	 * @param string $haystack
 	 * @return bool
 	 */
-	public function endsWith( $needle, $haystack )
+	public static function endsWith( $needle, $haystack )
 	{
 		$length = strlen( $needle );
 		return $length != 0
@@ -47,7 +45,7 @@ class Helper
 	 * @param mixed $fromClass
 	 * @return string
 	 */
-	public function getClassname( $fromClass )
+	public static function getClassname( $fromClass )
 	{
 		$className = is_string( $fromClass )
 			? $fromClass
@@ -60,7 +58,7 @@ class Helper
 	 * get_current_screen() is unreliable because it is not defined on all admin pages.
 	 * @return WP_Screen|stdClass
 	 */
-	public function getCurrentScreen()
+	public static function getCurrentScreen()
 	{
 		global $hook_suffix, $pagenow;
 		if( function_exists( 'get_current_screen' )) {
@@ -79,7 +77,7 @@ class Helper
 	 * @param string $haystack
 	 * @return bool
 	 */
-	public function startsWith( $needle, $haystack )
+	public static function startsWith( $needle, $haystack )
 	{
 		return substr( $haystack, 0, strlen( $needle )) === $needle;
 	}
@@ -88,7 +86,7 @@ class Helper
 	 * @param mixed $value
 	 * @return array
 	 */
-	public function toArray( $value )
+	public static function toArray( $value )
 	{
 		return array_filter( (array) $value );
 	}

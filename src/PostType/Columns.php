@@ -39,7 +39,7 @@ trait Columns
 	 */
 	public function printColumnValue( $name, $postId )
 	{
-		$method = ( new Helper )->buildMethodName( $name, 'getColumn' );
+		$method = Helper::buildMethodName( $name, 'getColumn' );
 		echo method_exists( $this, $method )
 			? $this->$method( $postId )
 			: apply_filters( "pollux/post_type/column/{$name}", '&mdash;', $postId );

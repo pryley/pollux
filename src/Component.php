@@ -38,7 +38,7 @@ abstract class Component
 	{
 		$data = wp_parse_args( $data, $defaults );
 		foreach( $defaults as $key => $value ) {
-			$method = ( new Helper )->buildMethodName( $key, 'normalize' );
+			$method = Helper::buildMethodName( $key, 'normalize' );
 			if( method_exists( $this, $method )) {
 				$data[$key] = $this->$method( $data[$key], $data, $id );
 			}

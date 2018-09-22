@@ -100,7 +100,7 @@ class Settings extends MetaBox
 	 */
 	public function filterSavedSettings( $settings )
 	{
-		$settings = ( new Helper )->toArray( $settings );
+		$settings = Helper::toArray( $settings );
 		return $this->filter( 'save', array_merge(
 			array_intersect_key( $this->getSettings(), $settings ),
 			$settings
@@ -124,7 +124,7 @@ class Settings extends MetaBox
 	 */
 	public function register()
 	{
-		if(( new Helper )->getCurrentScreen()->id != $this->hook )return;
+		if( Helper::getCurrentScreen()->id != $this->hook )return;
 		if( $this->app->gatekeeper->hasDependency( self::DEPENDENCY )) {
 			foreach( parent::register() as $metabox ) {
 				new RWMetaBox( $metabox, static::ID, $this );
@@ -169,7 +169,7 @@ class Settings extends MetaBox
 	 */
 	public function renderFooterScript()
 	{
-		if(( new Helper )->getCurrentScreen()->id != $this->hook )return;
+		if( Helper::getCurrentScreen()->id != $this->hook )return;
 		$this->app->render( 'settings/script', [
 			'confirm' => __( 'Are you sure want to do this?', 'pollux' ),
 			'hook' => $this->hook,
