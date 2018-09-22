@@ -92,7 +92,7 @@ msgstr "Reset successful."
 msgid "Failed to reset. Please try again."
 msgstr "Failed to reset. Please try again."
 
-#: src/MetaBox/Instruction.php:75
+#: src/MetaBox/Instruction.php:74
 msgid "How to use in your theme"
 msgstr "How to use in your theme"
 
@@ -180,17 +180,21 @@ msgstr "Word count: %s"
 msgid "General"
 msgstr "General"
 
-#: views/config/index.php:8
-msgid "Meta Boxes"
-msgstr "Meta Boxes"
+#: views/config/index.php:8, views/config/index.php:58
+msgid "Taxonomies"
+msgstr "Taxonomies"
 
-#: views/config/index.php:9, views/config/index.php:99
+#: views/config/index.php:9, views/config/index.php:72
 msgid "Post Types"
 msgstr "Post Types"
 
-#: views/config/index.php:10, views/config/index.php:122
-msgid "Taxonomies"
-msgstr "Taxonomies"
+#: views/config/index.php:10
+msgid "Meta Boxes"
+msgstr "Meta Boxes"
+
+#: views/config/index.php:11
+msgid "Documentation"
+msgstr "Documentation"
 
 #: views/config/index.php:26
 msgid "Disable Posts"
@@ -212,31 +216,35 @@ msgstr "Remove the WordPress Admin Footer"
 msgid "Remove the WordPress Menu From the Admin Bar"
 msgstr "Remove the WordPress Menu From the Admin Bar"
 
-#: views/config/index.php:58
-msgid "Archive Meta Boxes"
-msgstr "Archive Meta Boxes"
-
-#: views/config/index.php:67, views/config/index.php:79, views/config/index.php:88
-msgid "This field requires the Meta Box plugin."
-msgstr "This field requires the Meta Box plugin."
-
-#: views/config/index.php:68
-msgid "Archive Page is not enabled."
-msgstr "Archive Page is not enabled."
-
-#: views/config/index.php:76
-msgid "Post Type Meta Boxes"
-msgstr "Post Type Meta Boxes"
-
-#: views/config/index.php:85
-msgid "Site Settings Meta Boxes"
-msgstr "Site Settings Meta Boxes"
-
-#: views/config/index.php:108
+#: views/config/index.php:81
 msgid "Post Type Columns"
 msgstr "Post Type Columns"
 
-#: views/config/index.php:134
+#: views/config/index.php:95
+msgid "Archive Meta Boxes"
+msgstr "Archive Meta Boxes"
+
+#: views/config/index.php:104, views/config/index.php:116, views/config/index.php:125
+msgid "This field requires the Meta Box plugin."
+msgstr "This field requires the Meta Box plugin."
+
+#: views/config/index.php:105
+msgid "Archive Page is not enabled."
+msgstr "Archive Page is not enabled."
+
+#: views/config/index.php:113
+msgid "Post Type Meta Boxes"
+msgstr "Post Type Meta Boxes"
+
+#: views/config/index.php:122
+msgid "Site Settings Meta Boxes"
+msgstr "Site Settings Meta Boxes"
+
+#: views/config/index.php:137, views/config/index.php:206, views/config/index.php:259, views/config/index.php:296, views/config/index.php:380, views/config/index.php:452, views/config/index.php:614
+msgid "Toggle documentation panel"
+msgstr "Toggle documentation panel"
+
+#: views/config/index.php:861
 msgid "Reset to Defaults"
 msgstr "Reset to Defaults"
 

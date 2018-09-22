@@ -118,7 +118,7 @@ class MetaBox extends Component
 	 */
 	public function renderField( $html, $field )
 	{
-		return $this->validate( $field['condition'] )
+		return !isset( $field['condition'] ) || $this->validate( $field['condition'] )
 			? $html
 			: '';
 	}
