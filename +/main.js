@@ -356,9 +356,18 @@ pollux.tabs.setView = function( idx )
 	});
 };
 
-jQuery(function() {
+jQuery(function($) {
 	for( var key in pollux ) {
 		if( !pollux.hasOwnProperty( key ) || !pollux[key].init )continue;
 		pollux[key].init();
 	}
+	$( '.pollux-card.postbox' ).addClass( 'closed' ).find( '.handlediv' ).attr( 'aria-expanded', false );
+
+	$( '.pollux-card.postbox .pollux-card-header' ).on( 'click', function() {
+		var parent = $( this ).parent();
+		var action = parent.hasClass( 'closed' ) ? 'remove' : 'add';
+		parent[action + 'Class']( 'closed' ).find( '.handlediv' ).attr( 'aria-expanded', action !== 'add' );
+	});
+
 });
+

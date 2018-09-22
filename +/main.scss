@@ -2,6 +2,10 @@
 	table-layout: fixed;
 }
 
+.pollux-config #documentation {
+	margin-top: 22px;
+}
+
 .pollux-config .button,
 .pollux-notice .button {
 	margin-right: 5px;
@@ -33,4 +37,111 @@
 td.column-thumbnail img {
 	max-width: 64px;
 	max-height: 64px;
+}
+
+
+.pollux-card {
+	max-width: 750px;
+	box-sizing: border-box;
+}
+
+.pollux-card-result {
+	border: 1px solid #e1e1e1;
+	background-color: #f6fbfd;
+	padding: 0 1em;
+	margin: 1em 0;
+}
+
+.pollux-card ol {
+	list-style: decimal;
+	margin-left: 1.5em;
+}
+
+.pollux-card ul {
+	list-style: disc;
+	margin-left: 1.5em;
+}
+
+.pollux-heading {
+	color: #000;
+	font-size: 14px;
+	font-weight: 600;
+}
+
+.pollux-card.postbox {
+	padding: 0;
+	margin: 15px 0;
+}
+
+.pollux-card.postbox .pollux-card-header {
+	position: relative;
+	padding: 1em 0 calc(1em + 1px) 1.5em;
+	min-height: 48px;
+	cursor: pointer;
+	user-select: none;
+	box-sizing: border-box;
+	border-bottom: 1px solid #e5e5e5;
+}
+
+.pollux-card.postbox.closed .pollux-card-header {
+	padding-bottom: 1em;
+	border-bottom: none;
+}
+
+.pollux-card.postbox .pollux-card-header h3 {
+	margin: 0 48px 0 0;
+	line-height: 1.4;
+	font-size: 15px;
+}
+
+.pollux-card.postbox .inside {
+	padding: 0 1.5em;
+	margin: 1.5em 0;
+}
+
+.pollux-card.postbox .handlediv {
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: 48px;
+	height: 100%;
+}
+
+.pollux-card.postbox .handlediv .toggle-indicator::before {
+	width: 20px;
+	text-indent: -2px;
+	content: "\f142";
+	display: inline-block;
+	font: normal 20px/1 dashicons;
+	speak: none;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	text-decoration: none !important;
+}
+
+.pollux-card.postbox.closed .handlediv .toggle-indicator::before {
+	content: "\f140";
+}
+
+.pollux-card pre,
+.pollux-card code {
+	word-spacing: normal;
+	word-break: normal;
+	line-height: 1.5;
+	tab-size: 4;
+	hyphens: none;
+}
+
+.pollux-card pre code {
+	border-radius: 2px;
+}
+.pollux-card dd {
+	margin: 1em 0;
+}
+.pollux-card dt {
+	font-weight: 600;
+	margin: 1em 0;
+}
+.pollux-card code a {
+	text-decoration: none;
 }
