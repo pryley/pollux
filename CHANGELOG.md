@@ -18,6 +18,15 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ### Security
 
+## [1.2.0] - 2018-09-23
+
+### Added
+- Added ability to use arrays in condition values
+- Added plugin documentation
+
+### Fixed
+- Fixed compatibility with some Meta-box addons
+
 ## [1.1.4] - 2018-07-04
 
 ### Fixed
