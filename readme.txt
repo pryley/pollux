@@ -42,41 +42,21 @@ Download the Pollux plugin and uploading it to your server via your favorite FTP
 
 == Frequently Asked Questions ==
 
-= How do I add Meta Boxes? =
+= How do I...? =
 
-Pollux uses the [Meta Box](https://wordpress.org/plugins/meta-box/) plugin to add custom meta-boxes. Adding meta-boxes and meta-box fields is [the same as you would](https://github.com/rilwis/meta-box/blob/master/demo/demo.php) with Meta Box, except instead of registering meta-box arrays with the 'rwmb_meta_boxes' filter hook, you instead enter the arrays as YAML markup in the Pollux Settings.
-
-Please see the [Adding Meta Boxes](https://github.com/geminilabs/pollux/wiki/Adding-Meta-Boxes) page in the Pollux wiki for detailed information on how to add Meta Boxes with Pollux.
-
-= How do I make conditional Meta Boxes? =
-
-Please see the [Meta Box Conditions](https://github.com/geminilabs/pollux/wiki/Meta-Box-Conditions) page in the Pollux wiki.
-
-= How do I add Custom Post Types? =
-
-Please see the [Adding Post Types](https://github.com/geminilabs/pollux/wiki/Adding-Post-Types) page in the Pollux wiki.
-
-= How do I add Custom Post Type Columns? =
-
-Please see the [Adding Post Type Columns](https://github.com/geminilabs/pollux/wiki/Adding-Post-Type-Columns) page in the Pollux wiki.
-
-= How do I add Custom Taxonomies? =
-
-Please see the [Adding Taxonomies](https://github.com/geminilabs/pollux/wiki/Adding-Taxonomies) page in the Pollux wiki.
-
-= How do set my own defaults? =
-
-Please see the [How to create your own defaults](https://github.com/geminilabs/pollux/wiki/How-to-create-your-own-defaults) page in the Pollux wiki.
+Pollux includes comprehensive documentation. If your answer is not answered in the documentation, please open a new topic on the [support forum](http://wordpress.org/support/plugin/pollux/).
 
 == Screenshots ==
 
 1. A view of the Pollux settings "General" tab
 
-2. A view of the Pollux settings "Meta Boxes" tab
+2. A view of the Pollux settings "Taxonomies" tab
 
 3. A view of the Pollux settings "Post Types" tab
 
-4. A view of the Pollux settings "Taxonomies" tab
+4. A view of the Pollux settings "Meta Boxes" tab
+
+5. Pollux includes complete documentation
 
 5. A view of the "Post Archive" page
 
