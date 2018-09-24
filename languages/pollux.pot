@@ -316,10 +316,10 @@ msgstr ""
 msgid "Site Settings Meta Boxes"
 msgstr ""
 
-#: views/config/index.php:137, views/config/index.php:206, views/config/index.php:259, views/config/index.php:296, views/config/index.php:380, views/config/index.php:452, views/config/index.php:614
+#: views/config/index.php:137, views/config/index.php:206, views/config/index.php:259, views/config/index.php:296, views/config/index.php:380, views/config/index.php:455, views/config/index.php:617
 msgid "Toggle documentation panel"
 msgstr ""
 
-#: views/config/index.php:861
+#: views/config/index.php:864
 msgid "Reset to Defaults"
 msgstr ""

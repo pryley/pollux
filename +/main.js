@@ -251,10 +251,13 @@ pollux.featured.set = function( id )
 /**
  * @return bool
  */
-pollux.metabox.hasValue = function( el )
+pollux.metabox.hasValue = function( el, value )
 {
 	if( el.type === 'checkbox' ) {
 		return el.checked === true;
+	}
+	if( value !== undefined ) {
+		return el.value === value;
 	}
 	return el.value !== '';
 };
@@ -280,8 +283,9 @@ pollux.metabox.init = function()
  */
 pollux.metabox.setVisibility = function( el )
 {
-	var dependency = document.getElementById( el.getAttribute( 'data-depends' ));
-	var action = pollux.classListAction( !pollux.metabox.hasValue( dependency ));
+	var values = el.getAttribute( 'data-depends' ).split( '|' );
+	var dependency = document.getElementById( values[0] );
+	var action = pollux.classListAction( !pollux.metabox.hasValue( dependency, values[1] ));
 	el.closest( '.rwmb-field' ).classList[action]( 'hidden' );
 	return dependency;
 };

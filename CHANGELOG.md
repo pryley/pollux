@@ -18,6 +18,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ### Security
 
+## [1.3.0] - 2018-09-24
+
+### Added
+- Added ability to set required value of a meta box field dependancy (see documentation)
+
 ## [1.2.0] - 2018-09-23
 
 ### Added

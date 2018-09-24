@@ -278,9 +278,14 @@ class MetaBox extends Component
 		$depends = array_column( $fields, 'depends' );
 		array_walk( $depends, function( $value, $index ) use( &$fields, $metabox ) {
 			if( empty( $value ))return;
-			$dependency = array_search( $value, array_column( $fields, 'id' ));
 			$fields[$index]['attributes']['data-depends'] = $value;
-			if( !$this->getMetaValue( $fields[$dependency]['slug'], '', $metabox['slug'] )) {
+			list( $key, $value ) = array_pad( explode( '|', $value ), 2, null );
+			$dependency = array_search( $key, array_column( $fields, 'id' ));
+			$metaValue = $this->getMetaValue( $fields[$dependency]['slug'], '', $metabox['slug'] );
+			$isHidden = $value === null
+				? $metaValue === ''
+				: $metaValue != $value;
+			if( $isHidden ) {
 				$fields[$index]['class'] = trim( 'hidden ' . $fields[$index]['class'] );
 			}
 		});

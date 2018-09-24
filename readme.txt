@@ -5,7 +5,7 @@ Tags: pollux, castor, taxonomies, custom taxonomies, post types, custom post typ
 Requires at least: 4.7.0
 Requires PHP: 5.6
 Tested up to: 4.9
-Stable tag: 1.2.0
+Stable tag: 1.3.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -83,6 +83,10 @@ Please see the [How to create your own defaults](https://github.com/geminilabs/p
 6. A view of the "Site Settings" page
 
 == Changelog ==
+
+= 1.3.0 (2018-09-24) =
+
+- Added ability to set required value of a meta box field dependancy (see documentation)
 
 = 1.2.0 (2018-09-23) =
 

@@ -421,9 +421,12 @@ gallery_media:
   # Value to check must be the name of the theme template PHP file.
   is_page_template: template-contact.php</code></pre>
 					<p>You can also make meta-box field visibility dependant on whether or not another field has a value.</p>
-					<p>The <code>depends</code> key can only be added to a meta-box field.</p>
-					<pre><code># Value to check must be the name of another meta-box field
-depends: field_key_to_check_value_of</code></pre>
+					<p>The <code>depends</code> key can only be added to a meta-box field, this key checks if the referenced field has a value (and optionally checks for a specific value).</p>
+					<pre><code># This checks that another field has a value set.
+depends: field_key_to_check
+
+# If you also need to check that the key has a specific value, append that value after a "|" (pipe) character
+depends: field_key_to_check|field_value</code></pre>
 					<p>Here is an example meta-box entry that demonstrates the use of the <code>depends</code> option:</p>
 					<pre><code>seo_settings:
   title: SEO Settings
