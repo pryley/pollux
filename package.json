@@ -27,5 +27,8 @@
     "cm-show-invisibles": "^2.0.2",
     "codemirror": "^5.43.0",
     "js-yaml": "^3.12.1"
+  },
+  "scripts": {
+    "build": "./node_modules/gulp/bin/gulp.js build --production"
   }
 }
