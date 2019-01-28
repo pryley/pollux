@@ -56,7 +56,7 @@ class Helper
 
 	/**
 	 * get_current_screen() is unreliable because it is not defined on all admin pages.
-	 * @return WP_Screen|stdClass
+	 * @return \WP_Screen|\stdClass
 	 */
 	public static function getCurrentScreen()
 	{

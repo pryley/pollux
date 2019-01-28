@@ -1,7 +1,7 @@
 #!/bin/sh
 # By Paul Ryley, based on work by Mike Jolley
 # License: GPLv3
-# Version: 1.0.1
+# Version: 1.1.0
 
 # ----- START EDITING HERE -----
 
@@ -68,19 +68,14 @@ fi
 # LIST BRANCHES
 clear
 git fetch origin
-echo "WHICH BRANCH DO YOU WISH TO DEPLOY?"
-git branch -r || { echo "Unable to list branches."; exit 1; }
-echo ""
-read -p "origin/" BRANCH
 
-echo ${BRANCH:-$DEFAULT_GIT_BRANCH}
 # Switch Branch
-echo "Switching to branch"
+echo "Switching to master branch"
 mkdir -p $ROOT_PATH$TEMP_GITHUB_REPO
-git archive ${BRANCH:-$DEFAULT_GIT_BRANCH} | tar -x -f - -C $ROOT_PATH$TEMP_GITHUB_REPO || { echo "Unable to archive/copy branch."; exit 1; }
+git archive $GIT_BRANCH | tar -x -f - -C $ROOT_PATH$TEMP_GITHUB_REPO || { echo "Unable to archive/copy branch."; exit 1; }
 
 echo ""
-read -p "PRESS [ENTER] TO DEPLOY BRANCH "${BRANCH:-$DEFAULT_GIT_BRANCH}
+read -p "PRESS [ENTER] TO DEPLOY BRANCH "$GIT_BRANCH
 
 # MOVE INTO SVN DIR
 cd $ROOT_PATH$SVN_REPO_DIR
