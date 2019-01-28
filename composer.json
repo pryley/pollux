@@ -1,5 +1,5 @@
 {
-  "name": "geminilabs/pollux",
+  "name": "pryley/pollux",
   "type": "wordpress-plugin",
   "description": "Pollux is a theme-agnostic scaffolding plugin for WordPress.",
   "keywords": [
@@ -39,6 +39,6 @@
   },
   "require-dev": {
     "phpunit/phpunit": "^5.7",
-    "symfony/yaml": "^3.2"
+    "symfony/yaml": "^3.4"
   }
 }

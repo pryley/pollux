@@ -1,11 +1,11 @@
 === Pollux ===
-Contributors: geminilabs, pryley
+Contributors: pryley, geminilabs
 Donate link: https://www.paypal.me/pryley
-Tags: pollux, castor, taxonomies, custom taxonomies, post types, custom post types, settings, settings page, meta-box, yaml, scaffolding
+Tags: pollux, taxonomies, custom taxonomies, post types, custom post types, settings, meta-box, yaml, scaffolding, castor
 Requires at least: 4.7.0
 Requires PHP: 5.6
-Tested up to: 4.9
-Stable tag: 1.3.0
+Tested up to: 5.0
+Stable tag: 1.3.1
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -19,9 +19,9 @@ Instead of drag-and-drop, all configuration is added using simple [YAML](https:/
 
 Pollux uses the [Meta Box](https://wordpress.org/plugins/meta-box/) plugin to add custom meta-boxes. If the Meta Box plugin is not installed, Pollux will prompt you to do so on the Pollux settings page.
 
-Please see the [plugin wiki](https://github.com/geminilabs/pollux/wiki) for complete examples on how to use YAML markup in the plugin. Once you've used it, you'll wonder how you ever managed without it!
+Please see the [plugin wiki](https://github.com/pryley/pollux/wiki) for complete examples on how to use YAML markup in the plugin. Once you've used it, you'll wonder how you ever managed without it!
 
-Pollux was made to complement themes built on the [Castor framework](https://github.com/geminilabs/castor-framework) (i.e. [Castor](https://github.com/geminilabs/castor)), but it can be used with any theme.
+Pollux was made to complement themes built on the [Castor framework](https://github.com/pryley/castor-framework) (i.e. [Castor](https://github.com/pryley/castor)), but it can be used with any theme.
 
 == Installation ==
 
@@ -63,6 +63,9 @@ Pollux includes comprehensive documentation. If your answer is not answered in t
 6. A view of the "Site Settings" page
 
 == Changelog ==
+
+= 1.3.1 (2019-01-28) =
+- Updated plugin URL
 
 = 1.3.0 (2018-09-24) =
 

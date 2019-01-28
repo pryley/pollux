@@ -1,9 +1,9 @@
 # Pollux
 
-[![GitHub version](https://badge.fury.io/gh/geminilabs%2Fpollux.svg)](https://badge.fury.io/gh/geminilabs%2Fpollux)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/geminilabs/pollux/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/geminilabs/pollux/?branch=master)
-[![Build Status](https://scrutinizer-ci.com/g/geminilabs/pollux/badges/build.png?b=master)](https://scrutinizer-ci.com/g/geminilabs/pollux/build-status/master)
-[![License](https://img.shields.io/badge/license-GPL3-blue.svg)](https://github.com/geminilabs/pollux/blob/master/LICENSE)
+[![GitHub version](https://badge.fury.io/gh/pryley%2Fpollux.svg)](https://badge.fury.io/gh/pryley%2Fpollux)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/pryley/pollux/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/pryley/pollux/?branch=master)
+[![Build Status](https://scrutinizer-ci.com/g/pryley/pollux/badges/build.png?b=master)](https://scrutinizer-ci.com/g/pryley/pollux/build-status/master)
+[![License](https://img.shields.io/badge/license-GPL3-blue.svg)](https://github.com/pryley/pollux/blob/master/LICENSE)
 
 ![Pollux banner](+/assets/banner-1544x500.png)
 
@@ -13,9 +13,9 @@ Instead of drag-and-drop, all configuration is added using simple [YAML](https:/
 
 Pollux uses the [Meta Box](https://wordpress.org/plugins/meta-box/) plugin to add custom meta-boxes. If the Meta Box plugin is not installed, Pollux will prompt you to do so on the Pollux settings page.
 
-Please see the [plugin wiki](https://github.com/geminilabs/pollux/wiki) for complete examples on how to use YAML markup in the plugin. Once you've used it, you'll wonder how you ever managed without it!
+Please see the [plugin wiki](https://github.com/pryley/pollux/wiki) for complete examples on how to use YAML markup in the plugin. Once you've used it, you'll wonder how you ever managed without it!
 
-Pollux was made to complement themes built on the [Castor framework](https://github.com/geminilabs/castor-framework) (i.e. [Castor](https://github.com/geminilabs/castor)), but it can be used with any theme.
+Pollux was made to complement themes built on the [Castor framework](https://github.com/pryley/castor-framework) (i.e. [Castor](https://github.com/pryley/castor)), but it can be used with any theme.
 
 ## Minimum plugin requirements:
 
@@ -28,24 +28,24 @@ Pollux was made to complement themes built on the [Castor framework](https://git
 
 Pollux uses the [Meta Box](https://wordpress.org/plugins/meta-box/) plugin to add custom meta-boxes. Adding meta-boxes and meta-box fields is [the same as you would](https://github.com/rilwis/meta-box/blob/master/demo/demo.php) with Meta Box, except instead of registering meta-box arrays with the 'rwmb_meta_boxes' filter hook, you instead enter the arrays as YAML markup in the Pollux Settings.
 
-Please see the [Adding Meta Boxes](https://github.com/geminilabs/pollux/wiki/Adding-Meta-Boxes) page in the Pollux wiki for detailed information on how to add Meta Boxes with Pollux.
+Please see the [Adding Meta Boxes](https://github.com/pryley/pollux/wiki/Adding-Meta-Boxes) page in the Pollux wiki for detailed information on how to add Meta Boxes with Pollux.
 
 ### How do I make conditional Meta Boxes?
 
-Please see the [Meta Box Conditions](https://github.com/geminilabs/pollux/wiki/Meta-Box-Conditions) page in the Pollux wiki.
+Please see the [Meta Box Conditions](https://github.com/pryley/pollux/wiki/Meta-Box-Conditions) page in the Pollux wiki.
 
 ### How do I add Custom Post Types?
 
-Please see the [Adding Post Types](https://github.com/geminilabs/pollux/wiki/Adding-Post-Types) page in the Pollux wiki.
+Please see the [Adding Post Types](https://github.com/pryley/pollux/wiki/Adding-Post-Types) page in the Pollux wiki.
 
 ### How do I add Custom Post Type Columns?
 
-Please see the [Adding Post Type Columns](https://github.com/geminilabs/pollux/wiki/Adding-Post-Type-Columns) page in the Pollux wiki.
+Please see the [Adding Post Type Columns](https://github.com/pryley/pollux/wiki/Adding-Post-Type-Columns) page in the Pollux wiki.
 
 ### How do I add Custom Taxonomies?
 
-Please see the [Adding Taxonomies](https://github.com/geminilabs/pollux/wiki/Adding-Taxonomies) page in the Pollux wiki.
+Please see the [Adding Taxonomies](https://github.com/pryley/pollux/wiki/Adding-Taxonomies) page in the Pollux wiki.
 
 ### How do set my own defaults?
 
-Please see the [How to create your own defaults](https://github.com/geminilabs/pollux/wiki/How-to-create-your-own-defaults) page in the Pollux wiki.
+Please see the [How to create your own defaults](https://github.com/pryley/pollux/wiki/How-to-create-your-own-defaults) page in the Pollux wiki.
