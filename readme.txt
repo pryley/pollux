@@ -4,8 +4,8 @@ Donate link: https://www.paypal.me/pryley
 Tags: pollux, taxonomies, custom taxonomies, post types, custom post types, settings, meta-box, yaml, scaffolding, castor
 Requires at least: 4.7.0
 Requires PHP: 5.6
-Tested up to: 5.0
-Stable tag: 1.3.1
+Tested up to: 5.2
+Stable tag: 1.4.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -65,6 +65,7 @@ Pollux includes comprehensive documentation. If your answer is not answered in t
 == Changelog ==
 
 = 1.4.0 (2019-07-02) =
+- Added syntax highlighting to documentation examples
 - Changed minimum required version of Meta Box to v4.17
 - Fixed compatibility with Meta Box
 

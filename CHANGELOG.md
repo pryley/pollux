@@ -18,6 +18,22 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ### Security
 
+## [1.4.0] - 2019-07-02
+
+### Added
+- Added syntax highlighting to documentation examples
+
+### Changed
+- Changed minimum required version of Meta Box to v4.17
+
+### Fixed
+- Fixed compatibility with Meta Box
+
+## [1.3.1] - 2019-01-28
+
+### Changed
+- Changed plugin URL
+
 ## [1.3.0] - 2018-09-24
 
 ### Added
