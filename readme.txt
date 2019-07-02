@@ -64,6 +64,10 @@ Pollux includes comprehensive documentation. If your answer is not answered in t
 
 == Changelog ==
 
+= 1.4.0 (2019-07-02) =
+- Changed minimum required version of Meta Box to v4.17
+- Fixed compatibility with Meta Box
+
 = 1.3.1 (2019-01-28) =
 - Updated plugin URL
 

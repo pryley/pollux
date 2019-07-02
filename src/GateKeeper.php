@@ -11,7 +11,7 @@ class GateKeeper
 	 * [plugin_file_path] => [plugin_name]|[plugin_version]|[plugin_url]
 	 */
 	const DEPENDENCIES = [
-		'meta-box/meta-box.php' => 'Meta Box|4.11|https://wordpress.org/plugins/meta-box/',
+		'meta-box/meta-box.php' => 'Meta Box|4.17|https://wordpress.org/plugins/meta-box/',
 	];
 
 	public $errors = [];

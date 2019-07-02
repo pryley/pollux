@@ -4,7 +4,7 @@ namespace GeminiLabs\Pollux\Settings;
 
 use GeminiLabs\Pollux\Helper;
 use RW_Meta_Box;
-use RWMB_Field;
+use RWMB_Helpers_Field;
 
 class RWMetaBox extends RW_Meta_Box
 {
@@ -39,7 +39,7 @@ class RWMetaBox extends RW_Meta_Box
 		if( !$this->is_edit_screen() || !empty( Helper::toArray( $meta )) || empty( $field['slug'] )) {
 			return $meta;
 		}
-		$meta = call_user_func( [RWMB_Field::get_class_name( $field ), 'esc_meta'], ( $saved
+		$meta = call_user_func( [RWMB_Helpers_Field::get_class( $field ), 'esc_meta'], ( $saved
 			? $this->pollux_caller->getMetaValue( $field['slug'], $meta, $this->meta_box['slug'] )
 			: $field['std']
 		));
