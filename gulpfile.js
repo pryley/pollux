@@ -1,5 +1,6 @@
 var args            = require('yargs').argv;
 var autoprefixer    = require('gulp-autoprefixer');
+var babel           = require('gulp-babel');
 var bump            = require('gulp-bump');
 var checktextdomain = require('gulp-checktextdomain');
 var concat          = require('gulp-concat');
@@ -8,13 +9,12 @@ var gulp            = require('gulp');
 var gulpif          = require('gulp-if');
 var jshint          = require('gulp-jshint');
 var mergeStream     = require('merge-stream');
-var minify          = require('gulp-babel-minify');
 var potomo          = require('gulp-potomo');
 var pottopo         = require('gulp-pottopo');
 var pump            = require('pump');
 var sass            = require('gulp-sass');
 var sort            = require('gulp-sort');
-var uglify          = require('gulp-uglify');
+var terser          = require('gulp-terser');
 var wpPot           = require('gulp-wp-pot');
 var yaml            = require('yamljs');
 
@@ -55,11 +55,12 @@ gulp.task('js', function(cb) {
   }
   pump([
     streams,
-    // gulpif(args.production, uglify({
-    //   output: {comments: 'some'},
-    // })),
-    gulpif(args.production, minify({
-      // mangle: {keepClassName: true},
+    // babel({
+    //   compact: false,
+    //   presets: ['@babel/preset-env'],
+    // }),
+    gulpif(args.production, terser({
+      output: {comments: 'some'},
     })),
     gulp.dest(config.dest.js),
   ], cb);

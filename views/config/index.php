@@ -141,7 +141,7 @@
 				<div class="inside">
 					<h3>Example configuration for the "Post Types" field</h3>
 					<p>You may copy and paste the following into the <code>Post Types</code> field in the Pollux settings.</p>
-					<pre><code>gallery:
+					<pre><code class="pollux-code-example cm-s-pollux">gallery:
 
   # [required] This is the Singular name of the Post Type, used to generate correct labels
   single: Gallery
@@ -228,7 +228,7 @@
 					<ol>
 						<li>First you must add the column to the Post Type <code>columns</code> key in the "Post Types" field:</li>
 					</ol>
-					<pre><code>example_cpt:
+					<pre><code class="pollux-code-example cm-s-pollux">example_cpt:
   single: Example
   plural: Examples
   columns:
@@ -238,11 +238,11 @@
 					<ol start="2">
 						<li>Next you must add the custom column label in the "Post Type Columns" field:</li>
 					</ol>
-					<pre><code>my_awesome_column: Awesome!</code></pre>
+					<pre><code class="pollux-code-example cm-s-pollux">my_awesome_column: Awesome!</code></pre>
 					<ol start="3">
 						<li>Finally, you must create a special file called <code>pollux-hooks.php</code> and place it either in your root web directory, or in the wp-content directory. Once you have created the file, add a custom filter in it to populate the custom column with a value:</li>
 					</ol>
-					<pre><code class="php">/**
+					<pre><code class="pollux-code-example cm-s-pollux">/**
  * @return string|int
  */
 add_filter( 'pollux/post_type/column/my_awesome_column', function( $value, $post_id ) {
@@ -263,7 +263,7 @@ add_filter( 'pollux/post_type/column/my_awesome_column', function( $value, $post
 				<div class="inside">
 					<h3>Example configuration for the "Taxonomies" field</h3>
 					<p>You may copy and paste the following into the <code>Taxonomies</code> field in the Pollux settings.</p>
-					<pre><code>project_type:
+					<pre><code class="pollux-code-example cm-s-pollux">project_type:
 
   # [required] The names of the post types to associate the taxonomy with
   post_types:
@@ -313,7 +313,7 @@ add_filter( 'pollux/post_type/column/my_awesome_column', function( $value, $post
 					<p>Please see the <strong>Getting Started</strong> section for more information about available options for both meta-boxes and meta-box fields.</p>
 					<h3>Example configuration:</h3>
 					<p>You may copy and paste the following into the <code>Post Type Meta Boxes</code> field in the Pollux settings.</p>
-					<pre><code># This key is the meta-box ID
+					<pre><code class="pollux-code-example cm-s-pollux"># This key is the meta-box ID
 front_page:
 
   # This key defines which post types to attach this meta-box to.
@@ -384,7 +384,7 @@ gallery_media:
 				<div class="inside">
 					<p>Both meta-boxes, and specific meta-box fields can be set to show only if a specific condition is met.</p>
 					<p>The <code>condition</code> key can be added to both a meta-box and a meta-box field.</p>
-					<pre><code>condition:
+					<pre><code class="pollux-code-example cm-s-pollux">condition:
 
   # This condition checks if a PHP Class has been defined.
   # Value to check must be the name of the PHP Class, including the namespace if any.
@@ -422,13 +422,13 @@ gallery_media:
   is_page_template: template-contact.php</code></pre>
 					<p>You can also make meta-box field visibility dependant on whether or not another field has a value.</p>
 					<p>The <code>depends</code> key can only be added to a meta-box field, this key checks if the referenced field has a value (and optionally checks for a specific value).</p>
-					<pre><code># This checks that another field has a value set.
+					<pre><code class="pollux-code-example cm-s-pollux"># This checks that another field has a value set.
 depends: field_key_to_check
 
 # If you also need to check that the key has a specific value, append that value after a "|" (pipe) character
 depends: field_key_to_check|field_value</code></pre>
 					<p>Here is an example meta-box entry that demonstrates the use of the <code>depends</code> option:</p>
-					<pre><code>seo_settings:
+					<pre><code class="pollux-code-example cm-s-pollux">seo_settings:
   title: SEO Settings
   fields:
     seo_enabled:
@@ -461,7 +461,7 @@ depends: field_key_to_check|field_value</code></pre>
 					<p>If the <code>pollux.yml</code> file exists, Pollux with use it as the new plugin defaults.</p>
 					<p>You may also add a <code>disable_config</code> option to completely disable the Pollux Settings admin page UI.</p>
 					<h3>Example <code>pollux.yml</code> file</h3>
-					<pre><code class="bash">disable_config: false
+					<pre><code class="pollux-code-example cm-s-pollux">disable_config: false
 disable_posts: false
 enable_archive_page: false
 remove_dashboard_widgets: false
@@ -622,7 +622,7 @@ settings:
 					<p>The following contains all of the meta box fields found in the <a href="https://metabox.io/docs/getting-started/" rel="nofollow">Meta Box plugin getting started</a> demo file.</p>
 					<p>Please see the <strong>Adding Meta Boxes</strong> section for detailed information on adding meta-boxes.</p>
 					<p>To use, copy and paste into the <code>Post Type Meta Boxes</code> field in the Pollux plugin settings.</p>
-					<pre><code class="bash">standard:
+					<pre><code class="pollux-code-example cm-s-pollux">standard:
   title: Standard Fields
   post_types:
     - post

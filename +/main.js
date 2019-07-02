@@ -203,6 +203,9 @@ pollux.editors.init = function()
 			pollux.editors.disable( index );
 		}
 	});
+	[].forEach.call( document.querySelectorAll( '.pollux-code-example' ), function( example, index ) {
+		CodeMirror.runMode(example.textContent, 'yaml', example);
+	});
 };
 
 /**
