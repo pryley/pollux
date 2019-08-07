@@ -39,6 +39,6 @@
   },
   "require-dev": {
     "phpunit/phpunit": "^5.7",
-    "symfony/yaml": "^4.3"
+    "symfony/yaml": "^3.4"
   }
 }
