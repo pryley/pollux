@@ -1,16 +1,16 @@
 {
   "private": true,
   "devDependencies": {
-    "@babel/core": "^7.3.4",
-    "@babel/preset-env": "^7.3.4",
+    "@babel/core": "^7.5.5",
+    "@babel/preset-env": "^7.5.5",
     "gulp": "^4.0.2",
     "gulp-autoprefixer": "^6.1.0",
     "gulp-babel": "^8.0.0",
     "gulp-bump": "^3.1.3",
-    "gulp-checktextdomain": "^2.2.0",
+    "gulp-checktextdomain": "^2.2.1",
     "gulp-concat": "^2.6.1",
     "gulp-cssnano": "^2.1.3",
-    "gulp-if": "^2.0.2",
+    "gulp-if": "^3.0.0",
     "gulp-jshint": "^2.0.4",
     "gulp-potomo": "^1.1.0",
     "gulp-pottopo": "^1.0.1",
@@ -23,11 +23,11 @@
     "merge-stream": "^2.0.0",
     "pump": "^3.0.0",
     "yamljs": "^0.3.0",
-    "yargs": "^13.2.4"
+    "yargs": "^13.3.0"
   },
   "dependencies": {
     "cm-show-invisibles": "^2.0.2",
-    "codemirror": "^5.44.0",
+    "codemirror": "^5.48.2",
     "js-yaml": "^3.12.2"
   },
   "scripts": {
