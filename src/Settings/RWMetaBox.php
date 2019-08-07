@@ -123,7 +123,8 @@ class RWMetaBox extends RW_Meta_Box
 	 */
 	public static function normalize( $metabox )
 	{
-		unset( $metabox['post_types'] );
+		$metabox = parent::normalize( $metabox );
+		$metabox['post_types'] = [];
 		return wp_parse_args( $metabox, ['slug' => ''] );
 	}
 }
