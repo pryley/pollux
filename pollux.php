@@ -32,4 +32,6 @@ register_activation_hook( __FILE__, array( $app, 'onActivation' ));
 register_deactivation_hook( __FILE__, array( $app, 'onDeactivation' ));
 
 $app->register( new GeminiLabs\Pollux\Provider );
-$app->init();
+$app->init([
+	'meta-box/meta-box.php' => 'Meta Box|5.0.1|https://wordpress.org/plugins/meta-box/',
+]);

@@ -32,7 +32,6 @@ final class Application extends Container
 	public function __construct()
 	{
 		$this->file = realpath( dirname( dirname( __FILE__ )) . '/pollux.php' );
-		$this->gatekeeper = new GateKeeper( plugin_basename( $this->file ));
 
 		$data = get_file_data( $this->file, array(
 			'id' => 'Text Domain',
@@ -50,10 +49,12 @@ final class Application extends Container
 	 *
 	 * @return void
 	 */
-	public function init()
+	public function init( array $dependencies = [] )
 	{
 		$basename = plugin_basename( $this->file );
 		$controller = $this->make( 'Controller' );
+
+		$this->gatekeeper = new GateKeeper( $basename, $dependencies );
 
 		add_action( 'plugins_loaded', function() {
 			$this->bootstrap();

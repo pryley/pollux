@@ -7,14 +7,12 @@ use ReflectionClass;
 
 class GateKeeper
 {
+	public $errors = [];
+
 	/**
 	 * [plugin_file_path] => [plugin_name]|[plugin_version]|[plugin_url]
 	 */
-	const DEPENDENCIES = [
-		'meta-box/meta-box.php' => 'Meta Box|4.17|https://wordpress.org/plugins/meta-box/',
-	];
-
-	public $errors = [];
+	protected $dependencies = [];
 
 	/**
 	 * @var Notice
@@ -26,8 +24,9 @@ class GateKeeper
 	 */
 	protected $plugin;
 
-	public function __construct( $plugin )
+	public function __construct( $plugin, $dependencies = [] )
 	{
+		$this->dependencies = $dependencies;
 		$this->plugin = $plugin;
 		add_action( 'admin_init', [$this, 'init'] );
 	}
@@ -98,7 +97,7 @@ class GateKeeper
 	 */
 	public function hasPendingDependencies()
 	{
-		foreach( static::DEPENDENCIES as $plugin => $data ) {
+		foreach( $this->dependencies as $plugin => $data ) {
 			if( !$this->isPluginDependency( $plugin ))continue;
 			$this->isPluginActive( $plugin );
 			$this->isPluginVersionValid( $plugin );
@@ -121,7 +120,7 @@ class GateKeeper
 	 */
 	public function isPluginDependency( $plugin )
 	{
-		return array_key_exists( $plugin, static::DEPENDENCIES );
+		return array_key_exists( $plugin, $this->dependencies );
 	}
 
 	/**
@@ -323,7 +322,7 @@ class GateKeeper
 	{
 		$keys = ['Name', 'Version', 'PluginURI'];
 		$requirements = $this->isPluginDependency( $plugin )
-			? array_pad( explode( '|', static::DEPENDENCIES[$plugin] ), 3, '' )
+			? array_pad( explode( '|', $this->dependencies[$plugin] ), 3, '' )
 			: array_fill( 0, 3, '' );
 		return $this->getPluginData( $plugin, array_combine( $keys, $requirements ), $key );
 	}
