@@ -64,6 +64,10 @@ Pollux includes comprehensive documentation. If your answer is not answered in t
 
 == Changelog ==
 
+= 1.5.0 (2019-08-07) =
+- Changed minimum required version of Meta Box to v5.0.1
+- Fixed compatibility with Meta Box v5
+
 = 1.4.0 (2019-07-02) =
 - Added syntax highlighting to documentation examples
 - Changed minimum required version of Meta Box to v4.17
