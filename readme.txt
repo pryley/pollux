@@ -5,7 +5,7 @@ Tags: pollux, taxonomies, custom taxonomies, post types, custom post types, sett
 Requires at least: 4.7.0
 Requires PHP: 5.6
 Tested up to: 5.2
-Stable tag: 1.4.0
+Stable tag: 1.5.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 

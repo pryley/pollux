@@ -60,7 +60,7 @@ msgstr "Settings Disabled"
 msgid "Settings"
 msgstr "Settings"
 
-#: src/GateKeeper.php:183
+#: src/GateKeeper.php:182
 msgid "Pollux requires the latest version of the following plugins"
 msgstr "Pollux requires the latest version of the following plugins"
 
