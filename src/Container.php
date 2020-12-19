@@ -148,6 +148,18 @@ abstract class Container
 		return $abstract;
 	}
 
+    /**
+     * @param \ReflectionParameter $parameter
+     * @return null|\ReflectionClass|\ReflectionNamedType|\ReflectionType
+     */
+    protected function getClass($parameter)
+    {
+        if (version_compare(phpversion(), '8', '<')) {
+            return $parameter->getClass(); // @compat PHP < 8
+        }
+        return $parameter->getType();
+    }
+
 	/**
 	 * Throw an exception that the concrete is not instantiable.
 	 *
@@ -201,7 +213,7 @@ abstract class Container
 	protected function resolveClass( ReflectionParameter $parameter )
 	{
 		try {
-			return $this->make( $parameter->getClass()->name );
+			return $this->make( $this->getClass($parameter)->getName() );
 		}
 		catch( Exception $e ) {
 			if( $parameter->isOptional() ) {
@@ -222,7 +234,7 @@ abstract class Container
 
 		foreach( $dependencies as $dependency ) {
 			// If the class is null, the dependency is a string or some other primitive type
-			$results[] = !is_null( $class = $dependency->getClass() )
+			$results[] = !is_null( $class = $this->getClass($dependency) )
 				? $this->resolveClass( $dependency )
 				: null;
 		}
