@@ -5,7 +5,7 @@ Tags: pollux, taxonomies, custom taxonomies, post types, custom post types, sett
 Requires at least: 4.7.0
 Requires PHP: 5.6
 Tested up to: 5.6
-Stable tag: 1.5.1
+Stable tag: 1.5.2
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -63,6 +63,10 @@ Pollux includes comprehensive documentation. If your answer is not answered in t
 6. A view of the "Site Settings" page
 
 == Changelog ==
+
+= 1.5.2 (2023-03-10) =
+
+- Fixed compatibility with Meta Box
 
 = 1.5.1 (2020-12-18) =
 
