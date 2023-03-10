@@ -11,7 +11,7 @@ class RWMetaBox extends RW_Meta_Box
 	protected $pollux_caller;
 	protected $pollux_id;
 
-	public function __construct( $metabox, $id = null, $caller )
+	public function __construct( $metabox, $id = null, $caller = null )
 	{
 		parent::__construct( $metabox );
 		$this->meta_box = static::normalize( $this->meta_box );
@@ -39,10 +39,9 @@ class RWMetaBox extends RW_Meta_Box
 		if( !$this->is_edit_screen() || !empty( Helper::toArray( $meta )) || empty( $field['slug'] )) {
 			return $meta;
 		}
-		$meta = call_user_func( [RWMB_Helpers_Field::get_class( $field ), 'esc_meta'], ( $saved
+		$meta = $saved
 			? $this->pollux_caller->getMetaValue( $field['slug'], $meta, $this->meta_box['slug'] )
-			: $field['std']
-		));
+			: $field['std'];
 		return $this->_normalize_field_meta( $meta, $field );
 	}
 
