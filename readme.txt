@@ -2,10 +2,10 @@
 Contributors: pryley, geminilabs
 Donate link: https://www.paypal.me/pryley
 Tags: pollux, taxonomies, custom taxonomies, post types, custom post types, settings, meta-box, yaml, scaffolding, castor
-Requires at least: 4.7.0
-Requires PHP: 5.6
-Tested up to: 5.6
 Stable tag: 1.5.2
+Requires at least: 6.1
+Requires PHP: 7.4
+Tested up to: 6.7
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 

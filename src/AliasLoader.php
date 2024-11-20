@@ -56,13 +56,14 @@ final class AliasLoader
 	 *
 	 * @param string $alias
 	 *
-	 * @return bool|null
+	 * @return ?bool
 	 */
-	public function load( $alias )
+	public function load( $alias ): ?bool
 	{
 		if( isset( $this->aliases[$alias] )) {
 			return class_alias( $this->aliases[$alias], $alias );
 		}
+		return null;
 	}
 
 	/**

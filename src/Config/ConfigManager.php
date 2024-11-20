@@ -151,6 +151,7 @@ class ConfigManager extends SiteMetaManager
 		}
 		catch( DumpException $e ) {
 			$this->app->make( 'Notice' )->addError( $e->getMessage() );
+			return null;
 		}
 	}
 

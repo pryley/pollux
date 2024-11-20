@@ -41,17 +41,14 @@ class GateKeeper
 		add_action( 'current_screen',                         [$this, 'setDependencyNotice'] );
 	}
 
-	/**
-	 * @return void
-	 */
-	public function activatePlugin()
+	public function activatePlugin(): void
 	{
 		if( get_current_screen()->id != sprintf( 'settings_page_%s', pollux_app()->id )
 			|| filter_input( INPUT_GET, 'action' ) != 'activate'
 		)return;
 		$plugin = filter_input( INPUT_GET, 'plugin' );
 		check_admin_referer( 'activate-plugin_' . $plugin );
-		$result = activate_plugin( $plugin, null, is_network_admin(), true );
+		$result = activate_plugin( $plugin, '', is_network_admin(), true );
 		if( is_wp_error( $result )) {
 			wp_die( $result->get_error_message() );
 		}
@@ -59,10 +56,7 @@ class GateKeeper
 		exit;
 	}
 
-	/**
-	 * @return void
-	 */
-	public function ajaxActivatePluginLink()
+	public function ajaxActivatePluginLink(): void
 	{
 		check_ajax_referer( 'updates' );
 		$plugin = filter_input( INPUT_POST, 'plugin' );
@@ -159,20 +153,14 @@ class GateKeeper
 		));
 	}
 
-	/**
-	 * @return void
-	 */
-	public function printNotices()
+	public function printNotices(): void
 	{
 		foreach( $this->notice->all as $notice ) {
 			echo $this->notice->generate( $notice );
 		}
 	}
 
-	/**
-	 * @return void|null
-	 */
-	public function setDependencyNotice()
+	public function setDependencyNotice(): void
 	{
 		if( get_current_screen()->id != 'settings_page_pollux'
 			|| pollux_app()->config->disable_config
@@ -209,7 +197,7 @@ class GateKeeper
 	 */
 	protected function getAllPlugins()
 	{
-		require_once ABSPATH . 'wp-admin/includes/plugin.php';
+		require_once ABSPATH . 'wp-admin/includes/plugin.php'; // @phpstan-ignore-line
 		return array_merge( get_plugins(), $this->getMustUsePlugins() );
 	}
 

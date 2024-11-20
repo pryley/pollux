@@ -50,10 +50,14 @@ class Taxonomy extends Component
 	 */
 	public function filterByTaxonomy( WP_Query $query )
 	{
-		if( !is_admin() || Helper::getCurrentScreen()->base != 'edit' )return;
+		if( !is_admin() || Helper::getCurrentScreen()->base != 'edit' ) {
+			return $query;
+		}
 		$vars = &$query->query_vars;
 		foreach( array_keys( $this->taxonomies ) as $taxonomy ) {
-			if( !isset( $vars[$taxonomy] ))return;
+			if( !isset( $vars[$taxonomy] )) {
+				continue;
+			}
 			if( $term = get_term_by( 'id', $vars[$taxonomy], $taxonomy )) {
 				$vars[$taxonomy] = $term->slug;
 			}

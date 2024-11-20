@@ -36,9 +36,9 @@ class MetaBox extends Component
 		$this->normalize( $this->app->config->{static::ID}, [
 			'post_types' => [],
 		]);
+		add_filter( 'rwmb_meta_boxes',          [$this, 'filterMetaboxes'] );
 		add_filter( 'rwmb_normalize_map_field', [$this, 'normalizeMapField'] );
 		add_filter( 'rwmb_show',                [$this, 'show'], 10, 2 );
-		add_filter( 'rwmb_meta_boxes',          [$this, 'register'] );
 		add_filter( 'rwmb_outer_html',          [$this, 'renderField'], 10, 2 );
 	}
 
@@ -49,7 +49,7 @@ class MetaBox extends Component
 	 */
 	public function action( $name, ...$args )
 	{
-		return do_action_ref_array( sprintf( 'pollux/%s/%s', static::ID, $name ), $args );
+		do_action_ref_array( sprintf( 'pollux/%s/%s', static::ID, $name ), $args );
 	}
 
 	/**
@@ -95,10 +95,9 @@ class MetaBox extends Component
 	}
 
 	/**
-	 * @return array
 	 * @filter rwmb_meta_boxes
 	 */
-	public function register()
+	public function filterMetaboxes(): array
 	{
 		if( current_user_can( 'switch_themes' )) {
 			$instructions = $this->initInstructions();

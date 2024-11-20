@@ -47,7 +47,7 @@ class Archive extends Settings
 	{
 		return sprintf( '<pre class="my-sites nav-tab-active misc-pub-section">%s</pre>',
 			array_reduce( ['title', 'content', 'featured'], function( $instructions, $id ) {
-				return $instructions . $this->filterInstruction( null, ['slug' => $id], ['slug' => $this->getPostType()] ) . PHP_EOL;
+				return $instructions . $this->filterInstruction( '', ['slug' => $id], ['slug' => $this->getPostType()] ) . PHP_EOL;
 			})
 		);
 	}
@@ -87,10 +87,9 @@ class Archive extends Settings
 
 	/**
 	 * @todo: Use gatekeeper to check capability, wp_die(-1) on fail;
-	 * @return string|null
 	 * @action wp_ajax_pollux/archives/featured/html
 	 */
-	public function getFeaturedImageHtml()
+	public function getFeaturedImageHtml(): void
 	{
 		check_ajax_referer( sprintf( '%s-options', static::id() ));
 		static::$current = filter_input( INPUT_POST, 'post_type' );
@@ -124,10 +123,9 @@ class Archive extends Settings
 	}
 
 	/**
-	 * @return void
 	 * @action pollux/archives/init
 	 */
-	public function registerFeaturedImageMetaBox()
+	public function registerFeaturedImageMetaBox(): void
 	{
 		if( !current_user_can( 'upload_files' ))return;
 		add_meta_box( 'postimagediv', __( 'Featured Image', 'pollux' ), [$this, 'renderFeaturedImageMetaBox'], null, 'side', 'low' );
@@ -153,10 +151,9 @@ class Archive extends Settings
 	}
 
 	/**
-	 * @return void
 	 * @action pollux/archives/editor
 	 */
-	public function renderEditor( $content, $type )
+	public function renderEditor( $content, $type ): void
 	{
 		wp_editor( $content, 'content', [
 			'_content_editor_dfw' => true,

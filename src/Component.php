@@ -26,9 +26,10 @@ abstract class Component
 	abstract public function init();
 
 	/**
-	 * @return void|array
+	 * @return void
 	 */
-	abstract public function register();
+	public function register()
+	{}
 
 	/**
 	 * @param string $id

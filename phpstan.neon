@@ -1,0 +1,23 @@
+includes:
+    - phar://phpstan.phar/conf/bleedingEdge.neon
+    - vendor/szepeviktor/phpstan-wordpress/extension.neon
+parameters:
+  bootstrapFiles:
+    - tests/phpstan/bootstrap.php
+    - tests/phpstan/stubs/meta-box.php
+    - helpers.php
+    - autoload.php
+  ignoreErrors:
+    - 
+      identifier: missingType.iterableValue
+    -
+      identifier: missingType.generics
+    - '#Access to property (.+) on an unknown class GeminiLabs\\Pollux\\(.+)\\Application.#'
+    - '#Call to an undefined static method GeminiLabs\\Pollux\\Facades\\(.+)::(all|get|services)\(\).#'
+    - '#Call to method render\(\) on an unknown class GeminiLabs\\Pollux\\(.+)\\Application.#'
+    - '#Unsafe usage of new static\(\).#'
+  level: 5
+  paths:
+    - src
+  reportUnmatchedIgnoredErrors: false
+  treatPhpDocTypesAsCertain: false

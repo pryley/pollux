@@ -35,13 +35,14 @@ class Controller
 	}
 
 	/**
-	 * @return void
 	 * @filter admin_footer_text
 	 */
-	public function filterWordPressFooter( $text )
+	public function filterWordPressFooter( $text ): string
 	{
-		if( $this->app->config->remove_wordpress_footer )return;
-		return $text;
+		if ($this->app->config->remove_wordpress_footer) {
+			return '';
+		}
+		return (string) $text;
 	}
 
 	/**
@@ -105,6 +106,9 @@ class Controller
 	 */
 	protected function registerArchiveAssets( WP_Screen $screen )
 	{
+		if (empty($screen->pagenow)) {
+			return;
+		}
 		if( Helper::endsWith( '_archive', $screen->id ) && $screen->pagenow == 'edit.php' ) {
 			wp_enqueue_script( 'common' );
 			wp_enqueue_script( 'editor-expand' );
@@ -122,7 +126,10 @@ class Controller
 	 */
 	protected function registerCodemirrorAssets( WP_Screen $screen )
 	{
-		if( $screen->id != 'settings_page_pollux' || $screen->pagenow != 'options-general.php' )return;
+		if (empty($screen->pagenow)) {
+			return;
+		}
+		if( $screen->id !== 'settings_page_pollux' || $screen->pagenow !== 'options-general.php' )return;
 		wp_enqueue_style( 'pollux/codemirror.css',
 			$this->app->url( 'assets/codemirror.css' ),
 			[],
@@ -140,6 +147,9 @@ class Controller
 	 */
 	protected function registerGateKeeperAssets( WP_Screen $screen )
 	{
+		if (empty($screen->pagenow)) {
+			return;
+		}
 		if( $screen->id == 'settings_page_pollux'
 			&& $screen->pagenow == 'options-general.php'
 			&& $this->app->gatekeeper->hasPendingDependencies() ) {

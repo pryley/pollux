@@ -11,7 +11,7 @@ use GeminiLabs\Pollux\Settings\Settings;
  * SiteMeta::get('group');
  * SiteMeta::get('group','option','fallback');
  *
- * @property object all
+ * @property object $all
  */
 class SiteMetaManager
 {

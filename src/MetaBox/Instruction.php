@@ -4,7 +4,6 @@ namespace GeminiLabs\Pollux\MetaBox;
 
 use GeminiLabs\Pollux\Application;
 use GeminiLabs\Pollux\Component;
-use GeminiLabs\Pollux\MetaBox\Instruction;
 use RecursiveArrayIterator;
 use RecursiveIteratorIterator;
 
@@ -31,17 +30,14 @@ trait Instruction
 		return $this->filter( 'before/instructions', '' ) . $instructions . $this->filter( 'after/instructions', '' );
 	}
 
-	/**
-	 * @return array
-	 */
-	protected function getInstructionFields( $metabox )
+	protected function getInstructionFields( $metabox ): string
 	{
 		$skipFields = ['custom_html', 'divider', 'heading', 'taxonomy'];
-		return array_reduce( $metabox['fields'], function( $html, $field ) use( $metabox, $skipFields ) {
+		return array_reduce( $metabox['fields'], function( $carry, $field ) use( $metabox, $skipFields ) {
 			return $this->validate( $field['condition'] ) && !in_array( $field['type'], $skipFields )
-				? $html . $this->filter( 'instruction', "PostMeta::get('{$field['slug']}');", $field, $metabox ) . PHP_EOL
-				: $html;
-		});
+				? $carry . $this->filter( 'instruction', "PostMeta::get('{$field['slug']}');", $field, $metabox ) . PHP_EOL
+				: $carry;
+		}, '');
 	}
 
 	/**
@@ -60,7 +56,9 @@ trait Instruction
 	 */
 	protected function initInstructions()
 	{
-		if( !$this->showInstructions() )return;
+		if( !$this->showInstructions() ) {
+			return null;
+		}
 		return [
 			'infodiv' => [
 				'context' => 'side',

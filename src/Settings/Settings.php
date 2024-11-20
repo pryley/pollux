@@ -126,7 +126,7 @@ class Settings extends MetaBox
 	{
 		if( Helper::getCurrentScreen()->id != $this->hook )return;
 		if( $this->app->gatekeeper->hasDependency( self::DEPENDENCY )) {
-			foreach( parent::register() as $metabox ) {
+			foreach( $this->filterMetaboxes() as $metabox ) {
 				new RWMetaBox( $metabox, static::ID, $this );
 			}
 		}

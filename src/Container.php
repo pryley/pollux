@@ -192,7 +192,7 @@ abstract class Container
 		$reflector = new ReflectionClass( $concrete );
 
 		if( !$reflector->isInstantiable() ) {
-			return $this->notInstantiable( $concrete );
+			$this->notInstantiable( $concrete ); // thows \Exception
 		}
 
 		if( is_null(( $constructor = $reflector->getConstructor() ))) {

@@ -16,9 +16,6 @@ trait Columns
 	 */
 	public $columns = [];
 
-	/**
-	 * @var void
-	 */
 	public function initColumns()
 	{
 		foreach( $this->types as $type => $args ) {

@@ -72,9 +72,16 @@ class DisablePosts
 	public function filterPostQuery( $posts = [] )
 	{
 		global $wp_query;
-		return $this->isAdmin() || strpos( $wp_query->request, "wp_posts.post_type = 'post'" ) === false
-			? $posts
-			: [];
+		if ($this->isAdmin()) {
+			return $posts;
+		}
+		if (empty($wp_query->request)) {
+			return $posts;
+		}
+		if (false === strpos((string) $wp_query->request, "wp_posts.post_type = 'post'")) {
+			return $posts;
+		}
+		return [];
 	}
 
 	/**
