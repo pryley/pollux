@@ -1,4 +1,4 @@
-<?php defined( 'WPINC' ) || die; ?>
+<?php defined('WPINC') || exit; ?>
 
 <script type="text/javascript">
 
@@ -28,13 +28,13 @@
 	jQuery(function(x) {
 		'use strict';
 
-		var form = x('#<?= $id; ?>');
+		var form = x('#<?php echo $id; ?>');
 
 		pollux_metabox_validate( form );
 
 		x('.if-js-closed').removeClass('if-js-closed').addClass('closed');
 
-		postboxes.add_postbox_toggles('<?= $hook; ?>');
+		postboxes.add_postbox_toggles('<?php echo $hook; ?>');
 
 		form.submit(function() {
 			x('#submit').addClass('button-primary-disabled');
@@ -42,7 +42,7 @@
 		});
 
 		x('#delete-action .submitdelete').on( 'click', function() {
-			return confirm("<?= $confirm; ?>");
+			return confirm("<?php echo $confirm; ?>");
 		});
 	});
 </script>

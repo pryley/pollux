@@ -2,7 +2,7 @@
 /**
  * ╔═╗╔═╗╔╦╗╦╔╗╔╦  ╦  ╔═╗╔╗ ╔═╗
  * ║ ╦║╣ ║║║║║║║║  ║  ╠═╣╠╩╗╚═╗
- * ╚═╝╚═╝╩ ╩╩╝╚╝╩  ╩═╝╩ ╩╚═╝╚═╝
+ * ╚═╝╚═╝╩ ╩╩╝╚╝╩  ╩═╝╩ ╩╚═╝╚═╝.
  *
  * Plugin Name: Pollux
  * Plugin URI:  https://wordpress.org/plugins/pollux
@@ -15,23 +15,24 @@
  * Text Domain: pollux
  * Domain Path: languages
  */
+defined('WPINC') || exit;
 
-defined( 'WPINC' ) || die;
-
-if( !class_exists( 'GL_Plugin_Check_v3' )) {
-	require_once __DIR__.'/activate.php';
+if (!class_exists('GL_Plugin_Check_v3')) {
+    require_once __DIR__.'/activate.php';
 }
-if( !(new GL_Plugin_Check_v3( __FILE__ ))->canProceed() )return;
+if (!(new GL_Plugin_Check_v3(__FILE__))->canProceed()) {
+    return;
+}
 require_once __DIR__.'/autoload.php';
 require_once __DIR__.'/helpers.php';
 require_once __DIR__.'/thirdparty.php';
 
 $app = GeminiLabs\Pollux\Application::getInstance();
 
-register_activation_hook( __FILE__, array( $app, 'onActivation' ));
-register_deactivation_hook( __FILE__, array( $app, 'onDeactivation' ));
+register_activation_hook(__FILE__, [$app, 'onActivation']);
+register_deactivation_hook(__FILE__, [$app, 'onDeactivation']);
 
-$app->register( new GeminiLabs\Pollux\Provider );
+$app->register(new GeminiLabs\Pollux\Provider());
 $app->init([
-	'meta-box/meta-box.php' => 'Meta Box|5.0.1|https://wordpress.org/plugins/meta-box/',
+    'meta-box/meta-box.php' => 'Meta Box|5.0.1|https://wordpress.org/plugins/meta-box/',
 ]);
